@@ -75,6 +75,10 @@
                 answerElement.className = 'flex flex-col p-4 bg-green-200 rounded-lg text-white mb-4';
                 answerElement.style.backgroundColor = '#68A192';
 
+                answerElement.likes = 0;
+                answerElement.comments = 0;
+                answerElement.liked = false;
+
                 answerElement.innerHTML = `
                     <div class="flex items-center">
                         <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4" />
@@ -89,54 +93,68 @@
                         </button>
 
                         <button class="comment-toggle-button text-white text-sm w-8 h-8 rounded-full flex items-center justify-center ml-3">
-                            <i class="fas fa-comment"></i>
+                        <i class="fas fa-comment"></i>
+                        <span class="comment-count text-white ml-2">0</span>
                         </button>
 
-                    </div>
-                    <div class="comments-list hidden mt-2 ml-12 space-y-2">
+                        </div>
+                        <div class="comments-list hidden mt-2 ml-12 space-y-2">
                         <div class="comment-input-box flex items-center mt-2">
                             <input type="text" placeholder="Tulis komentar Anda..." class="comment-input w-full p-2 rounded-lg focus:outline-none text-black mr-2">
                             <button class="submit-comment text-white bg-green-900 rounded-lg p-2">Kirim</button>
+                            </div>
                         </div>
-                    </div>
-                `;
+                        `;
 
                 answersList.appendChild(answerElement);
                 answerInput.value = '';
 
                 // Like 
                 const likeButton = answerElement.querySelector('.like-button');
+                const heartIcon = likeButton.querySelector('.fa-heart'); 
                 const likeCount = answerElement.querySelector('.like-count');
                 likeButton.addEventListener('click', () => {
-                    let currentCount = parseInt(likeCount.textContent);
-                    likeCount.textContent = currentCount + 1;
+                    if (!answerElement.liked) {
+                        answerElement.likes += 1;
+                        answerElement.liked = true;
+                        heartIcon.classList.add('text-green-800');
+                        likeCount.textContent = answerElement.likes;
+                    }
                 });
 
                 // komentar 
                 const commentToggleButton = answerElement.querySelector('.comment-toggle-button');
+                const commentCount = answerElement.querySelector('.comment-count');
                 const commentsList = answerElement.querySelector('.comments-list');
                 commentToggleButton.addEventListener('click', () => {
-                    commentsList.classList.toggle('hidden');
-                });;
+                commentsList.classList.toggle('hidden');
+                });
+
 
                 // tambah komentar
                 const submitCommentButton = answerElement.querySelector('.submit-comment');
                 const commentInput = answerElement.querySelector('.comment-input');
-                
                 submitCommentButton.addEventListener('click', () => {
-                    const commentText = commentInput.value.trim();
-                    if (commentText) {
-                        const commentElement = document.createElement('div');
-                        commentElement.className = 'flex items-center text-white p-2 rounded-md';
-                        commentElement.style.backgroundColor = '#5A897C';
-                        commentElement.innerHTML = `
-                            <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-6 h-6 rounded-full mr-2" />
-                            <span>${commentText}</span>
-                        `;
-                        commentsList.insertBefore(commentElement, commentsList.querySelector('.comment-input-box'));
-                        commentInput.value = ''; 
-                    }
-                });
+                const commentText = commentInput.value.trim();
+                if (commentText) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'flex items-center text-white p-2 rounded-md';
+                commentElement.style.backgroundColor = '#5A897C';
+                commentElement.innerHTML = `
+                    <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-6 h-6 rounded-full mr-2" />
+                    <div class="flex-grow">
+                    <span class="font-semibold text-white">username </span>
+                    <p>${commentText}</p>
+                    </div>
+                `;
+                commentsList.insertBefore(commentElement, commentsList.querySelector('.comment-input-box'));
+                commentInput.value = ''; 
+
+                //hitung komentar
+                answerElement.comments += 1;
+                commentCount.textContent = answerElement.comments;
+            }
+        });
             } else {
                 alert('Tolong masukkan jawaban!');
             }
