@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],  // Adjusted to capture jsx/tsx
@@ -31,6 +32,7 @@ module.exports = {
       backgroundImage: {
         'custom-radial': 'radial-gradient(circle at center, #C1E3D7 22%, #E0F1EB 61%, #FFFFFF 100%)',
         'custom-green-button': 'linear-gradient(90deg, #81C780 0%, #135B35 100%)',
+        'custom-gradient-button': 'linear-gradient(90deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%)',
       },
       borderRadius: {
         1: '2rem',
@@ -99,6 +101,9 @@ module.exports = {
         },
         ".bg-shadow": {
           "@apply p-4 bg-white bg-opacity-30 rounded-1 shadow-lg border border-black w-full max-w-md md:max-w-lg lg:max-w-xl": {},
+        },
+        ".bg-shadow2": {
+          "@apply p-4 bg-white bg-opacity-30 rounded-2xl shadow-lg border border-black w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
       });
       addUtilities({
