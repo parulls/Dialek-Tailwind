@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wadah Diskusi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-custom-radial font-inter flex flex-col ">
+
+    <!-- Navbar -->
+    <nav class="logo font-irish p-4">
+        <div>
+            <p>dialek.id</p>
+        </div>
+    </nav>
+
+    <!-- Tombol Kembali -->
+    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <div="min-h-screen font-inter">
+    <!-- Judul -->
+    <main class="flex flex-col items-center flex-grow">
+        <h1 class="text-4xl font-bold py-5 text-gradient">Wadah Diskusi</h1>
+
+        <!-- Atur box-->
+        <div class="p-8 rounded-lg shadow-md w-11/12 md:w-8/12 lg:w-8/12" style="background-color: rgba(212, 229, 221, 40)">
+
+            <!-- Tampilkan pertanyaan-->
+            <section id="questionSection" class="mb-6 flex items-start">
+                <img src="../assets/tandatanya.png" alt="user" class="w-9 h-9 rounded-full mr-2" />
+                <div id="questionDisplay" class="flex-grow p-6 rounded-lg text-white"
+                style="background-color: #4C968B;">
+                </div>
+            </section>
+
+            <!--Tempat jawaban-->
+            <section id="answerInputSection" class="mb-10 flex">
+                <textarea id="answerInput" class="w-full p-2 rounded-lg border-none focus:outline-none mt-4" rows="5" style="background-color: #4C968B; color: white;"></textarea> 
+                <!-- Tombol untuk mengirim jawaban -->          
+                <div class="flex justify-end mt-6 p-2 ">
+                    <button id="submitAnswerButton" ><img src="../assets/tomboltambahjawab.png" alt="" class="w-12 h-12 rounded-full mr-2"/></button>
+                </div>
+            </section>
+
+            <!-- Section 3: Answer List -->
+            <section id="answerListSection">
+                <h2 class="text-xl font-bold mb-4 text-green-800">Jawaban Lain:</h2>
+                <div id="answersList" class="space-y-4">
+                    <!-- User answers will be displayed here -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+    </div>
+    <script>
+        //ambil pertanyaan dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const questionText = urlParams.get('question');
+
+        //tampilkan pertanyaan
+        document.getElementById('questionDisplay').textContent = questionText;
+
+        const answersList = document.getElementById('answersList');
+        const answerInput = document.getElementById('answerInput');
+        const submitAnswerButton = document.getElementById('submitAnswerButton');
+
+        //tambahkan event listener untuk tombol submit jawaban
+        submitAnswerButton.addEventListener('click', () => {
+            const answerText = answerInput.value.trim();
+            if (answerText) {
+                const answerElement = document.createElement('div');
+                answerElement.className = 'flex item-center p-4 bg-green-200 rounded-lg text-white';
+                answerElement.style.backgroundColor = '#68A192';
+                answerElement.textContent = answerText;
+                answerElement.innerHTML = `
+                    <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4" />
+                    <div class="flex-grow">
+                        <span class="font-semibold text-white">username</span>
+                        <p>${answerText}</p>
+                    </div>
+                `;
+                answersList.appendChild(answerElement);
+                answerInput.value = '';
+            } else {
+                alert('Tolong masukkan jawaban!');
+            }
+        });
+    </script>
+</body>
+</html>
