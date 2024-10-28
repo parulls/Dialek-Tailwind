@@ -3205,6 +3205,7 @@ video {
   margin-left: 0.5rem;
 }
 
+<<<<<<< Updated upstream
 .ml-3{
   margin-left: 0.75rem;
 }
@@ -3223,6 +3224,10 @@ video {
 
 .mr-4{
   margin-right: 1rem;
+=======
+.mt-0{
+  margin-top: 0px;
+>>>>>>> Stashed changes
 }
 
 .mt-1{
@@ -3253,6 +3258,7 @@ video {
   display: flex;
 }
 
+<<<<<<< Updated upstream
 .table{
   display: table;
 }
@@ -3261,18 +3267,24 @@ video {
   height: 3rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .h-4{
   height: 1rem;
 }
 
+<<<<<<< Updated upstream
 .h-40{
   height: 10rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .h-6{
   height: 1.5rem;
 }
 
+<<<<<<< Updated upstream
 .h-8{
   height: 2rem;
 }
@@ -3281,6 +3293,8 @@ video {
   height: 2.25rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .h-full{
   height: 100%;
 }
@@ -3390,6 +3404,7 @@ video {
   gap: 2rem;
 }
 
+<<<<<<< Updated upstream
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -3402,6 +3417,8 @@ video {
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+=======
+>>>>>>> Stashed changes
 .space-y-16 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
@@ -3414,18 +3431,26 @@ video {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
+<<<<<<< Updated upstream
 .space-y-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+=======
+>>>>>>> Stashed changes
 .overflow-hidden{
   overflow: hidden;
 }
 
+<<<<<<< Updated upstream
 .rounded-3xl{
   border-radius: 1.5rem;
+=======
+.rounded-1{
+  border-radius: 2rem;
+>>>>>>> Stashed changes
 }
 
 .rounded-full{
@@ -3544,6 +3569,7 @@ video {
   padding: 1.5rem;
 }
 
+<<<<<<< Updated upstream
 .p-8{
   padding: 2rem;
 }
@@ -3553,6 +3579,8 @@ video {
   padding-right: 3rem;
 }
 
+=======
+>>>>>>> Stashed changes
 .px-3{
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -3563,6 +3591,14 @@ video {
   padding-right: 1rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.px-5{
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+>>>>>>> Stashed changes
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -3699,6 +3735,7 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+<<<<<<< Updated upstream
 .placeholder-gray-500::-moz-placeholder{
   --tw-placeholder-opacity: 1;
   color: rgb(107 114 128 / var(--tw-placeholder-opacity));
@@ -3707,6 +3744,10 @@ video {
 .placeholder-gray-500::placeholder{
   --tw-placeholder-opacity: 1;
   color: rgb(107 114 128 / var(--tw-placeholder-opacity));
+=======
+.opacity-70{
+  opacity: 0.7;
+>>>>>>> Stashed changes
 }
 
 .opacity-80{
@@ -3729,6 +3770,7 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+<<<<<<< Updated upstream
 .shadow-md{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
@@ -3740,6 +3782,14 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+=======
+.shadow-xl{
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+>>>>>>> Stashed changes
 .transition{
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -3791,6 +3841,7 @@ video {
 .focus\:outline-none:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
+<<<<<<< Updated upstream
 }
 
 .focus\:ring-2:focus{
@@ -3813,4 +3864,6 @@ video {
   .lg\:w-8\/12{
     width: 66.666667%;
   }
+=======
+>>>>>>> Stashed changes
 }
