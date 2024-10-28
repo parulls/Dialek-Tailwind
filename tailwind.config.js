@@ -10,6 +10,7 @@ module.exports = {
         custom3: '#2F2A1F',
         custom4: '#973131',
         custom5: '#9EB5A9',
+        custom6: '#4C968B',
         border: '#492F22',
         'bg-form': '#B1D5CE',
         form: '#5D6D77',
