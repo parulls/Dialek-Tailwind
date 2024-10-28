@@ -19,7 +19,7 @@
         <div class="logo font-irish text-2xl">dialek.id</div>
         <div class="flex items-center font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> <!-- Increased icon size here -->
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
@@ -27,9 +27,9 @@
             <div class="text-center">
                 <h1 class="text-gradient font-extrabold text-6xl">SUBJEK</h1>
             </div>
-            <div class="button-custom drop-shadow-sm mt-6">
+            <button id="mulai-button" class="button-custom drop-shadow-sm mt-6">
                 <p class="text-center font-bold text-md mx-6">Mulai!</p>
-            </div>
+            </button>
         </div>
         <div class="rating-box bg-shadow2 flex justify-center items-center flex-col">
             <div class="text-2xl w-1/2 items-center justify-center flex-row flex">
@@ -88,6 +88,7 @@
         const stars = document.querySelectorAll(".stars i");
         const ratingValue = document.getElementById("rating-value");
         const progressBars = document.querySelectorAll(".progress");
+        const mulai = document.getElementById("mulai-button")
 
         stars.forEach((star, index1) => {
             star.addEventListener("click", () => {
@@ -103,6 +104,10 @@
                     progress.style.setProperty('--bar-width', barRating === rating ? '100%' : '0');
                 });
             });
+        });
+
+        mulai.addEventListener("click", () => {
+            window.location.href = "Materi2.html";
         });
     </script>
 </body>

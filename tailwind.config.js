@@ -12,6 +12,7 @@ module.exports = {
         custom4: '#973131',
         custom5: '#9EB5A9',
         custom6: '#4C968B',
+        custom7:'#BBDFD9',
         border: '#492F22',
         bar:'#34343B',
         'bg-form': '#B1D5CE',
@@ -109,10 +110,10 @@ module.exports = {
           "@apply p-4 bg-white bg-opacity-0 rounded-1 shadow-lg border border-black py-8 w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
         ".button-custom" : {
-          "@apply bg-custom-gradient-button text-white py-2 px-4 rounded-full font-bold shadow-xl":{},
+          "@apply bg-custom-gradient-button text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80":{},
         },
         ".button-custom2" : {
-          "@apply bg-custom-gradient2-button text-white py-2 px-4 rounded-full font-bold shadow-xl":{},
+          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex hover:opacity-80":{},
 
         },
       });

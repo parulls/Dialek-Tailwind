@@ -24,7 +24,7 @@
         <div class="logo font-irish text-2xl">dialek.id</div>
         <div class="flex items-center font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> <!-- Increased icon size here -->
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
@@ -96,12 +96,24 @@
         </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
-        <button class="button-custom2 text-sm mx-6">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">
             Kembali
         </button>
-        <button class="button-custom2 text-sm mx-6">
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">
             Selanjutnya
         </button>
     </footer>
+    <script>
+        const kembali = document.getElementById("kembali-button");
+        const selanjutnya = document.getElementById("selanjutnya-button");
+
+        kembali.addEventListener("click", () => {
+            window.location.href = "Materi.html";
+        });
+
+        selanjutnya.addEventListener("click", () => {
+            window.location.href = "MateriRating.html";
+        });
+    </script>
 </body>
 </html>
