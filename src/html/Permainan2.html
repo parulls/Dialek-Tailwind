@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wadah Diskusi</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between w-full px-4 py-4">
+        <div class="logo font-irish text-2xl">dialek.id</div>
+        <div class="flex items-center font-semibold">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl text-custom2"></i>
+        </div>
+    </nav>
+
+    <!-- Tombol Kembali -->
+    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4" aria-label="Kembali">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+    </button>
+
+    <main class="flex flex-col items-center flex-grow">
+        <!-- Judul -->
+        <h1 class="text-4xl font-bold py-5 text-gradient">Sambung Kata</h1>
+
+        <!-- Timer -->
+        <div class="text-4xl py-6 text-green-900" id="timer" style="font-weight: bold;">01:15</div>
+
+        <!-- Area Permainan -->
+        <div class="flex space-x-8 items-start">
+            <!-- Untuk User -->
+            <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
+                <p class="font-extrabold text-xl text-green-900">Kamu</p>
+                <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="player-score" style="background-color: #acd3c6;">0</div>
+                <input type="text" id="word-input" placeholder="Masukkan kata" class="w-full p-2 mb-2 rounded-lg border border-gray-300 focus:outline-none" />
+                <p id="error-message" class="text-red-500 text-sm hidden">Masukkan kata yang valid!</p>
+                <div id="player-words" class="text-gray-600 mt-4 text-sm"></div>
+            </div>
+
+            <!-- Untuk AI -->
+            <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
+                <p class="font-extrabold text-xl text-green-900">Dia</p>
+                <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="ai-score" style="background-color: #acd3c6;">0</div>
+                <input type="text" disabled placeholder="Menunggu giliran..." class="w-full p-2 rounded-lg border border-gray-300 bg-gray-100 cursor-not-allowed" />
+                <div id="ai-words" class="text-gray-600 mt-4 text-sm"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const wordInput = document.getElementById("word-input");
+    const playerWords = document.getElementById("player-words");
+    const aiWords = document.getElementById("ai-words");
+    const errorMessage = document.getElementById("error-message");
+    const playerScoreDisplay = document.getElementById("player-score");
+    const aiScoreDisplay = document.getElementById("ai-score");
+    const timerDisplay = document.getElementById("timer");
+
+    let playerScore = 0;
+    let aiScore = 0;
+    let lastWord = "";
+    let usedWords = new Set();
+    let timer = 75; 
+    let playerTurn = true;
+
+    // Daftar kata Batak Toba
+    const batakTobaWords = [
+        "Ahu", "Au", "Ampun", "Holong", "Modom", "Karejo", "Alani", "Maridi", "Loja", "Las",
+        "Mangan", "Sogot", "Adu", "Aek", "Etong", "Adong", "Sae", "Mardongan", "Mardalani", 
+        "Gok", "Hekkel", "Barani", "Mabiae", "Uli", "Roa", "Parsimburu", "Sahata", "Burju", 
+        "Pogos", "Hata", "Holit", "Sigogo Mangan", "Suan-suanan", "Pauli", "Sip", "Bagak", 
+        "Mora", "Gokhon", "Naposo", "Muruk", "Amang", "Among", "Ama", "Ina", "Oma", 
+        "Inang", "Dainang", "Angkang", "Haha", "Anggi", "Iboto", "Ito", "Oppung Boru", 
+        "Ompu", "Oppung Doli", "Ulu", "Bohi", "Baba", "Igung", "Pamereng", "Simalolong", 
+        "Pinggol", "Osang", "Rungkung", "Tiput", "Pat", "Aha", "Ise", "Boasa", "Songondia", 
+        "Boha", "Sadihari", "Andigan", "Didia", "Ulos", "Mardomu", "Mangula", "Pangula", 
+        "Tu", "Sada", "Dua", "Tolu"
+    ];
+
+    // Update skor pemain dan AI
+    function updateScores() {
+        playerScoreDisplay.textContent = playerScore;
+        aiScoreDisplay.textContent = aiScore;
+    }
+
+    // Update tampilan timer
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timer / 60);
+        const seconds = timer % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+
+    // Jalankan timer
+    function startTimer() {
+        const countdown = setInterval(() => {
+            timer--;
+            updateTimerDisplay();
+            if (timer <= 0) {
+                clearInterval(countdown);
+                endGame();
+            }
+        }, 1000);
+    }
+
+    // Akhiri permainan
+    function endGame() {
+        wordInput.disabled = true;
+        alert(`Waktu habis! Skor akhir - Kamu: ${playerScore}, Dia: ${aiScore}`);
+    }
+
+    // Validasi kata yang dimasukkan pemain
+    function isValidWord(word) {
+        const lowercaseWord = word.toLowerCase();
+        if (usedWords.has(lowercaseWord)) return "reused";
+        if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false;
+        return "new";
+    }
+
+    // Giliran pemain
+    function handlePlayerTurn() {
+        const word = wordInput.value.trim();
+        wordInput.value = "";
+        errorMessage.classList.add("hidden");
+
+        const validity = isValidWord(word);
+        if (validity === false) {
+            errorMessage.classList.remove("hidden");
+            return;
+        }
+
+        if (validity === "new") {
+            playerScore += 10;
+        } else if (validity === "reused") {
+            playerScore += 5;
+        }
+
+        usedWords.add(word.toLowerCase());
+        lastWord = word.toLowerCase();
+
+        const wordElement = document.createElement("div");
+        wordElement.textContent = word;
+        playerWords.appendChild(wordElement);
+
+        playerTurn = false;
+        setTimeout(aiTurn, 1000);
+
+        updateScores();
+    }
+
+    // Giliran AI
+    function aiTurn() {
+        const aiWord = generateAIWord();
+        if (aiWord) {
+            const validity = usedWords.has(aiWord.toLowerCase()) ? "reused" : "new";
+            aiScore += (validity === "new") ? 10 : 5;
+
+            usedWords.add(aiWord.toLowerCase());
+            lastWord = aiWord.toLowerCase();
+
+            const aiWordElement = document.createElement("div");
+            aiWordElement.textContent = aiWord;
+            aiWords.appendChild(aiWordElement);
+        } else {
+            playerScore += 50;
+            alert(`AI tidak dapat menemukan kata. Kamu menang!`);
+            endGame();
+        }
+
+        updateScores();
+        playerTurn = true;
+    }
+
+    // Fungsi AI untuk menghasilkan kata yang valid
+    function generateAIWord() {
+        const validWords = batakTobaWords.filter(word => 
+            !usedWords.has(word.toLowerCase()) && word[0].toLowerCase() === lastWord.slice(-1)
+        );
+        return validWords.length > 0 ? validWords[Math.floor(Math.random() * validWords.length)] : null;
+    }
+
+    // Event listener untuk "Enter" saat giliran pemain
+    wordInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && playerTurn) handlePlayerTurn();
+    });
+
+    startTimer();
+});
+
+    </script>
+</body>
+
+</html>
