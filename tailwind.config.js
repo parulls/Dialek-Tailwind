@@ -114,7 +114,9 @@ module.exports = {
         },
         ".button-custom2" : {
           "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex hover:opacity-80":{},
-
+        },
+        ".button-option" : {
+          "@apply bg-custom6 w-32 text-custom8 py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},
         },
       });
       addUtilities({
