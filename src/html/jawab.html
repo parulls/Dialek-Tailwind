@@ -109,17 +109,27 @@
                 answersList.appendChild(answerElement);
                 answerInput.value = '';
 
-                // Like 
+                // Like  button
                 const likeButton = answerElement.querySelector('.like-button');
                 const heartIcon = likeButton.querySelector('.fa-heart'); 
                 const likeCount = answerElement.querySelector('.like-count');
+                // Inisialisasi 
+                answerElement.liked = answerElement.liked || false;
+                answerElement.likes = answerElement.likes || 0;
+
                 likeButton.addEventListener('click', () => {
-                    if (!answerElement.liked) {
-                        answerElement.likes += 1;
+                if (!answerElement.liked) {
+                  // Like 
+                         answerElement.likes += 1;
                         answerElement.liked = true;
                         heartIcon.classList.add('text-green-800');
-                        likeCount.textContent = answerElement.likes;
+                    } else {
+                        // Unlike 
+                        answerElement.likes -= 1;
+                        answerElement.liked = false;
+                        heartIcon.classList.remove('text-green-800');
                     }
+                    likeCount.textContent = answerElement.likes;
                 });
 
                 // komentar 
