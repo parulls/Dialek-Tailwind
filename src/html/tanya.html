@@ -20,9 +20,8 @@
             <h1 class="text-4xl font-bold py-5 text-gradient">Wadah Diskusi</h1>
             <div class="p-6 rounded-lg shadow-md w-11/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);">
                 <div class="flex space-x-4 mb-4">
-                    <!--tombol pilih bahasa-->
-                    <button id="bahasaJawa" class="button-custom lg:w-6/12 text-md">Bahasa Jawa</button>
-                    <button id="bahasaBatak" class="button-custom lg:w-6/12 text-md">Bahasa Batak Toba</button>
+                    <!--bahasa yang digunakan-->
+                    <div id="bahasaBatak" class="button-custom  text-sm">Bahasa Batak Toba</div>
                     
                 </div>
 
@@ -141,19 +140,6 @@
             popularButton.classList.remove('bg-custom-green-button', 'text-white');
             popularButton.classList.add('bg-green-800', 'text-white');
             renderPertanyaan(pertanyaanArray.slice().sort((a, b) => b.timestamp - a.timestamp));
-        });
-
-        // Bahasa
-        bahasaJawaButton.addEventListener('click', () => {
-            bahasaJawaButton.classList.add('bg-custom-green-button', 'text-white');
-            bahasaBatakButton.classList.remove('bg-custom-green-button', 'text-white');
-            bahasaBatakButton.classList.add('bg-green-800', 'text-white');
-        });
-
-        bahasaBatakButton.addEventListener('click', () => {
-            bahasaBatakButton.classList.add('bg-custom-green-button', 'text-white');
-            bahasaJawaButton.classList.remove('bg-custom-green-button', 'text-white');
-            bahasaJawaButton.classList.add('bg-green-800', 'text-white');
         });
     </script>
 </body>
