@@ -170,7 +170,7 @@
 
             function closePopup() {
                 document.getElementById("popup").style.display = "none";
-                window.location.href = "Sebelumgame.html";
+                window.location.href = "Sebelumgame.php";
             }
 
             function resetGame() {
