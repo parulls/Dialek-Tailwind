@@ -2,9 +2,6 @@
     require '.functions.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,22 +23,22 @@
     </nav>
 
     <!-- Back Button -->
-    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4" aria-label="Kembali">
+    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4" id="back">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
     </button>
 
     <main class="flex flex-col items-center flex-grow">
-        <!-- Title -->
+        <!-- Judul -->
         <h1 class="text-4xl font-bold text-gradient">Sambung Kata</h1>
 
-        <!-- Timer -->
+        <!-- Waktu -->
         <div class="text-4xl py-6 text-green-900" id="timer" style="font-weight: bold;">01:15</div>
 
-        <!-- Game Area -->
-        <div class="flex space-x-8 items-start">
-            <!-- Player Section -->
+        <!-- Game -->
+        <div class="flex space-x-24 items-start">
+            <!-- Player -->
             <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
                 <p class="font-extrabold text-xl text-green-900">Kamu</p>
                 <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="player-score" style="background-color: #acd3c6;">0</div>
@@ -50,7 +47,7 @@
                 <div id="player-words" class="mt-4 text-sm min-h-7"></div>
             </div>
 
-            <!-- AI Section -->
+            <!-- AI -->
             <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
                 <p class="font-extrabold text-xl text-green-900">Dia</p>
                 <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="ai-score" style="background-color: #acd3c6;">0</div>
@@ -77,7 +74,12 @@
             const playerScoreDisplay = document.getElementById("player-score");
             const aiScoreDisplay = document.getElementById("ai-score");
             const timerDisplay = document.getElementById("timer");
+            const kembalipanah = document.querySelector("back");
             document.querySelector("#popup button").addEventListener("click", closePopup);
+
+            back.addEventListener("click", () => {
+            window.location.href = "dashboardBatak.html";
+            });
 
             let playerScore = 0;
             let aiScore = 0;
@@ -170,7 +172,7 @@
 
             function closePopup() {
                 document.getElementById("popup").style.display = "none";
-                window.location.href = "Sebelumgame.php";
+                window.location.href = "Sebelumgame.html";
             }
 
             function resetGame() {
