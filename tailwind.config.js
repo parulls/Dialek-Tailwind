@@ -13,6 +13,8 @@ module.exports = {
         custom5: '#9EB5A9',
         custom6: '#4C968B',
         custom7:'#BBDFD9',
+        custom8:'#F5EBC3',
+        custom9: '#C1E1D6',
         border: '#492F22',
         bar:'#34343B',
         'bg-form': '#B1D5CE',
@@ -21,6 +23,8 @@ module.exports = {
       fontFamily: {
         irish: ['Irish Grover', 'sans-serif'],
         inter: ['Inter', 'serif'],
+        playfair: ['Playfair Display', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       screens: {
         sm: '640px',
@@ -118,6 +122,15 @@ module.exports = {
         ".button-option" : {
           "@apply bg-custom6 w-max py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},
         },
+        ".box-custom1" : {
+          "@apply max-w-5xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar":{},
+        },
+        ".level" : {
+          "@apply w-20 h-20 flex items-center justify-center rounded-full border-[6px] border-custom6 bg-custom8 text-custom2 font-bold font-irish text-5xl hover:opacity-80 cursor-pointer":{},
+        },
+        ".level-lock" : {
+          "@apply w-20 h-20 flex items-center justify-center rounded-full border-[6px] border-gray-400 bg-gray-200 text-gray-600 font-bold font-irish text-5xl hover:opacity-80 cursor-pointer":{},
+        },
       });
       addUtilities({
         '.text-gradient': {
@@ -125,6 +138,7 @@ module.exports = {
           '-webkit-background-clip': 'text',
           '-webkit-text-fill-color': 'transparent',
           'display': 'inline-block',
+          'text-shadow': '1px 2px 3px rgba(0, 0, 0, 0.3)',
         },
       });
     }),

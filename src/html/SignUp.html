@@ -27,11 +27,9 @@
     <link rel="stylesheet" href="../styles/style2.css">
 </head>
 <body class="bg-custom-radial font-inter flex flex-col">
-<nav class="logo font-irish">
-    <div>
-        <p>dialek.id</p>
-    </div>
-</nav>
+    <nav class="flex items-center justify-between w-full p-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+      </nav>
 <section class="main flex flex-col mx-auto w-4/5 min-h-screen flex-grow">
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
@@ -62,14 +60,14 @@
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" name="password" id="password" placeholder="" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
+                        <input type="password" name="password" id="password" placeholder="*********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="mb-6">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="confirmPassword">Konfirmasi Kata Sandi</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
@@ -101,55 +99,6 @@
 <footer class="footer text-center">
     <p>&copy; 2024 Dialek.id. Semua hak dilindungi.</p>
 </footer>
-<script>
-    // Import and initialize Firebase if not done already
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-    
-    // Firebase configuration (replace with your actual Firebase config)
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-    
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    
-    // Form submit event listener
-    document.getElementById('signup-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-    
-        // Get form input values
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-    
-        // Simple validation check
-        if (password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-    
-        // Register the user using Firebase Authentication
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-    
-                // Redirect to the language page after successful signup
-                window.location.href = './Bahasa.html';
-            })
-            .catch((error) => {
-                console.error("Error signing up:", error.message);
-                alert("Registration failed: " + error.message);
-            });
-    });
-</script>
+<script src=".../firebase.js"></script>
 </body>
 </html>

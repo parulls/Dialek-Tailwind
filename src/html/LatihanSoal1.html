@@ -20,7 +20,7 @@
         </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 w-full">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
             <div class="flex justify-center items-center font-bold text-lg">
                 <p>Latihan Soal</p>
             </div>
@@ -43,11 +43,11 @@
         const selanjutnya = document.getElementById("selanjutnya-button");
 
         kembali.addEventListener("click", () => {
-            window.location.href = "MateriRating.html";
+            window.location.href = "./MateriRating.html";
         });
 
         selanjutnya.addEventListener("click", () => {
-            window.location.href = "LatihanSoal2.html";
+            window.location.href = "./LatihanSoal2.html";
         });
 
         function saveAnswer(answer) {

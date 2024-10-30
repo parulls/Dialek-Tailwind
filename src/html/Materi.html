@@ -36,11 +36,11 @@
         <div class="rating-box bg-shadow2 flex justify-center items-center flex-col">
             <div class="text-2xl w-1/2 items-center justify-center flex-row flex">
                 <div class="stars text-bar justify-between">
-                    <i class="fa-solid fa-star cursor-pointer"></i>
-                    <i class="fa-solid fa-star cursor-pointer"></i>
-                    <i class="fa-solid fa-star cursor-pointer"></i>
-                    <i class="fa-solid fa-star cursor-pointer"></i>
-                    <i class="fa-solid fa-star cursor-pointer"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
                 </div>
                 <div>
                     <p id="rating-value" class="text-lg font-bold ml-1">0/5</p>
@@ -87,27 +87,7 @@
     </footer>
 
     <script>
-        const stars = document.querySelectorAll(".stars i");
-        const ratingValue = document.getElementById("rating-value");
-        const progressBars = document.querySelectorAll(".progress");
         const mulai = document.getElementById("mulai-button")
-
-        stars.forEach((star, index1) => {
-            star.addEventListener("click", () => {
-                stars.forEach((star, index2) => {
-                    index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
-                });
-                const rating = index1 + 1;
-                ratingValue.textContent = `${rating}/5`;
-
-                progressBars.forEach(progress => {
-                    const barRating = parseInt(progress.getAttribute("data-rating"));
-                    progress.classList.toggle("active", barRating === rating);
-                    progress.style.setProperty('--bar-width', barRating === rating ? '100%' : '0');
-                });
-            });
-        });
-
         mulai.addEventListener("click", () => {
             window.location.href = "Materi2.html";
         });

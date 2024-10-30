@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialek.Id - Belajar Kosakata</title>
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl"></i> 
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <section class="main flex flex-col mx-auto w-4/5 flex-grow space-y-16">
+        <div class="flex flex-col items-center justify-center">
+            <header class="header items-center text-center mb-10">
+                <h1 class="h1 font-bold text-gradient">
+                  Literasi Budaya
+                </h1>
+            </header>
+            <div class="box-custom1 font-medium p-4 text-xl">
+                <p>Lakukan literasi budaya Batak Toba dan telusuri sejarahnya, lalu lakukan kuis tiap 2 level yang kamu lewati.</p>
+            </div>
+        </div>
+        <div class="flex flex-col justify-start items-start text-center space-y-4">
+            <div class="flex">
+                <h2 class="h2 font-poppins font-semibold text-custom1">
+                    Level
+                </h2>
+            </div>
+            <div class="flex w-auto h-auto space-x-8">
+                <!-- Level 1 -->
+                <div class="level cursor-pointer">
+                    1
+                </div>
+                <!-- Level 2 -->
+                <div class="level cursor-pointer">
+                    2
+                </div>
+                <!-- Speech bubble icon -->
+                <div class="level">
+                    <i class="fa-solid fa-comment"></i>
+                </div>
+                <!-- Level 3 -->
+                <div class="level cursor-pointer">
+                    3
+                </div>
+                <!-- Level 4 (grayed out) -->
+                <div class="level-lock">
+                    4
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="flex items-center justify-center w-full px-4 py-4">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+    </footer>
+    <script>
+        // Ambil elemen level 1
+        const level1 = document.querySelector('.level:nth-child(1)');
+
+        // Tambahkan event listener untuk klik
+        level1.addEventListener('click', function() {
+            // Redirect ke halaman LiterasiBudaya1.html
+            window.location.href = './LiterasiBudaya1.html';
+        });
+
+        // Event listener untuk tombol "Kembali"
+        document.getElementById('kembali-button').addEventListener('click', function() {
+            // Redirect ke halaman dashboardBatak.html
+            window.location.href = './dashboardBatak.html';
+        });
+    </script>
+</body>
+</html>

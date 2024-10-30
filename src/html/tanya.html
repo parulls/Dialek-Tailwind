@@ -22,12 +22,16 @@
     </nav>
 
     <div>
-        <main class="flex flex-col items-center mt-10">
-            <h1 class="text-4xl font-bold py-5 text-gradient">Wadah Diskusi</h1>
-            <div class="p-6 rounded-lg shadow-md w-11/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);">
+        <main class="flex flex-col items-center">
+            <header class="header items-center text-center mb-10">
+                <h1 class="h1 font-bold text-gradient">
+                  Wadah Diskusi
+                </h1>
+              </header>
+            <div class="p-6 rounded-lg box-custom1 w-11/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);">
                 <div class="flex space-x-4 mb-4">
                     <!--bahasa yang digunakan-->
-                    <div id="bahasaBatak" class="button-custom  text-sm">Bahasa Batak Toba</div>
+                    <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm">Bahasa Batak Toba</div>
                     
                 </div>
 
@@ -47,8 +51,8 @@
                     <h2 class="text-lg font-semibold text-green-800">Pertanyaan Lain:</h2>
                     <!-- Tombol untuk mengurutkan pertanyaan -->
                     <div class="flex space-x-2">
-                        <button id="popularButton" class="bg-custom-green-button text-white py-2 px-4 rounded-full">Popular</button>
-                        <button id="terbaruButton" class="bg-green-100 bg-custom-green-button text-white py-2 px-4 rounded-full">Terbaru</button>
+                        <button id="popularButton" class="button-custom2 text-white">Popular</button>
+                        <button id="terbaruButton" class="button-custom2 text-white">Terbaru</button>
                     </div>
                 </div>
 
