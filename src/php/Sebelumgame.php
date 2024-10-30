@@ -33,15 +33,24 @@
 
     <main class="flex flex-col items-center flex-grow">
     <!-- Judul -->
-    <h1 class="text-4xl font-bold text-gradient text-center ">Sambung Kata</h1>
+    <h1 class="text-4xl font-bold text-gradient text-center py-6 ">Sambung Kata</h1>
 
     
-        <div class="grid grid-cols-2 gap-8 w-7/12 py-6">
+     
             <!-- Kosakata yang Digunakan -->
-            <div class="col-span-2 p-4 rounded-lg shadow-lg " style="background-color: rgba(243, 245, 243, 0.4)">
+            <div class="col-span-2 p-4 rounded-lg shadow-lg w-7/12 " style="background-color: rgba(243, 245, 243, 0.4)">
                 <div id="used-vocabulary" class="mt-4 overflow-y-auto h-72"></div>
+
+             
+            </div>
+             <!--button mulai-->
+             <div class="justify-end mt-4">
+                <button id="startbutton" class="bg-green-800 text-white py-2 px-6 rounded-full shadow-md hover:bg-green-700">
+                   Mulai</button>
             </div>
 
+          
+            <div class="grid grid-cols-2 gap-8 w-7/12 py-6">
             <!-- Peringkat Harian -->
             <div class="rounded-lg shadow-lg p-4" style="background-color: rgba(243, 245, 243, 0.4)">
                 <h2 class="text-2xl font-extrabold text-center" 
@@ -131,6 +140,12 @@
             wordElement.textContent = word;
             wordElement.className = "text-lg text-green-900";
             usedVocabularyContainer.appendChild(wordElement);
+        });
+
+        const mulai = document.getElementById("startbutton");
+
+        startbutton.addEventListener("click", () => {
+            window.location.href = "Permainan.html";
         });
 
         // Hapus data dari local storage setelah ditampilkan
