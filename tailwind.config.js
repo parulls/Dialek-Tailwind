@@ -11,10 +11,14 @@ module.exports = {
         custom3: '#2F2A1F',
         custom4: '#973131',
         custom5: '#9EB5A9',
+<<<<<<< HEAD
+        border: '#492F22',
+=======
         custom6: '#4C968B',
         custom7:'#BBDFD9',
         border: '#492F22',
         bar:'#34343B',
+>>>>>>> cc9dac1c10fa8f163c0531519f1eb922e0a72b5e
         'bg-form': '#B1D5CE',
         form: '#5D6D77',
       },
@@ -36,7 +40,10 @@ module.exports = {
         'custom-radial': 'radial-gradient(circle at center, #C1E3D7 22%, #E0F1EB 61%, #FFFFFF 100%)',
         'custom-green-button': 'linear-gradient(90deg, #81C780 0%, #135B35 100%)',
         'custom-gradient-button': 'linear-gradient(90deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%)',
+<<<<<<< HEAD
+=======
         'custom-gradient2-button' : 'linear-gradient(to bottom,#81C780, #135B35)',
+>>>>>>> cc9dac1c10fa8f163c0531519f1eb922e0a72b5e
       },
       borderRadius: {
         1: '2rem',
@@ -107,6 +114,9 @@ module.exports = {
           "@apply p-4 bg-white bg-opacity-30 rounded-1 shadow-lg border border-black w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
         ".bg-shadow2": {
+<<<<<<< HEAD
+          "@apply p-4 bg-white bg-opacity-30 rounded-2xl shadow-lg border border-black w-full max-w-md md:max-w-lg lg:max-w-xl": {},
+=======
           "@apply p-4 bg-white bg-opacity-0 rounded-1 shadow-lg border border-black py-8 w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
         ".button-custom" : {
@@ -117,6 +127,7 @@ module.exports = {
         },
         ".button-option" : {
           "@apply bg-custom6 w-max py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},
+>>>>>>> cc9dac1c10fa8f163c0531519f1eb922e0a72b5e
         },
       });
       addUtilities({

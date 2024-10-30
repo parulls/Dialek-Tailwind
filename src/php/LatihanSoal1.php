@@ -1,3 +1,7 @@
+<?php
+    require '.functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,26 +22,15 @@
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
         <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 w-full">
             <div class="flex justify-center items-center font-bold text-lg">
-                <p>Belajar Kosakata</p>
+                <p>Latihan Soal</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex items-center justify-center m-4 p-4 space-x-8">
-                <div class="w-32 rounded-full flex items-center">
-                    <img src="../assets/makan.webp" alt="Makan" class="rounded-full">
-                </div>
-                <div class="bg-[#53A596] p-2 flex items-center justify-center rounded-lg">
-                    <p class="text-lg text-white font-semibold">Mangan</p>
-                </div>
+            <div class="bg-custom7 w-[70%] flex justify-start items-center mb-12 mt-28 px-4">
+                <p class="text-lg font-semibold mb-4">________ mangan i ladang sonari (saya)</p>
             </div>
-            <div class="flex flex-col items-center w-[70%] mb-28 space-y-4">
-                <button class="button-option option w-full" data-answer="A">
-                    Minum
-                </button>
-                <button class="button-option option w-full" data-answer="B">
-                    Makan
-                </button>
-                <button class="button-option option w-full data-answer="C">
-                    Duduk
-                </button>
+            <div class="flex justify-between w-[70%] mb-40">
+                <button class="option button-option w-32" data-answer="Au">Au</button>
+                <button class="option button-option w-32" data-answer="Hami">Hami</button>
+                <button class="option button-option w-32" data-answer="Ibana">Ibana</button>
             </div>
         </div>
     </section>
@@ -50,11 +43,11 @@
         const selanjutnya = document.getElementById("selanjutnya-button");
 
         kembali.addEventListener("click", () => {
-            window.location.href = "dashboardBatak.html";
+            window.location.href = "MateriRating.html";
         });
 
         selanjutnya.addEventListener("click", () => {
-            window.location.href = "Kosakata2.html";
+            window.location.href = "LatihanSoal2.html";
         });
 
         function saveAnswer(answer) {

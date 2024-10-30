@@ -1,3 +1,7 @@
+<?php
+    require '.functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,30 +24,36 @@
             <div class="flex justify-center items-center font-bold text-lg">
                 <p>Latihan Soal</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex justify-start items-center mb-12 mt-28 px-4">
-                <p class="text-lg font-semibold mb-4">________ mangan i ladang sonari (saya)</p>
+            <div class="bg-custom7 w-[70%] flex items-center justify-start mb-12 mt-28 px-4">
+                <p class="text-lg font-semibold mb-4">Pilih yang  benar</p>
             </div>
-            <div class="flex justify-between w-[70%] mb-40">
-                <button class="option button-option w-32" data-answer="Au">Au</button>
-                <button class="option button-option w-32" data-answer="Hami">Hami</button>
-                <button class="option button-option w-32" data-answer="Ibana">Ibana</button>
+            <div class="flex flex-col items-center w-[70%] mb-28 space-y-4">
+                <button class="button-option option w-full" data-answer="Au">
+                    Lao do hami mardalani to Medan. (Kami akan pergi berlibur ke Medan)
+                </button>
+                <button class="button-option option w-full" data-answer="Hami">
+                    Halaki karejo di PT Dirgantara Indonesia. (Saya bekerja di PT Dirgantara Indonesia)
+                </button>
+                <button class="button-option option w-full data-answer="Ibana">
+                    On ma Tao Toba. (Inilah Danau Toba)
+                </button>
             </div>
         </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
+        <button id="keluar-button" class="button-custom2 text-sm mx-6">Keluar</button>
     </footer>
     <script>
         const kembali = document.getElementById("kembali-button");
-        const selanjutnya = document.getElementById("selanjutnya-button");
+        const keluar = document.getElementById("keluar-button");
 
         kembali.addEventListener("click", () => {
-            window.location.href = "MateriRating.html";
+            window.location.href = "LatihanSoal1.html";
         });
 
-        selanjutnya.addEventListener("click", () => {
-            window.location.href = "LatihanSoal2.html";
+        keluar.addEventListener("click", () => {
+            window.location.href = "dashboardBatak.html";
         });
 
         function saveAnswer(answer) {
