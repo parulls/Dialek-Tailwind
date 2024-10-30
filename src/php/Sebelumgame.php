@@ -24,7 +24,7 @@
     </nav>
 
     <!-- Tombol Kembali -->
-    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4" aria-label="Kembali">
+    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4" id="backbutton">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
@@ -39,14 +39,15 @@
      
             <!-- Kosakata yang Digunakan -->
             <div class="col-span-2 p-4 rounded-lg shadow-lg w-7/12 " style="background-color: rgba(243, 245, 243, 0.4)">
-                <div id="used-vocabulary" class="mt-4 overflow-y-auto h-72"></div>
-
-             
+                <div id="used-vocabulary" class="mt-4 overflow-y-auto h-72"></div>         
             </div>
              <!--button mulai-->
-             <div class="justify-end mt-4">
+             <div class="flex justify-end mt-4 w-7/12">
                 <button id="startbutton" class="bg-green-800 text-white py-2 px-6 rounded-full shadow-md hover:bg-green-700">
                    Mulai</button>
+                   <button class="h-6/12 ml-2" id="infoButton">
+                   <i class="fa-solid fa-circle-info"></i> 
+                    </button>        
             </div>
 
           
@@ -98,8 +99,9 @@
 
             <!-- Statistik Permainan -->
             <div class="rounded-lg shadow-lg p-4 col-span-2" style="background-color: rgba(243, 245, 243, 0.4)">
+
                 <div class="flex justify-between mt-4">
-                    <div class="rounded-lg p-4" style="background-color: #daead1;">
+                    <div class="rounded-lg p-4 mr-2" style="background-color: #daead1;">
                         <p class="text-xl font-bold text-green-900">Kata Berhasil:</p>
                         <p id="successful-words" class="text-2xl font-bold text-center text-green-900">0</p>
                     </div>
@@ -107,13 +109,23 @@
                         <p class="text-xl font-bold text-green-900">Kata Gagal:</p>
                         <p id="failed-words" class="text-2xl font-bold text-center text-green-900">0</p>
                     </div>
-                    <div class="rounded-lg p-4" style="background-color: #daead1;">
+                    <div class="rounded-lg p-4 ml-2" style="background-color: #daead1;">
                         <p class="text-xl font-bold text-green-900">Akurasi:</p>
                         <p id="accuracy" class="text-2xl font-bold text-center text-green-900">0%</p>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="info-popup" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" style="display: none;">
+            <div class="p-6 rounded-lg shadow-lg text-center" style="background-color: #CBEADF;">
+                <p id="popup-message" class="text-lg font-bold mb-4">
+                    Jadi gini cara mainnya
+                </p>
+                <button onclick="closePopup()" class="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">OK</button>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -142,11 +154,25 @@
             usedVocabularyContainer.appendChild(wordElement);
         });
 
-        const mulai = document.getElementById("startbutton");
+        const play = document.getElementById("startbutton");
+        const Back = document.querySelector("backbutton");
+        const infoButton = document.getElementById("infoButton");
 
         startbutton.addEventListener("click", () => {
             window.location.href = "Permainan.html";
         });
+
+        backbutton.addEventListener("click", () => {
+            window.location.href = "dashboardBatak.html";
+        });
+
+        infoButton.addEventListener("click", () => {
+            document.getElementById("info-popup").style.display = "flex";
+        });
+
+        closePopup = () => {
+            document.getElementById("info-popup").style.display = "none";
+        };
 
         // Hapus data dari local storage setelah ditampilkan
         localStorage.removeItem('successfulWordsCount');
