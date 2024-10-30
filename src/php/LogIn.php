@@ -1,5 +1,5 @@
 <?php 
-    require '../php/functions.php';
+    require '.functions.php';
 
     // cek apakah tombol login sudah ditekan atau belum
     if (isset($_POST["login"])) {

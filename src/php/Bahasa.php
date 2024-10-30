@@ -1,3 +1,7 @@
+<?php
+    require '.functions.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,9 +29,5 @@
         </div>
     </div>
 </section>
-<!-- Footer -->
-<footer class="footer text-center py-4">
-    <p>&copy; 2024 Dialek.id. Semua hak dilindungi.</p>
-</footer>
 </body>
 </html>

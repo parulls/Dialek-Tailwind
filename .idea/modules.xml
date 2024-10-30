@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Dialek-Tailwind-main.iml" filepath="$PROJECT_DIR$/.idea/Dialek-Tailwind-main.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/Dialek-Tailwind.iml" filepath="$PROJECT_DIR$/.idea/Dialek-Tailwind.iml" />
+>>>>>>> cc9dac1c10fa8f163c0531519f1eb922e0a72b5e
     </modules>
   </component>
 </project>
