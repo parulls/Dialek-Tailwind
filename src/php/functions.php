@@ -1,6 +1,6 @@
 <?php 
     // koneksi ke database
-    $conn = mysqli_connect("localhost", "root", "", "dialekid");
+    $conn = mysqli_connect("192.168.0.103", "root", "", "dialekid");
 
     function query($query) {
         global $conn;

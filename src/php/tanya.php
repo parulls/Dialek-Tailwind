@@ -13,9 +13,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body class="bg-custom-radial font-inter flex flex-col">
-    <nav class="logo font-irish">
-        <div>
-            <p>dialek.id</p>
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
 

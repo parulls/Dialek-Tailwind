@@ -22,9 +22,9 @@
     </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
-    <nav class="flex items-center justify-between w-full px-4 py-4">
-        <div class="logo font-irish text-2xl">dialek.id</div>
-        <div class="flex items-center font-semibold text-custom2">
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -110,11 +110,11 @@
         const selanjutnya = document.getElementById("selanjutnya-button");
 
         kembali.addEventListener("click", () => {
-            window.location.href = "Materi.html";
+            window.location.href = "Materi.php";
         });
 
         selanjutnya.addEventListener("click", () => {
-            window.location.href = "MateriRating.html";
+            window.location.href = "MateriRating.php";
         });
     </script>
 </body>
