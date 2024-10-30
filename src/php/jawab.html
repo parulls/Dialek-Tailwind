@@ -38,7 +38,7 @@
 
             <!-- tenpat pertanyaan-->
             <section id="questionSection" class="mb-6 flex items-start">
-                <img src="../assets/tandatanya.png" alt="user" class="w-9 h-9 rounded-full mr-2" />
+                <img src="../assets/tandatanya.webp" alt="user" class="w-9 h-9 rounded-full mr-2" />
                 <div id="questionDisplay" class="flex-grow p-6 rounded-lg text-white" style="background-color: #4C968B;">
                 </div>
             </section>
@@ -47,13 +47,13 @@
             <section id="answerInputSection" class="mb-10 flex">
                 <textarea id="answerInput" class="w-full p-2 rounded-lg border-none focus:outline-none mt-4" rows="5" style="background-color: #4C968B; color: white;"></textarea> 
                 <div class="flex justify-end mt-6 p-2">
-                    <button id="submitAnswerButton"><img src="../assets/tomboltambahjawab.png" alt="" class="w-12 h-12 rounded-full mr-2"/></button>
+                    <button id="submitAnswerButton"><img src="../assets/tomboltambahjawab.webp" alt="" class="w-12 h-12 rounded-full mr-2"/></button>
                 </div>
             </section>
 
             <!-- tempat list jawaban -->
             <section id="answerListSection">
-                <h2 class="text-xl font-bold mb-4 text-green-800">Jawaban Lain:</h2>
+                <h2 class="text-xl font-bold mb-4 text-green-800">Jawaban</h2>
                 <div id="answersList" class="space-y-4">
                 </div>
             </section>
