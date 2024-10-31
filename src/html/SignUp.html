@@ -89,7 +89,7 @@
                     </div>
                     <div class="relative w-full">
                         <button type="button" id="facebookLogin" class="flex justify-center items-center w-full py-2 border border-green-600 rounded-full text-green-700 hover:bg-green-50 transition duration-300">Daftar dengan akun Facebook</button>
-                        <img src="../assets/Facebook.webp" alt="Google Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
+                        <img src="../assets/Facebook.webp" alt="Facebook Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
                     </div>
                 </div>
             </form>
@@ -99,6 +99,74 @@
 <footer class="footer text-center">
     <p>&copy; 2024 Dialek.id. Semua hak dilindungi.</p>
 </footer>
-<script src=".../firebase.js"></script>
+<script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    
+    // Firebase configuration (replace with your actual Firebase config)
+    const firebaseConfig = {
+    apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+    authDomain: "dialek-6a219.firebaseapp.com",
+    projectId: "dialek-6a219",
+    storageBucket: "dialek-6a219.firebasestorage.app",
+    messagingSenderId: "423916223695",
+    appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+    measurementId: "G-4SLBH47WTM"
+  };
+    
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Mendapatkan instance Authentication
+    const auth = getAuth(app);
+
+    // Google Login Provider
+    const googleProvider = new GoogleAuthProvider();
+
+    // Event listener for Google login button
+    document.getElementById('googleLogin').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // Successful Google sign-in
+                const user = result.user;
+                console.log("Google user signed in:", user);
+                // Redirect to a page after login
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error with Google sign-in:", error.message);
+                alert("Google login failed: " + error.message);
+            });
+    });
+
+    // Register with email and password
+    document.getElementById('signup-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        
+        // Get form input values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Simple validation check
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        // Register the user using Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // Redirect to a page after successful signup
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error signing up:", error.message);
+                alert("Registration failed: " + error.message);
+            });
+    });
+</script>
 </body>
 </html>
