@@ -14,15 +14,13 @@
 
     <div class="flex items-center justify-between w-full px-4 inline-block ">
             <!-- Tombol Kembali -->
-            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7" aria-label="Kembali">
+            <button id="kembali-dashboard" class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7" aria-label="Kembali">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
             </button>
             <div class="flex items-center font-semibold text-custom2 mr-7">
-            <a href="Pengaturan.html">
-            <i class="fa-solid fa-gear text-4xl"></i>
-            </a>
+            <i class="fa-solid fa-gear text-4xl"></i> 
             </div>
     </div>
     
@@ -73,7 +71,11 @@
             const profileName = localStorage.getItem("profileName") || "Nama User";
             const profileUsername = localStorage.getItem("profileUsername") || "@username";
             const profileImage = localStorage.getItem("profileImage") || "default-profile.png";
+            const balik = document.getElementById("kembali-dashboard");
 
+            balik.addEventListener("click", () => {
+            window.location.href = "dashboardBatak.html";
+        });
             document.getElementById("display-name").innerText = profileName;
             document.getElementById("display-username").innerText = profileUsername;
             document.getElementById("display-profile-image").src = profileImage;

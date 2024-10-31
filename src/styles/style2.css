@@ -3501,6 +3501,10 @@ video {
   margin-top: 1.75rem;
 }
 
+.ml-16{
+  margin-left: 4rem;
+}
+
 .block{
   display: block;
 }
@@ -4366,11 +4370,6 @@ video {
 .text-custom6{
   --tw-text-opacity: 1;
   color: rgb(76 150 139 / var(--tw-text-opacity));
-}
-
-.text-custom7{
-  --tw-text-opacity: 1;
-  color: rgb(187 223 217 / var(--tw-text-opacity));
 }
 
 .text-form{
