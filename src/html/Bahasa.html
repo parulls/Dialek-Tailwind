@@ -25,16 +25,19 @@
             <img src="../assets/BahasaJawa.webp" alt="Bahasa Jawa" class="hover:opacity-80 cursor-pointer transition duration-300">
         </div>
         <div class="w-1/2 flex justify-center" id="bahasa-batak">
-            <button id="bahasaBatak">
             <img src="../assets/BahasaBatak.webp" alt="Bahasa Batak" class="hover:opacity-80 cursor-pointer transition duration-300">
-            </button>
         </div>
     </div>
 </section>
 <script >
-    const bahasaBatak = document.getElementById('bahasaBatak');
+    const BahasaBatak = document.getElementById('bahasa-batak');
     bahasaBatak.addEventListener('click', () => {
         window.location.href = './dashboardBatak.html';
+    });
+
+    const BahasaJawa = document.getElementById('bahasa-jawa');
+    bahasaBatak.addEventListener('click', () => {
+        window.location.href = './dashboardJawa.html';
     });
 </script>
 </body>
