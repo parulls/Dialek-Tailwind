@@ -11,34 +11,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dialek.Id</title>
   <link rel="stylesheet" href="./src/styles/style2.css">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
   <nav class="flex items-center justify-between w-full p-12">
     <div class="logo font-irish m-0 text-2xl">dialek.id</div>
   </nav>
 
-<section class="main flex flex-col mx-auto w-4/5 flex-grow">
-  <main class="mainMateri flex flex-col mb-12">
-    <header class="header items-center text-center">
-      <h1 class="h1 font-bold text-gradient">
+  <section class="main flex flex-col mx-auto w-2/3 flex-grow">
+    <main class="mainMateri flex flex-col mb-8">
+      <header class="header items-center text-center">
+        <h1 class="text-3xl font-bold text-gradient">
         Belajar Bahasa Daerah dengan Menyenangkan
       </h1>
       <p class="text-xl mt-5">
         Kami akan membantu Anda dalam mempelajari bahasa daerah dan memahami tradisi serta budaya suku-suku di Indonesia.
       </p>
     </header>
-    <div class="image w-full flex justify-center mt-6 mb-6">
+    <div data-aos="fade-up" class="image w-full flex justify-center mt-6 mb-6">
       <img src="./src/assets/Pulau.webp" alt="Pulau" class="container" />
     </div>
 
-    <div class="container bg-white bg-opacity-30 rounded-1 shadow-lg font-inter text-custom2">
-      <div class="pt-5 pb-10">
-        <div class="w-full p-5 pb-7">
-          <h6 class="h6 pb-2">Materi</h6>
-          <ul class="list-none">
-            <li class="opacity-80 text-lg">Materi pembelajaran yang lengkap dan seru</li>
-          </ul>
-        </div>
+    <br><br><br>
+
+    <section class="main flex flex-col mx-auto w-4/5 flex-grow">
+      <div data-aos="fade-up" class="container bg-white bg-opacity-30 rounded-1 shadow-lg font-inter text-custom2">
+        <div class="pt-5 pb-10">
+          <div class="w-full p-5 pb-7">
+            <h6 class="h6 pb-2">Materi</h6>
+            <ul class="list-none">
+              <li class="opacity-80 text-lg">Materi pembelajaran yang lengkap dan seru</li>
+            </ul>
+          </div>
 
         <hr class="border-t border-border mt-0 w-[98%] mx-auto" />
 
@@ -52,7 +57,7 @@
         <hr class="border-t border-border mt-0 w-[98%] mx-auto" />
 
         <div class="w-full p-5 pb-7">
-          <h6 class="h6 pb-2">Literasi Budaya dan Latihan</h6>
+          <h6 class="h6 pb-2">Literasi Budaya</h6>
           <ul class="list-none">
             <li class="opacity-80 text-lg">Pengenalan budaya dengan cerita daerah dan latihan harian</li>
           </ul>
@@ -71,7 +76,7 @@
       </div>
     </div>
 
-    <div class="button-display flex flex-col items-center justify-center m-20">
+    <div data-aos="fade-up" class="button-display flex flex-col items-center justify-center m-20">
       <button class="button text-white bg-custom1" onclick="navigateTo('/daftar')">Daftar</button>
       <button class="button text-black bg-white" onclick="navigateTo('/masuk')">Masuk</button>
       <p class="text-lg text-custom5 mt-1">Mulai perjalananmu sekarang!</p>
@@ -84,6 +89,8 @@
 </footer>
 
 <script>
+  AOS.init();
+
   function navigateTo(path) {
     if (path === '/daftar') {
       window.location.href = './src/html/SignUp.html';

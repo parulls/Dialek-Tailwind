@@ -11,8 +11,14 @@
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        .stars i {
-            font-size: 5rem;
+        .stars-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .stars-container i {
+            font-size: 3rem;
             color: #0D4422;
         }
     </style>
@@ -25,9 +31,10 @@
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <div class="flex flex-col justify-center items-center">
-            <div class="stars flex mb-16">
+    
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-8">
+        <div class="stars-container">
+            <div class="stars flex justify-center mb-6">
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
@@ -37,7 +44,7 @@
             <textarea name="komentar" id="komentar-materi" class="bg-custom7 w-full h-40 p-4 font-semibold text-sm rounded-3xl placeholder-gray-500 text-gray-500 border-black focus:outline-none focus:ring-2" placeholder="Tuliskan Komentar"></textarea>
         </div>
         <div class="flex items-center justify-center w-full px-4 py-4">
-            <button id="kirim-button" class="button-custom2 h-12 rounded-md text-sm px-12">
+            <button id="kirim-button" class="button-custom2 rounded-md text-sm mx-6">
                 Kirim
             </button>
         </div>

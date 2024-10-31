@@ -4053,10 +4053,14 @@ video {
   background-color: rgb(151 49 49 / var(--tw-bg-opacity));
 }
 
-.bg-custom7{
-  --tw-bg-opacity: 1;
-  background-color: rgb(187 223 217 / var(--tw-bg-opacity));
+.bg-custom7 {
+    display: flex;
+    align-items: center; /* Vertikal tengah */
+    justify-content: center; /* Horizontal tengah */
+    height: 100px; /* Sesuaikan tinggi sesuai kebutuhan */
+    padding: 8px;
 }
+
 
 .bg-custom9{
   --tw-bg-opacity: 1;
@@ -4365,6 +4369,14 @@ video {
 .text-custom5{
   --tw-text-opacity: 1;
   color: rgb(158 181 169 / var(--tw-text-opacity));
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .text-custom5 {
+    text-align: center;
+    white-space: nowrap;
+  }
 }
 
 .text-custom6{
@@ -4559,6 +4571,18 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
 @media (min-width: 768px){
   .md\:row-span-4{
     grid-row: span 4 / span 4;
@@ -4591,3 +4615,44 @@ video {
     width: 50%;
   }
 }
+
+/* CSS */
+.h6 {
+  line-height: 1.5; /* Default line spacing */
+}
+
+@media (max-width: 600px) {
+  .h6 {
+    line-height: 2; /* Line spacing when screen width is 600px or less */
+  }
+}
+
+/* CSS */
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-container input {
+  width: 100%;
+  padding-left: 40px; /* Adjust padding to make space for the icon */
+  background-color: var(--bg-form); /* Default background color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.input-container input:focus {
+  background-color: white; /* Change background color on focus */
+}
+
+.input-container ion-icon {
+  position: absolute;
+  left: 10px; /* Adjust position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the icon does not interfere with input */
+}
+
+.input-container:focus-within {
+  background-color: white; /* Change background color when container is focused */
+}
+
