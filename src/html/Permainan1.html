@@ -120,7 +120,13 @@
         <div id="info-popup" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" style="display: none;">
             <div class="p-6 rounded-lg shadow-lg text-center" style="background-color: #CBEADF;">
                 <p id="popup-message" class="text-lg font-bold mb-4">
-                    Jadi gini cara mainnya
+                    Instruksi:
+                    <ul>
+                        <li>1. Ketik kata Batak Toba yang valid di kotak input dan tekan Enter. Kata harus dimulai dengan huruf terakhir dari kata sebelumnya dan belum pernah digunakan.</li>
+                        <li>2. Kata baru yang valid +10, kata yang pernah digunakan +5</li>
+                        <li>3.  Setelah giliran Anda, AI akan mencari kata yang valid. Skor AI bertambah sesuai aturan yang sama.</li>
+                        <li>4.Anda menang jika AI tidak bisa menemukan kata yang valid, atau skor akhir Anda lebih tinggi saat waktu habis.</li>
+                    </ul>
                 </p>
                 <button onclick="closePopup()" class="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">OK</button>
             </div>

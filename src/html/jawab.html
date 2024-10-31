@@ -36,7 +36,7 @@
         <!-- Container tombol kembali dan box -->
         <div class="flex items-start w-full px-12 justify-between">
             <!-- Tombol Kembali di ujung kiri -->
-            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center">
+            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center" id="backButton">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
@@ -44,7 +44,7 @@
 
             <!-- Box Pertanyaan di tengah -->
             <div class="p-8 rounded-lg box-custom1 w-11/12 md:w-8/12 lg:w-6/12 mx-auto" style="background-color: rgba(212, 229, 221, 0.4)">
-                <!-- Tenpat Pertanyaan -->
+                <!-- Tempat Pertanyaan -->
                 <section id="questionSection" class="mb-6 flex items-start">
                     <img src="../assets/tandatanya.webp" alt="user" class="w-9 h-9 rounded-full mr-2" />
                     <div id="questionDisplay" class="flex-grow p-6 rounded-lg text-white" style="background-color: #4C968B;">
@@ -70,6 +70,11 @@
     </main>
 
     <script>
+        // tombol kembali
+        document.getElementById('backButton').addEventListener('click', () => {
+            window.location.href = 'tanya.html';
+        });
+        
         // tampikan pertanyaan
         const urlParams = new URLSearchParams(window.location.search);
         const questionText = urlParams.get('question');

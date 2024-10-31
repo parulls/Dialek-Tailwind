@@ -132,18 +132,20 @@
 
             
 
-
+            // Fungsi untuk mengupdate skor pemain dan AI
             function updateScores() {
                 playerScoreDisplay.textContent = playerScore;
                 aiScoreDisplay.textContent = aiScore;
             }
 
+            // Fungsi untuk mengupdate tampilan timer
             function updateTimerDisplay() {
                 const minutes = Math.floor(timer / 60);
                 const seconds = timer % 60;
                 timerDisplay.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
             }
 
+            // Fungsi untuk memulai timer
             function startTimer() {
                 countdown = setInterval(() => {
                     timer--;
@@ -155,12 +157,13 @@
                 }, 1000);
             }
 
+            // Fungsi untuk mengakhiri permainan
             function endGame(message) {
                 wordInput.disabled = true;
                 clearInterval(countdown);
                 showResultPopup(message);
 
-                // Update Local Storage with cumulative game data
+                // Hitung statistik permainan
                 const successfulWords = playerWordsList.length;
                 const failedWords = 0;
                 const totalScore = playerScore; 
@@ -175,13 +178,14 @@
                 localStorage.setItem("usedVocabulary", JSON.stringify(usedVocabulary));
             }
 
+            // Fungsi untuk menampilkan popup hasil permainan
             function showResultPopup(message) {
                 document.getElementById("popup-message").textContent = message;
                 document.getElementById("popup").style.display = "flex";
             }
 
 
-
+            // Fungsi untuk menutup popup
             function showResultPopup(message) {
                 document.getElementById("popup-message").textContent = message;
                 document.getElementById("popup").style.display = "flex";
