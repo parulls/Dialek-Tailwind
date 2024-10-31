@@ -3,48 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dialek.id</title>
+    <title>Dialek.id - Masuk</title>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="../styles/style2.css">
 </head>
-<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
-<nav class="logo font-irish">
-    <div>
-        <p>dialek.id</p>
-    </div>
-</nav>
-<section class="main flex flex-col mx-auto w-4/5 flex-grow">
+<body class="bg-custom-radial font-inter flex flex-col">
+    <nav class="flex items-center justify-between w-full p-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+      </nav>
+<section class="main flex flex-col mx-auto w-4/5 min-h-screen flex-grow">
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
+
             <form id="login-form">
-                <!-- Form Fields -->
                 <div class="mb-4">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">E-mail</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="email">E-mail</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" required />
+                        <input type="email" name="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" required />
                         <ion-icon name="mail" class="pr-4 items-center"></ion-icon>
                     </div>
+                    <p id="email-error" class="text-red-500 text-sm hidden">Email atau kata sandi salah.</p>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">Kata Sandi</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" id="password" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" required />
+                        <input type="password" name="password" id="password" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" required />
                         <ion-icon name="lock-closed" class="pr-4 items-center"></ion-icon>
                     </div>
                 </div>
-                <!-- Login Button -->
                 <div class="text-center">
-                    <button type="submit" class="text-lg py-2 bg-custom-green-button w-40 text-white font-bold rounded-lg shadow-0 hover:bg-custom-green-button hover:opacity-80">Masuk</button>
+                    <button type="submit" id="submit" class="text-lg py-2 bg-custom-green-button w-40 text-white font-bold rounded-lg shadow-0 hover:bg-custom-green-button hover:opacity-80">Masuk</button>
                 </div>
-                <!-- Divider -->
                 <div class="my-4 flex items-center">
                     <hr class="flex-grow border-t border-black" />
                     <span class="mx-4 text-black">atau</span>
                     <hr class="flex-grow border-t border-black" />
                 </div>
-                <!-- Social Media Buttons -->
                 <div class="flex flex-col space-y-3">
                     <div class="relative w-full">
                         <button type="button" id="google-login" class="flex justify-center items-center w-full py-2 border border-green-600 rounded-full text-green-700 hover:bg-green-50 transition duration-300">Masuk dengan akun Google</button>
@@ -64,65 +62,61 @@
 </footer>
 
 <script type="module">
-    // Mengimpor Firebase dari CDN
+    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    // Konfigurasi Firebase Anda
+    // Firebase configuration (replace with your actual Firebase config)
     const firebaseConfig = {
         apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
-    authDomain: "dialek-6a219.firebaseapp.com",
-    projectId: "dialek-6a219",
-    storageBucket: "dialek-6a219.appspot.com",
-    messagingSenderId: "423916223695",
-    appId: "1:423916223695:web:449bd44c54cad998d8cbba",
-    measurementId: "G-4SLBH47WTM"
+        authDomain: "dialek-6a219.firebaseapp.com",
+        projectId: "dialek-6a219",
+        storageBucket: "dialek-6a219.appspot.com",
+        messagingSenderId: "423916223695",
+        appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+        measurementId: "G-4SLBH47WTM"
     };
 
-    // Inisialisasi Firebase
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const analytics = getAnalytics(app);
-    const provider = new GoogleAuthProvider();
 
-    // Fungsi untuk login dengan Google
-    async function googleSignIn() {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            console.log("Login berhasil:", result.user);
-            window.location.href = './Bahasa.html'; // Redirect setelah login sukses
-        } catch (error) {
-            console.error("Error during Google Sign-In:", error);
-            alert("Login dengan Google gagal! Silakan coba lagi.");
-        }
-    }
-
-    const loginForm = document.getElementById('login-form');
-    const googleLoginButton = document.getElementById('google-login');
-
-    loginForm.addEventListener('submit', handleManualLogin);
-    googleLoginButton.addEventListener('click', googleSignIn);
-
-    async function handleManualLogin(event) {
+    // Handle form submission for login
+    document.getElementById('login-form').addEventListener('submit', function (event) {
         event.preventDefault();
+
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        if (email && password) {
-            try {
-                // Melakukan login dengan email dan kata sandi
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                console.log("Login berhasil:", userCredential.user);
-                window.location.href = './Bahasa.html'; // Redirect setelah login sukses
-            } catch (error) {
-                console.error("Login gagal:", error);
-                alert("Login gagal! Pastikan E-mail dan Kata Sandi benar.");
-            }
-        } else {
-            alert("E-mail dan Kata Sandi harus diisi!");
-        }
-    }
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert("Login berhasil!");
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error signing in:", error);
+                document.getElementById('email-error').classList.remove('hidden');
+                if (error.code === 'auth/too-many-requests') {
+                    document.getElementById('email-error').innerText = "Terlalu banyak permintaan, coba lagi nanti.";
+                } else {
+                    document.getElementById('email-error').innerText = "Email atau kata sandi salah.";
+                }
+            });
+    });
+
+    // Google Login
+    const googleProvider = new GoogleAuthProvider();
+    document.getElementById('google-login').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                alert("Login dengan Google berhasil!");
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error with Google sign-in:", error.message);
+                alert("Login Google gagal: " + error.message);
+            });
+    });
 </script>
 </body>
 </html>

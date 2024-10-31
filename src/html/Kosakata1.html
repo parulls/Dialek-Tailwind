@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialek.Id</title>
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <nav class="flex items-center justify-between w-full p-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl"></i> 
+        </div>
+    </nav>
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
+            <div class="flex justify-center items-center font-bold text-lg my-6">
+                <p>Belajar Kosakata</p>
+            </div>
+            <div class="bg-custom7 w-[70%] flex items-center justify-center m-4 p-4 space-x-8">
+                <div class="w-28 rounded-full flex items-center">
+                    <img src="../assets/makan.webp" alt="Makan" class="rounded-full">
+                </div>
+                <div class="bg-[#53A596] p-2 flex items-center justify-center rounded-lg">
+                    <p class="text-lg text-white font-semibold">Mangan</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-[70%] space-y-4 mb-10">
+                <button class="button-option option w-full" data-answer="A">
+                    Minum
+                </button>
+                <button class="button-option option w-full" data-answer="B">
+                    Makan
+                </button>
+                <button class="button-option option w-full" data-answer="C">
+                    Duduk
+                </button>
+            </div>
+            <p id="feedback" class="text-red-500 font-semibold"></p>
+        </div>
+    </section>
+    <footer class="flex items-center justify-between w-full px-4 py-4">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6" disabled>Selanjutnya</button>
+    </footer>
+    <script>
+        const kembali = document.getElementById("kembali-button");
+        const selanjutnya = document.getElementById("selanjutnya-button");
+        const feedback = document.getElementById("feedback");
+
+        kembali.addEventListener("click", () => {
+            window.location.href = "./dashboardBatak.html";
+        });
+
+        selanjutnya.addEventListener("click", () => {
+            if (!selanjutnya.disabled) {
+                window.location.href = "./Kosakata2.html";
+            }
+        });
+
+        function saveAnswer(answer) {
+            const correctAnswer = "B"; // Correct answer is "Makan"
+
+            if (answer === correctAnswer) {
+                feedback.textContent = "Jawaban benar!";
+                feedback.classList.remove("text-red-500");
+                feedback.classList.add("text-custom2");
+                selanjutnya.disabled = false; // Enable "Selanjutnya" button if the answer is correct
+            } else {
+                feedback.textContent = "Jawaban salah. Coba lagi.";
+                feedback.classList.remove("text-custom2");
+                feedback.classList.add("text-red-500");
+                selanjutnya.disabled = true; // Keep "Selanjutnya" button disabled if the answer is incorrect
+            }
+        }
+
+        document.querySelectorAll('.option').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.getAttribute('data-answer');
+                saveAnswer(answer);
+            });
+        });
+    </script>
+</body>
+</html>

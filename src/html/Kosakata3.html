@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialek.Id - Belajar Kosakata</title>
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl"></i> 
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
+            <div class="flex justify-center items-center font-bold text-lg my-8">
+                <p>Belajar Kosakata</p>
+            </div>
+            <!-- Word Matching Game Container -->
+            <div class="bg-custom7 w-[70%] flex flex-row justify-center gap-12 items-center mx-4 px-4 py-8 space-y-8 rounded-lg mt-12 min-h-[200px] font-bold">
+                
+                <!-- Left Column: Draggable Words -->
+                <div id="left-column" class="space-y-4">
+                    <div class="draggable bg-custom2 text-white text-center py-2 px-4 rounded-lg cursor-pointer" draggable="true" data-match="Rumah">Jabu</div>
+                    <div class="draggable bg-custom2 text-white text-center py-2 px-4 rounded-lg cursor-pointer" draggable="true" data-match="Makan">Mangan</div>
+                    <div class="draggable bg-custom2 text-white text-center py-2 px-4 rounded-lg cursor-pointer" draggable="true" data-match="Bertemu">Mardomu</div>
+                </div>
+    
+                <!-- Right Column: Droppable Matching Options -->
+                <div id="right-column" class="space-y-4">
+                    <div class="droppable border-2 border-custom2 text-custom2 text-center py-2 px-4 rounded-lg" data-accept="Makan">Makan</div>
+                    <div class="droppable border-2 border-custom2 text-custom2 text-center py-2 px-4 rounded-lg" data-accept="Bertemu">Bertemu</div>
+                    <div class="droppable border-2 border-custom2 text-custom2 text-center py-2 px-4 rounded-lg" data-accept="Rumah">Rumah</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer with Navigation Buttons -->
+    <footer class="flex items-center justify-between w-full px-4 py-4">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+        <button id="keluar-button" class="button-custom2 text-sm mx-6" disabled>Keluar</button>
+    </footer>
+
+    <script>
+        // Redirect Buttons
+        document.getElementById("kembali-button").addEventListener("click", () => {
+            window.location.href = "./Kosakata2.html";
+        });
+
+        const keluarButton = document.getElementById("keluar-button");
+
+        keluarButton.addEventListener("click", () => {
+            if (!keluarButton.disabled) {
+                window.location.href = "./dashboardBatak.html";
+            }
+        });
+
+        // Drag-and-Drop Game Logic
+        const draggables = document.querySelectorAll(".draggable");
+        const droppables = document.querySelectorAll(".droppable");
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener("dragstart", dragStart);
+        });
+
+        droppables.forEach(droppable => {
+            droppable.addEventListener("dragover", dragOver);
+            droppable.addEventListener("drop", drop);
+        });
+
+        function dragStart(event) {
+            event.dataTransfer.setData("text", event.target.dataset.match);
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const draggedData = event.dataTransfer.getData("text");
+            const targetData = event.target.dataset.accept;
+
+            // Check if the dropped item matches the target
+            if (draggedData === targetData) {
+                // Update droppable style to show correct match
+                event.target.classList.remove("border-custom2", "text-custom2");
+                event.target.classList.add("bg-custom2", "text-white", "font-bold");
+                event.target.textContent = draggedData;
+
+                // Hide matched draggable item
+                const draggedElement = document.querySelector(`[data-match="${draggedData}"]`);
+                draggedElement.classList.add("invisible");
+
+                checkGameStatus();
+            }
+        }
+
+        // Check if all matches are correct
+        function checkGameStatus() {
+            const invisibleItems = document.querySelectorAll(".invisible");
+            if (invisibleItems.length === draggables.length) {
+                keluarButton.disabled = false; // Enable "Keluar" button once all matches are correct
+            }
+        }
+    </script>
+</body>
+</html>

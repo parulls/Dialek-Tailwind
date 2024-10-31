@@ -1,3 +1,21 @@
+<!-- <?php 
+    require './functions.php';
+
+    if (isset($_POST["register"])) {
+        if(registrasi($_POST) > 0) {
+            echo "<script>
+                    alert('User baru berhasil ditambahkan!');
+                    window.location.href = 'LogIn.php';
+                  </script>";
+            exit;
+        } else {
+            echo "<script>
+                    alert('User baru gagal ditambahkan!');
+                  </script>";
+        }
+    }
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,49 +26,54 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="../styles/style2.css">
 </head>
-<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
-<nav class="logo font-irish">
-    <div>
-        <p>dialek.id</p>
-    </div>
-</nav>
-<section class="main flex flex-col mx-auto w-4/5 flex-grow">
+<body class="bg-custom-radial font-inter flex flex-col">
+    <nav class="flex items-center justify-between w-full p-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+      </nav>
+<section class="main flex flex-col mx-auto w-4/5 min-h-screen flex-grow">
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-gradient text-4xl font-bold text-center mb-6 w-full">Daftar</h2>
-            <form id="signup-form">
+            <form id="signup-form" action="" method="post">
                 <!-- Form Fields -->
                 <div class="mb-4">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">Nama</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="nama">Nama</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="text" id="name" placeholder="John Doe" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Name" />
+                        <input type="text" name="name" id="name" placeholder="John Doe" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Name" />
                         <ion-icon name="person" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">E-mail</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="username">Nama Pengguna</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" />
+                        <input type="text" name="username" id="username" placeholder="johndoe_2112" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Username" />
+                        <ion-icon name="person" class="pr-4  items-center"></ion-icon>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="email">E-mail</label>
+                    <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
+                        <input type="email" name="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" />
                         <ion-icon name="mail" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">Kata Sandi</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" id="password" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
+                        <input type="password" name="password" id="password" placeholder="*********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="mb-6">
-                    <label class="block text-custom2 text-lg font-semibold mb-2">Konfirmasi Kata Sandi</label>
+                    <label class="block text-custom2 text-lg font-semibold mb-2" for="confirmPassword">Konfirmasi Kata Sandi</label>
                     <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" id="confirmPassword" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <!-- Register Button -->
                 <div class="text-center">
-                    <button type="submit" class="text-lg py-2 bg-custom-green-button w-40 text-white font-bold rounded-lg shadow-0 hover:bg-custom-green-button hover:opacity-80">Daftar</button>
+                    <button type="submit" name="register" class="text-lg py-2 bg-custom-green-button w-40 text-white font-bold rounded-lg shadow-0 hover:bg-custom-green-button hover:opacity-80">Daftar</button>
                 </div>
                 <!-- Divider -->
                 <div class="my-4 flex items-center">
@@ -66,7 +89,7 @@
                     </div>
                     <div class="relative w-full">
                         <button type="button" id="facebookLogin" class="flex justify-center items-center w-full py-2 border border-green-600 rounded-full text-green-700 hover:bg-green-50 transition duration-300">Daftar dengan akun Facebook</button>
-                        <img src="../assets/Facebook.webp" alt="Google Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
+                        <img src="../assets/Facebook.webp" alt="Facebook Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
                     </div>
                 </div>
             </form>
@@ -76,31 +99,74 @@
 <footer class="footer text-center">
     <p>&copy; 2024 Dialek.id. Semua hak dilindungi.</p>
 </footer>
-<script src=".../firebase.js"></script>
-<script>
-    const signupForm = document.getElementById('signup-form');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
+<script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    
+    // Firebase configuration (replace with your actual Firebase config)
+    const firebaseConfig = {
+    apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+    authDomain: "dialek-6a219.firebaseapp.com",
+    projectId: "dialek-6a219",
+    storageBucket: "dialek-6a219.firebasestorage.app",
+    messagingSenderId: "423916223695",
+    appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+    measurementId: "G-4SLBH47WTM"
+  };
+    
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
 
-    function handleSignUp(event) {
+    // Mendapatkan instance Authentication
+    const auth = getAuth(app);
+
+    // Google Login Provider
+    const googleProvider = new GoogleAuthProvider();
+
+    // Event listener for Google login button
+    document.getElementById('googleLogin').addEventListener('click', () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // Successful Google sign-in
+                const user = result.user;
+                console.log("Google user signed in:", user);
+                // Redirect to a page after login
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error with Google sign-in:", error.message);
+                alert("Google login failed: " + error.message);
+            });
+    });
+
+    // Register with email and password
+    document.getElementById('signup-form').addEventListener('submit', function (event) {
         event.preventDefault();
+        
+        // Get form input values
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
 
-        const name = nameInput.value.trim();
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (name && email && password && password === confirmPassword) {
-            window.location.href = './Bahasa.html';
-        } else {
-            alert("Pastikan semua data diisi dengan benar dan kata sandi sesuai.");
+        // Simple validation check
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
         }
-    }
 
-    signupForm.addEventListener('submit', handleSignUp);
-
+        // Register the user using Firebase Authentication
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                // Redirect to a page after successful signup
+                window.location.href = './Bahasa.html';
+            })
+            .catch((error) => {
+                console.error("Error signing up:", error.message);
+                alert("Registration failed: " + error.message);
+            });
+    });
 </script>
 </body>
 </html>

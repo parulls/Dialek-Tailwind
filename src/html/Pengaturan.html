@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Dialek.id</title>
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <nav class="flex items-center justify-between w-full px-4 py-4">
+        <div class="logo font-irish text-2xl">dialek.id</div>
+    </nav>
+
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+    <h1 class="text-3xl font-bold text-custom2 mb-6 font-bold">Pengaturan</h1>
+    <!-- Main Container -->
+    <div class="flex flex-col items-center p-8 mt-10 w-11/12 md:w-8/12 lg:w-6/12 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
+
+        <!-- Profile Image Section -->
+        <div class="relative">
+            <label for="profile-picture" class="relative cursor-pointer">
+                <img id="profile-image" src="../assets/pp.webp" alt="Profile Image" class="w-24 h-24 rounded-full bg-gray-200 object-cover">
+                <input type="file" id="profile-picture" accept="image/*" class="hidden" onchange="previewProfilePicture(event)">
+                <span class="absolute bottom-0 right-0 bg-white rounded-full p-1 text-green-600 ml-20">
+                    <i class="fa fa-edit"></i>
+                </span>
+            </label>
+        </div>
+
+        <!-- Form Fields -->
+        <form id="settings-form" class="w-max mt-6 space-y-4">
+            <div class="flex flex-row justify-center space-x-7">
+                <div class="flex flex-col">
+                    <label class="text-gray-600">Nama</label>
+                    <input type="text" id="name" class="max-w-96 p-2 border rounded-lg" placeholder="Nama">
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-gray-600">Username</label>
+                    <input type="text" id="username" class="w-full p-2 border rounded-md" placeholder="Username">
+                </div>
+            </div>
+            <div class="flex flex-row justify-center space-x-7">
+                <div class="flex flex-col">
+                    <label class="text-gray-600">Alamat E-mail</label>
+                    <input type="email" id="email" class="w-full p-2 border rounded-md" placeholder="Alamat E-mail">
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-gray-600">Nomor Telepon</label>
+                    <input type="text" id="phone" class="w-full p-2 border rounded-md" placeholder="+62">
+                </div>
+            </div>
+        </form>
+
+        <!-- Buttons -->
+        <div class="flex justify-between w-full mt-6 space-x-4">
+            <button onclick="saveProfile()" class="flex-1 py-2 bg-custom1 text-white rounded-full hover:bg-green-500">Simpan</button>
+            <button onclick="deleteAccount()" class="flex-1 py-2 bg-custom4 text-white rounded-full hover:bg-red-500">Hapus Akun</button>
+        </div>
+    </div>
+    </section>
+
+    <script>
+        // Preview selected profile picture and save it as base64
+        function previewProfilePicture(event) {
+            const profileImage = document.getElementById("profile-image");
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result; // Show preview
+                    // Save image as base64 in localStorage
+                    localStorage.setItem("profileImage", e.target.result);
+                };
+                reader.readAsDataURL(file); // Convert to base64
+            }
+        }
+
+        // Load profile data from localStorage on page load
+        document.addEventListener("DOMContentLoaded", function() {
+            const profileName = localStorage.getItem("profileName");
+            const profileUsername = localStorage.getItem("profileUsername");
+            const profileImage = localStorage.getItem("profileImage");
+
+            if (profileName) document.getElementById("name").value = profileName;
+            if (profileUsername) document.getElementById("username").value = profileUsername;
+            if (profileImage) document.getElementById("profile-image").src = profileImage;
+        });
+
+        // Save profile data to localStorage
+        function saveProfile() {
+            const name = document.getElementById("name").value;
+            const username = document.getElementById("username").value;
+            
+            // Store text values
+            localStorage.setItem("profileName", name);
+            localStorage.setItem("profileUsername", username);
+            
+            alert("Profile saved successfully!");
+        }
+    </script>
+
+</body>
+</html>

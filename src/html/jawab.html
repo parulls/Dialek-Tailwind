@@ -1,3 +1,7 @@
+<!-- <?php
+    require './functions.php';
+?> -->
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -11,53 +15,66 @@
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
     <!-- Navbar -->
-    <nav class="flex items-center justify-between w-full px-4 py-4">
-        <div class="logo font-irish text-2xl">dialek.id</div>
-        <div class="flex items-center font-semibold">
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl text-custom2"></i>
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
 
-    <!-- tombol kembali -->
-    <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7 mb-4">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-    </button>
-
     <main class="flex flex-col items-center flex-grow">
-        <h1 class="text-4xl font-bold py-5 text-gradient">Wadah Diskusi</h1>
+        <!-- Judul -->
+        <div class="flex items-center w-full justify-center mb-10">
+            <header class="header text-center">
+                <h1 class="h1 font-bold text-gradient">
+                  Wadah Diskusi
+                </h1>
+            </header>
+        </div>
 
-        <!-- atur box-->
-        <div class="p-8 rounded-lg shadow-md w-11/12 md:w-8/12 lg:w-8/12" style="background-color: rgba(212, 229, 221, 0.4)">
+        <!-- Container tombol kembali dan box -->
+        <div class="flex items-start w-full px-12 justify-between">
+            <!-- Tombol Kembali di ujung kiri -->
+            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center" id="backButton">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
 
-            <!-- tenpat pertanyaan-->
-            <section id="questionSection" class="mb-6 flex items-start">
-                <img src="../assets/tandatanya.png" alt="user" class="w-9 h-9 rounded-full mr-2" />
-                <div id="questionDisplay" class="flex-grow p-6 rounded-lg text-white" style="background-color: #4C968B;">
-                </div>
-            </section>
-
-            <!-- input jawaban-->
-            <section id="answerInputSection" class="mb-10 flex">
-                <textarea id="answerInput" class="w-full p-2 rounded-lg border-none focus:outline-none mt-4" rows="5" style="background-color: #4C968B; color: white;"></textarea> 
-                <div class="flex justify-end mt-6 p-2">
-                    <button id="submitAnswerButton"><img src="../assets/tomboltambahjawab.png" alt="" class="w-12 h-12 rounded-full mr-2"/></button>
-                </div>
-            </section>
-
-            <!-- tempat list jawaban -->
-            <section id="answerListSection">
-                <h2 class="text-xl font-bold mb-4 text-green-800">Jawaban Lain:</h2>
-                <div id="answersList" class="space-y-4">
-                </div>
-            </section>
-
+            <!-- Box Pertanyaan di tengah -->
+            <div class="p-8 rounded-lg box-custom1 w-11/12 md:w-8/12 lg:w-6/12 mx-auto" style="background-color: rgba(212, 229, 221, 0.4)">
+                <!-- Tempat Pertanyaan -->
+                <section id="questionSection" class="mb-6 flex items-start">
+                    <img src="../assets/tandatanya.webp" alt="user" class="w-9 h-9 rounded-full mr-2" />
+                    <div id="questionDisplay" class="flex-grow p-6 rounded-lg text-white" style="background-color: #4C968B;">
+                    </div>
+                </section>
+    
+                <!-- Input Jawaban -->
+                <section id="answerInputSection" class="mb-10 flex">
+                    <textarea id="answerInput" class="w-full p-2 rounded-lg border-none focus:outline-none mt-4" rows="5" style="background-color: #4C968B; color: white;"></textarea> 
+                    <div class="flex justify-end mt-6 p-2">
+                        <button id="submitAnswerButton"><img src="../assets/tomboltambahjawab.webp" alt="" class="w-12 h-12 rounded-full mr-2"/></button>
+                    </div>
+                </section>
+    
+                <!-- List Jawaban -->
+                <section id="answerListSection">
+                    <h2 class="text-xl font-bold mb-4 text-green-800">Jawaban</h2>
+                    <div id="answersList" class="space-y-4">
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
     <script>
+        // tombol kembali
+        document.getElementById('backButton').addEventListener('click', () => {
+            window.location.href = 'tanya.html';
+        });
+        
         // tampikan pertanyaan
         const urlParams = new URLSearchParams(window.location.search);
         const questionText = urlParams.get('question');
@@ -109,7 +126,7 @@
                 answersList.appendChild(answerElement);
                 answerInput.value = '';
 
-                // Like  button
+                // Like button
                 const likeButton = answerElement.querySelector('.like-button');
                 const heartIcon = likeButton.querySelector('.fa-heart'); 
                 const likeCount = answerElement.querySelector('.like-count');

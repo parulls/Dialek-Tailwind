@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Dialek.id</title>
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <nav class="flex items-center justify-between w-full px-4 py-4">
+        <div class="logo font-irish text-2xl">dialek.id</div>
+    </nav>
+
+    <div class="flex items-center justify-between w-full px-4 inline-block ">
+            <!-- Tombol Kembali -->
+            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center ml-7" aria-label="Kembali">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <div class="flex items-center font-semibold text-custom2 mr-7">
+            <a href="Pengaturan.html">
+            <i class="fa-solid fa-gear text-4xl"></i>
+            </a>
+            </div>
+    </div>
+    
+<section class="main flex flex-col mx-auto max-w-2xl items-center flex-grow space-y-4 -mt-20">
+        <!-- Profile Section -->
+            <div class="flex items-center w-full max-w-2xl p-6 mt-10 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
+                <img id="profile-image" src="../assets/pp.webp" alt="Profile Image" class="w-24 h-24 rounded-full bg-gray-200 -mt-10">
+                <div class="px-6 ">
+                    <h2 id="profile-name" class="text-xl font-semibold text-custom2">Sabrina Carpenter</h2>
+                    <p id="profile-username" class="text-gray-500 flex flex-row">@sab2112</p>
+                    <ul class="flex space-x-8 mt-2 mb-10 text-xs">
+                        <li id="total-exp" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Total Exp</li>
+                        <li id="level" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Level</li>
+                        <li id="study-duration" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Durasi Belajar</li>
+                    </ul>
+                </div>     
+            </div>
+        <!-- Profile Section Selesai -->
+
+        <!-- PENCAPAIAN -->
+        <div class="w-full max-w-2xl p-6 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2 text-custom2">Pencapaian</h3>
+            </div>
+            <div class="footer text-center">
+                <p class="text-custom2"></p>
+            </div>
+        </div>
+        
+        <!-- PENCAPAIAN SELESAI -->
+
+        <!-- BAHASA YG DIPELAJARI -->
+        <div class="w-full max-w-2xl p-6 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar"> 
+            <h3 class="text-lg font-semibold mb-2">Bahasa yang Dipelajari</h3>
+            <div id="language" class="bg-custom1 text-white rounded-full px-4 py-2 max-w-44">
+                <h3>Bahasa Batak Toba</h3>
+            </div>
+        </div>
+        
+        
+        <!-- BAHASA YANG DIPELAJARI SELESAI -->
+    
+</section>
+
+<script>
+        // Load and display profile data from localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            const profileName = localStorage.getItem("profileName") || "Nama User";
+            const profileUsername = localStorage.getItem("profileUsername") || "@username";
+            const profileImage = localStorage.getItem("profileImage") || "default-profile.png";
+
+            document.getElementById("display-name").innerText = profileName;
+            document.getElementById("display-username").innerText = profileUsername;
+            document.getElementById("display-profile-image").src = profileImage;
+        });
+</script>
+</body> 
+</html>
