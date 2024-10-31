@@ -4208,10 +4208,6 @@ video {
   font-weight: 600;
 }
 
-.italic{
-  font-style: italic;
-}
-
 .text-bar{
   --tw-text-opacity: 1;
   color: rgb(52 52 59 / var(--tw-text-opacity));
@@ -4456,4 +4452,3 @@ video {
     width: 50%;
   }
 }
-

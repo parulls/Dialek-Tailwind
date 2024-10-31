@@ -17,51 +17,49 @@
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
+            <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
 
-    <div>
-        <main class="flex flex-col items-center">
-            <header class="header items-center text-center mb-10">
-                <h1 class="h1 font-bold text-gradient">
-                  Wadah Diskusi
-                </h1>
-              </header>
+    <main class="flex flex-col items-center">
+        <header class="header items-center text-center mb-10">
+            <h1 class="h1 font-bold text-gradient">Wadah Diskusi</h1>
+        </header>
+
+        <div class="flex items-start w-full px-12 justify-between">
+            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+
             <div class="p-6 rounded-lg box-custom1 w-11/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);">
                 <div class="flex space-x-4 mb-4">
-                    <!--bahasa yang digunakan-->
                     <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm">Bahasa Batak Toba</div>
-                    
                 </div>
 
-                <!-- Input pertanyaan -->
                 <label for="pertanyaanInput" class="text-lg font-semibold text-green-800">Tulis pertanyaanmu:</label>
                 <textarea id="pertanyaanInput" class="w-full p-4 rounded-lg border-none focus:outline-none text-white" rows="5" style="background-color: #4C968B;"></textarea>
 
-                <!-- Tombol untuk mengirim pertanyaan -->
                 <div class="flex justify-end mt-4">
                     <button id="tanyaButton" class="bg-green-800 text-white py-2 px-6 rounded-full shadow-md hover:bg-green-700">Tanya</button>
                 </div>
             </div>
+        </div>
 
-
-            <div class="mt-10 w-11/12 md:w-8/12 lg:w-6/12">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-lg font-semibold text-green-800">Pertanyaan Lain:</h2>
-                    <!-- Tombol untuk mengurutkan pertanyaan -->
-                    <div class="flex space-x-2">
-                        <button id="popularButton" class="button-custom2 text-white">Popular</button>
-                        <button id="terbaruButton" class="button-custom2 text-white">Terbaru</button>
-                    </div>
-                </div>
-
-                <div id="pertanyaanList" class="space-y-4">
-
+        <!-- Tambahkan Div Pertanyaan Lain dan Tombol di sini -->
+        <div class="mt-10 w-11/12 md:w-8/12 lg:w-6/12">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-semibold text-green-800">Pertanyaan Lain:</h2>
+                <div class="flex space-x-2">
+                    <button id="popularButton" class="button-custom2 text-white">Popular</button>
+                    <button id="terbaruButton" class="button-custom2 text-white">Terbaru</button>
                 </div>
             </div>
-        </main>
- 
+
+            <div id="pertanyaanList" class="space-y-4"></div>
+        </div>
+    </main>
 
     <script>
         const pertanyaanInput = document.getElementById('pertanyaanInput');
@@ -69,8 +67,11 @@
         const pertanyaanList = document.getElementById('pertanyaanList');
         const popularButton = document.getElementById('popularButton');
         const terbaruButton = document.getElementById('terbaruButton');
-        const bahasaJawaButton = document.getElementById('bahasaJawa');
         const bahasaBatakButton = document.getElementById('bahasaBatak');
+        const kembaliButton = document.querySelector('button.bg-green-800'); // memilih tombol kembali
+        kembaliButton.addEventListener('click', () => {
+            window.location.href = './dashboardBatak.html';
+        });
 
         let pertanyaanArray = [];
 
@@ -79,8 +80,7 @@
             pertanyaanList.innerHTML = '';
             sortedArray.forEach((pertanyaan) => {
                 const questionElement = document.createElement('div');
-                // Tampilkan pertanyaan
-                questionElement.className = 'flex items-center p-4 rounded-lg  shadow-md text-white';
+                questionElement.className = 'flex items-center p-4 rounded-lg shadow-md text-white';
                 questionElement.style.backgroundColor = '#4C968B';
                 questionElement.innerHTML = `
                     <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4" />
@@ -97,13 +97,11 @@
 
                 pertanyaanList.appendChild(questionElement);
 
-                // Jawab Button 
                 const jawabButton = questionElement.querySelector('.jawab-button');
                 jawabButton.addEventListener('click', () => {
                     window.open(`jawab.html?question=${encodeURIComponent(pertanyaan.text)}`, '_blank');
                 });
 
-                //like button
                 const likeButton = questionElement.querySelector('.like-button');
                 const heartIcon = likeButton.querySelector('i');  
                 const likeCountElement = questionElement.querySelector('.like-count');
