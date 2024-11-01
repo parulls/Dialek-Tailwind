@@ -139,7 +139,7 @@
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                window.location.href = './Bahasa.html';
+                window.location.href = './dashboardBatak.html';
             })
             .catch((error) => {
                 console.error("Error signing up:", error.message);
