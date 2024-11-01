@@ -14,20 +14,15 @@
             position: relative;
         }
         
-        input {
+        .input-container input {
             background-color: transparent;
-            border: 2px solid #ccc;
-            padding-right: 40px;
+            padding-left: 2.5rem; /* Tambahkan padding untuk memberi ruang pada ikon di sebelah kiri */
+            padding-right: 10px; /* Tambahkan padding jika diperlukan di kanan */
         }
         
-        input:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-        
-        ion-icon {
+        .input-container ion-icon {
             position: absolute;
-            right: 10px;
+            left: 10px; /* Tempatkan ikon di sebelah kiri */
             color: black;
         }
     </style>
@@ -150,6 +145,17 @@
                 console.error("Error signing up:", error.message);
                 alert("Registration failed: " + error.message);
             });
+    });
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+        // Toggle the type attribute
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle the eye icon
+        togglePassword.setAttribute('name', type === 'password' ? 'eye' : 'eye-off');
     });
 </script>
 </body>
