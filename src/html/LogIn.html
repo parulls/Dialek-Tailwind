@@ -21,20 +21,20 @@
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
 
-            <form id="login-form">
+            <form id="login-form" action="" method="post">
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="email">E-mail</label>
-                    <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="email" name="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" required />
-                        <ion-icon name="mail" class="pr-4 items-center"></ion-icon>
+                    <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
+                        <input type="email" name="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" />
+                        <ion-icon name="mail" class="pr-4  items-center"></ion-icon>
                     </div>
                     <p id="email-error" class="text-red-500 text-sm hidden">Email atau kata sandi salah.</p>
                 </div>
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
-                    <div class="flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" name="password" id="password" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" required />
-                        <ion-icon name="lock-closed" class="pr-4 items-center"></ion-icon>
+                    <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
+                        <input type="password" name="password" id="password" placeholder="*********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
+                        <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="text-center">
