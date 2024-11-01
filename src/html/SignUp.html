@@ -32,13 +32,13 @@
         }
     </style>
 </head>
-<body class="bg-custom-radial font-inter flex flex-col">
-    <nav class="flex items-center justify-between w-full p-12">
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen ">
+    <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-      </nav>
-<section class="main flex flex-col mx-auto w-2/3 min-h-screen flex-grow">
+    </nav>
+<section class="main flex flex-col mx-auto w-2/3 flex-grow">
     <div class="flex items-center justify-center px-4">
-        <div data-aos="fade-up" class="bg-shadow p-6 rounded-lg">
+        <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-gradient text-4xl font-bold text-center mb-6 w-full">Daftar</h2>
             <form id="signup-form" action="" method="post">
                 <div class="mb-4">
@@ -76,15 +76,15 @@
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
-                <div data-aos="fade-up" class="text-center">
+                <div class="text-center">
                     <button type="submit" name="register" class="text-lg py-2 bg-custom-green-button w-40 text-white font-bold rounded-lg shadow-0 hover:bg-custom-green-button hover:opacity-80">Daftar</button>
                 </div>
-                <div data-aos="fade-up" class="my-4 flex items-center">
+                <div class="my-4 flex items-center">
                     <hr class="flex-grow border-t border-black" />
                     <span class="mx-4 text-black">atau</span>
                     <hr class="flex-grow border-t border-black" />
                 </div>
-                <div data-aos="fade-up" class="flex flex-col space-y-3">
+                <div class="flex flex-col space-y-3">
                     <div class="relative w-full">
                         <button type="button" id="googleLogin" class="flex justify-center items-center w-full py-2 border border-green-600 rounded-full text-green-700 hover:bg-green-50 transition duration-300">Daftar dengan akun Google</button>
                         <img src="../assets/Google.webp" alt="Google Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
@@ -99,8 +99,6 @@
     </div>
 </section>
 <script type="module">
-    AOS.init();
-
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
     

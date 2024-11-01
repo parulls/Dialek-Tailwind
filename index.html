@@ -65,7 +65,7 @@
   </nav>
 
   <!-- Konten Utama -->
-  <section id="home" class="main flex flex-col mx-auto w-2/3 flex-grow mt-32 top-32">
+  <section id="home" class="main flex flex-col mx-auto w-2/3 flex-grow pt-32 top-2">
     <main class="mainMateri flex flex-col mb-8">
       <header class="header items-center text-center">
         <h1 class="h3 md:text-4xl lg:text-4xl font-bold text-gradient">Belajar Bahasa Daerah dengan Menyenangkan</h1>
@@ -80,7 +80,7 @@
       </div>
 
       <!-- Section: "Pilih Bahasa Yang Ingin Dipelajari" -->
-      <div class="section-title text-lg text-custom2" data-aos="fade-up">Pilih Bahasa Yang Ingin Dipelajari</div>
+      <div class="section-title text-lg text-custom2" data-aos="fade-up" id="bahasa">Pilih Bahasa Yang Ingin Dipelajari</div>
       <div class="language-selection-container text-white font-semibold" data-aos="fade-up">
         <div class="language-option" data-aos="fade-right" data-aos-delay="100">
           <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa">
@@ -167,17 +167,40 @@
     </div>
   </footer>  
 
-  <!-- Script -->
   <script>
+    // Inisiasi animasi AOS
     AOS.init();
-
-    function navigateTo(path) {
-      if (path === '/daftar') {
-        window.location.href = './src/html/SignUp.html';
-      } else if (path === '/masuk') {
-        window.location.href = './src/html/LogIn.html';
-      }
-    }
+  
+    // Script untuk navbar smooth scrolling
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+  
+          if (targetElement) {
+            const navbarHeight = document.querySelector('nav').offsetHeight;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+  
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+  
+      // Redirect ke logIn.html saat elemen dengan ID 'jawa' atau 'batak' diklik
+      document.getElementById("jawa").addEventListener("click", function() {
+        window.location.href = "./src/html/LogIn.html";
+      });
+  
+      document.getElementById("batak").addEventListener("click", function() {
+        window.location.href = "./src/html/LogIn.html";
+      });
+    });
   </script>
 </body>
 </html>
