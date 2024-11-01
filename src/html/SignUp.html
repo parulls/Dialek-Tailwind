@@ -16,13 +16,13 @@
         
         .input-container input {
             background-color: transparent;
-            padding-left: 2.5rem; /* Tambahkan padding untuk memberi ruang pada ikon di sebelah kiri */
-            padding-right: 10px; /* Tambahkan padding jika diperlukan di kanan */
+            padding-left: 2.5rem; 
+            padding-right: 10px; 
         }
         
         .input-container ion-icon {
             position: absolute;
-            left: 10px; /* Tempatkan ikon di sebelah kiri */
+            left: 10px; 
             color: black;
         }
     </style>
@@ -115,12 +115,12 @@
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                console.log("Google user signed in:", user);
-                window.location.href = './Bahasa.html';
+                console.log("Pengguna google terdaftar:", user);
+                window.location.href = './dashboardBatak.html';
             })
             .catch((error) => {
                 console.error("Error with Google sign-in:", error.message);
-                alert("Google login failed: " + error.message);
+                alert("Login dengan google gagal: " + error.message);
             });
     });
 
@@ -132,7 +132,7 @@
         const confirmPassword = document.getElementById('confirmPassword').value;
 
         if (password !== confirmPassword) {
-            alert("Passwords do not match!");
+            alert("Kata sandi tidak cocok!");
             return;
         }
 
@@ -142,20 +142,9 @@
                 window.location.href = './dashboardBatak.html';
             })
             .catch((error) => {
-                console.error("Error signing up:", error.message);
-                alert("Registration failed: " + error.message);
+                console.error("Masalah error:", error.message);
+                alert("Registrasi Gagal: " + error.message);
             });
-    });
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-
-    togglePassword.addEventListener('click', () => {
-        // Toggle the type attribute
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-
-        // Toggle the eye icon
-        togglePassword.setAttribute('name', type === 'password' ? 'eye' : 'eye-off');
     });
 </script>
 </body>

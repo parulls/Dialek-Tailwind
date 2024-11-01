@@ -24,7 +24,7 @@
                 <div class="flex items-center justify-center space-x-6">
                     <div class="px-4 py-2 bg-custom2 text-white font-bold rounded-md w-20 text-center">Ahu</div>
                     <div id="answer-line" class="w-16 border-t-2 border-custom2"></div>
-                    <div id="answer-chain" class="flex flex-wrap gap-4items-center justify-center space-x-4"></div>
+                    <div id="answer-chain" class="flex flex-wrap gap-4 items-center justify-center space-x-4"></div>
                 </div>
                 <div class="flex space-x-4">
                     <button class="button-option bg-custom2 text-white px-4 py-2 rounded-md hover:bg-custom3 transition duration-200" data-answer="Mangula">
@@ -63,7 +63,7 @@
         document.querySelectorAll('.button-option').forEach(button => {
             button.addEventListener('click', () => {
                 const word = button.getAttribute('data-answer');
-                const wordElementId = `word-${word}`;
+                const wordElementId = `${word}`;
 
                 let wordElement = document.getElementById(wordElementId);
 

@@ -49,30 +49,6 @@
         selanjutnya.addEventListener("click", () => {
             window.location.href = "./LatihanSoal2.html";
         });
-
-        function saveAnswer(answer) {
-            localStorage.setItem('selectedAnswer', answer);
-            displaySavedAnswer();
-        }
-
-        function displaySavedAnswer() {
-            const savedAnswer = localStorage.getItem('selectedAnswer');
-            const savedAnswerElement = document.getElementById('saved-answer');
-            if (savedAnswer) {
-                savedAnswerElement.textContent = `Jawaban yang Anda pilih: ${savedAnswer}`;
-            } else {
-                savedAnswerElement.textContent = '';
-            }
-        }
-
-        document.querySelectorAll('.option').forEach(button => {
-            button.addEventListener('click', () => {
-                const answer = button.getAttribute('data-answer');
-                saveAnswer(answer);
-            });
-        });
-
-        displaySavedAnswer();
     </script>
 </body>
 </html>

@@ -46,11 +46,10 @@
     <!-- Footer with Navigation Buttons -->
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        <button id="keluar-button" class="button-custom2 text-sm mx-6" disabled>Keluar</button>
+        <button id="keluar-button" class="button-custom2 text-sm mx-6">Keluar</button>
     </footer>
 
     <script>
-        // Redirect Buttons
         document.getElementById("kembali-button").addEventListener("click", () => {
             window.location.href = "./Kosakata2.html";
         });
@@ -63,7 +62,6 @@
             }
         });
 
-        // Drag-and-Drop Game Logic
         const draggables = document.querySelectorAll(".draggable");
         const droppables = document.querySelectorAll(".droppable");
 
@@ -89,14 +87,11 @@
             const draggedData = event.dataTransfer.getData("text");
             const targetData = event.target.dataset.accept;
 
-            // Check if the dropped item matches the target
             if (draggedData === targetData) {
-                // Update droppable style to show correct match
                 event.target.classList.remove("border-custom2", "text-custom2");
                 event.target.classList.add("bg-custom2", "text-white", "font-bold");
                 event.target.textContent = draggedData;
 
-                // Hide matched draggable item
                 const draggedElement = document.querySelector(`[data-match="${draggedData}"]`);
                 draggedElement.classList.add("invisible");
 
@@ -107,9 +102,6 @@
         // Check if all matches are correct
         function checkGameStatus() {
             const invisibleItems = document.querySelectorAll(".invisible");
-            if (invisibleItems.length === draggables.length) {
-                keluarButton.disabled = false; // Enable "Keluar" button once all matches are correct
-            }
         }
     </script>
 </body>
