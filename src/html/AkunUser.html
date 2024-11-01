@@ -20,7 +20,9 @@
                 </svg>
             </button>
             <div class="flex items-center font-semibold text-custom2 mr-7">
+            <button id="SettingButton">
             <i class="fa-solid fa-gear text-4xl"></i> 
+            </button>
             </div>
     </div>
     
@@ -79,6 +81,11 @@
             document.getElementById("display-name").innerText = profileName;
             document.getElementById("display-username").innerText = profileUsername;
             document.getElementById("display-profile-image").src = profileImage;
+        });
+
+        //ke halaman setting
+        document.getElementById("SettingButton").addEventListener("click", () => {
+            window.location.href = "Pengaturan.html";
         });
 </script>
 </body> 
