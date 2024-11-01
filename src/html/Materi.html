@@ -24,18 +24,17 @@
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-8">
-        <div class="bg-shadow2 flex-col flex justify-between items-center p-4">
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+        <div class="bg-shadow2 flex-col flex justify-between items-center">
             <div class="text-center">
-                <h1 class="text-gradient font-extrabold text-3xl">SUBJEK</h1>
+                <h1 class="text-gradient font-extrabold text-6xl">SUBJEK</h1>
             </div>
-            <button id="mulai-button" class="button-custom2 text-sm mt-4">
-                <p class="text-center">Mulai!</p>
+            <button id="mulai-button" class="button-custom drop-shadow-sm mt-6">
+                <p class="text-center font-bold text-md mx-6">Mulai!</p>
             </button>
         </div>
-        <div class="rating-box bg-shadow2 flex justify-center items-center flex-col p-4">
-            <div class="text-xl w-3/4 items-center justify-center flex-row flex">
+        <div class="rating-box bg-shadow2 flex justify-center items-center flex-col">
+            <div class="text-2xl w-1/2 items-center justify-center flex-row flex">
                 <div class="stars text-bar justify-between">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
@@ -82,7 +81,7 @@
         </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
-        <button id="kembali-button" class="button-custom2 text-sm mx-6">
+        <button class="button-custom2 text-sm mx-6">
             Kembali
         </button>
     </footer>
@@ -91,11 +90,6 @@
         const mulai = document.getElementById("mulai-button")
         mulai.addEventListener("click", () => {
             window.location.href = "Materi2.html";
-        });
-
-        const kembali = document.getElementById("kembali-button");
-        kembali.addEventListener("click", () => {
-            window.location.href = "dashboardBatak.html";
         });
     </script>
 </body>

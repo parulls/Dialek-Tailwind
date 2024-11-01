@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-
-<body class="bg-custom-radial font-inter flex flex-col min-h-screen justify-center">
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div class="flex items-center m-0 font-semibold text-custom2">
@@ -20,44 +19,66 @@
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-
-    <section class="main flex flex-col mx-auto w-4/5 items-center justify-center flex-grow">
-        <div id="soal" class="flex flex-col items-center justify-center text-sm p-6 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[300px] h-auto w-full max-w-4xl">
-            <div class="text-center">
-                <h1 class="text-gradient font-extrabold text-3xl">Latihan Soal</h1>
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
+            <div class="flex justify-center items-center font-bold text-lg">
+                <p>Latihan Soal</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex justify-center items-center mb-2 mt-8 px-4 h-20"> <!-- Kurangi margin-bottom -->
-                <p class="text-lg font-semibold mb-0">Pilih yang benar</p>
+            <div class="bg-custom7 w-[70%] flex items-center justify-start mb-8 mt-28 px-4">
+                <p class="text-lg font-semibold mb-4">Pilih yang  benar</p>
             </div>
-            <div class="flex flex-col items-center w-[70%] mb-16 space-y-2"> <!-- Kurangi margin-top dan margin-bottom -->
+            <div class="flex flex-col items-center w-[70%] mb-28 space-y-4">
                 <button class="button-option option w-full" data-answer="Au">
                     Lao do hami mardalani to Medan. (Kami akan pergi berlibur ke Medan)
                 </button>
                 <button class="button-option option w-full" data-answer="Hami">
                     Halaki karejo di PT Dirgantara Indonesia. (Saya bekerja di PT Dirgantara Indonesia)
                 </button>
-                <button class="button-option option w-full" data-answer="Ibana">
+                <button class="button-option option w-full data-answer="Ibana">
                     On ma Tao Toba. (Inilah Danau Toba)
                 </button>
             </div>
         </div>
     </section>
-
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
         <button id="keluar-button" class="button-custom2 text-sm mx-6">Keluar</button>
     </footer>
-
     <script>
         const kembali = document.getElementById("kembali-button");
         const keluar = document.getElementById("keluar-button");
 
         kembali.addEventListener("click", () => {
-            window.location.href = "previousPage.html"; // Ganti dengan URL halaman sebelumnya
+            window.location.href = "LatihanSoal1.html";
         });
 
         keluar.addEventListener("click", () => {
-            window.location.href = "exitPage.html"; // Ganti dengan URL halaman keluar
+            window.location.href = "dashboardBatak.html";
         });
+
+        function saveAnswer(answer) {
+            localStorage.setItem('selectedAnswer', answer);
+            displaySavedAnswer();
+        }
+
+        function displaySavedAnswer() {
+            const savedAnswer = localStorage.getItem('selectedAnswer');
+            const savedAnswerElement = document.getElementById('saved-answer');
+            if (savedAnswer) {
+                savedAnswerElement.textContent = `Jawaban yang Anda pilih: ${savedAnswer}`;
+            } else {
+                savedAnswerElement.textContent = '';
+            }
+        }
+
+        document.querySelectorAll('.option').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.getAttribute('data-answer');
+                saveAnswer(answer);
+            });
+        });
+
+        displaySavedAnswer();
     </script>
 </body>
+</html>
