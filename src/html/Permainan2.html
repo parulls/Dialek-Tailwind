@@ -99,6 +99,7 @@
             let timer = 75;
             let countdown;
             let playerTurn = true;
+            let failedWords = 0;
 
             const playerWordsList = [];
             const aiWordsList = [];
@@ -165,7 +166,6 @@
 
                 // Hitung statistik permainan
                 const successfulWords = playerWordsList.length;
-                const failedWords = 0;
                 const totalScore = playerScore; 
 
                 // Simpan ke local storage untuk digunakan dalam Sebelumgame.html
@@ -222,6 +222,7 @@
             if (!validity) {
                 errorMessage.textContent = "Masukkan kata yang valid!";
                 errorMessage.classList.remove("hidden");
+                failedWords++;
                 return;
             }
 
@@ -252,7 +253,7 @@
                 usedWords.add(aiWord.toLowerCase());
                 aiWordsList.push(aiWord);
                 lastWord = aiWord.toLowerCase();
-
+ 
                 const aiWordElement = document.createElement("div");
                 aiWordElement.textContent = aiWord;
                 aiWordElement.classList.add("used-word");
