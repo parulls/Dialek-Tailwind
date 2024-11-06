@@ -12,7 +12,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "npm start"
+    "dev": "npm start",
+    "watch": "npx tailwindcss -i ./src/styles/style.css -o ./src/styles/style2.css --watch"
   },
   "name": "dialek-tailwind",
   "version": "1.0.0",
