@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
@@ -91,8 +93,7 @@
                color: transparent;" id="total-score">0</div>
             </div>
             <div class="py-3">
-                <img src="../assets/f8f5ff28-84c5-4fa3-80d1-32a40fad6c61.webp">
-
+                <canvas id="accuracyChart" width="200" height="200"></canvas>
             </div>
             
             </div>
@@ -144,6 +145,28 @@
         // Hitung akurasi
         const totalAttempts = successfulWordsCount + failedWordsCount;
         const accuracy = totalAttempts > 0 ? Math.round((successfulWordsCount / totalAttempts) * 100) : 0;
+
+
+        const ctx = document.getElementById('accuracyChart').getContext('2d');
+        new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Successful Words', 'Failed Words'],
+            datasets: [{
+                data: [successfulWordsCount, failedWordsCount],
+                backgroundColor: ['#ADDFB3', '#62AA6D'],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                }
+            }
+        }
+    });
 
         // Tampilkan data permainan di halaman
         document.getElementById("total-score").textContent = totalScore;
