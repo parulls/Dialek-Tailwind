@@ -26,13 +26,6 @@ module.exports = {
         playfair: ['Playfair Display', 'serif'],
         poppins: ['Poppins', 'sans-serif'],
       },
-      screens: {
-        sm: '640px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px',
-      },
       padding: {
         p1: '3.75rem',
       },
@@ -126,10 +119,10 @@ module.exports = {
           "@apply max-w-5xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar":{},
         },
         ".level" : {
-          "@apply w-20 h-20 flex items-center justify-center rounded-full border-[6px] border-custom6 bg-custom8 text-custom2 font-bold font-irish text-5xl hover:opacity-80 cursor-pointer":{},
+          "@apply w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full border-[3px] sm:border-[5px] md:border-[6px] border-custom6 bg-custom8 text-custom2 font-bold font-irish text-2xl sm:text-3xl md:text-4xl hover:opacity-80 cursor-pointer":{},
         },
         ".level-lock" : {
-          "@apply w-20 h-20 flex items-center justify-center rounded-full border-[6px] border-gray-400 bg-gray-200 text-gray-600 font-bold font-irish text-5xl hover:opacity-80 cursor-pointer":{},
+          "@apply w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full border-[3px] sm:border-[5px] md:border-[6px] border-gray-400 bg-gray-200 text-gray-600 font-bold font-irish text-2xl sm:text-3xl md:text-4xl hover:opacity-80 cursor-pointer":{},
         },
       });
       addUtilities({
