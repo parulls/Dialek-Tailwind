@@ -7,6 +7,59 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+    @media (max-width: 768px) {
+        /* Compact layout on tablets */
+        .header h1 {
+            font-size: 1.5rem;
+        }
+
+        .box-custom1 {
+            width: 90%;
+        }
+
+        textarea, .box-custom1, .header h1 {
+            font-size: 0.875rem;
+            padding: 0.75rem;
+        }
+
+        .button-custom, .button-custom2 {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        /* Mobile screen layout adjustments */
+        body {
+            font-size: 0.875rem;
+        }
+
+        nav {
+            flex-direction: flex;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .box-custom1 {
+            padding: 1rem;
+            width: 95%;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        textarea{
+            font-size: 0.75rem;
+        }
+    }
+</style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
