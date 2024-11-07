@@ -3735,10 +3735,6 @@ video {
   max-width: 11rem;
 }
 
-.max-w-52{
-  max-width: 13rem;
-}
-
 .max-w-56{
   max-width: 14rem;
 }
@@ -3834,10 +3830,6 @@ video {
 
 .items-start{
   align-items: flex-start;
-}
-
-.items-end{
-  align-items: flex-end;
 }
 
 .items-center{
@@ -4647,10 +4639,6 @@ video {
 
   .md\:w-8\/12{
     width: 66.666667%;
-  }
-
-  .md\:items-start{
-    align-items: flex-start;
   }
 
   .md\:text-4xl{
