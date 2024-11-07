@@ -18,9 +18,11 @@
         }
 
         .stars-container i {
-            font-size: 3rem;
             border-color: #34343B;
         }
+        .stars-container i.active {
+            color: #FFD700; 
+        }        
     </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
@@ -33,15 +35,15 @@
     </nav>
     
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-8">
-        <div class="stars-container">
-            <div class="stars flex justify-center mb-6">
+        <div class="stars-container w-2/4">
+            <div class="stars flex justify-center mb-6 md:text-7xl sm:text-5xl">
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
                 <i class="fa-regular fa-star cursor-pointer"></i>
             </div>
-            <textarea name="komentar" id="komentar-materi" class="bg-custom7 w-full h-40 p-4 font-semibold text-sm rounded-3xl placeholder-gray-500 text-gray-500 border-black focus:outline-none focus:ring-2" placeholder="Tuliskan Komentar"></textarea>
+            <textarea name="komentar" id="komentar-materi" class="bg-custom6 opacity-50 min-w-96 min-h-60 p-4 font-semibold text-xl rounded-3xl placeholder-white text-white border-black focus:outline-none focus:ring-2" placeholder="Tuliskan Komentar"></textarea>
         </div>
         <div class="flex items-center justify-center w-full px-4 py-4">
             <button id="kirim-button" class="button-custom2 rounded-md text-sm mx-6">

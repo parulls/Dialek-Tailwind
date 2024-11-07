@@ -2,7 +2,7 @@
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-  content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],  // Adjusted to capture jsx/tsx
+  content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -126,6 +126,9 @@ module.exports = {
         },
       });
       addUtilities({
+        '.text-shadow-custom': { 
+          'text-shadow': '1px 2px 3px rgba(1, 0.5, 0, 0.3)',
+        },
         '.text-gradient': {
           'background': 'linear-gradient(to right, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%)',
           '-webkit-background-clip': 'text',
