@@ -18,13 +18,13 @@
         
         .input-container input {
             background-color: transparent;
-            padding-left: 2.5rem; /* Tambahkan padding untuk memberi ruang pada ikon di sebelah kiri */
-            padding-right: 10px; /* Tambahkan padding jika diperlukan di kanan */
+            padding-left: 2.5rem;
+            padding-right: 10px; 
         }
         
         .input-container ion-icon {
             position: absolute;
-            left: 10px; /* Tempatkan ikon di sebelah kiri */
+            left: 10px; 
             color: black;
         }
     </style>
@@ -83,7 +83,7 @@
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-
+    
         const firebaseConfig = {
             apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
             authDomain: "dialek-6a219.firebaseapp.com",
@@ -93,17 +93,13 @@
             appId: "1:423916223695:web:449bd44c54cad998d8cbba",
             measurementId: "G-4SLBH47WTM"
         };
-
+    
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-
-        document.getElementById('login-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            const googleProvider = new GoogleAuthProvider();
-            document.getElementById('google-login').addEventListener('click', () => {
+        const googleProvider = new GoogleAuthProvider();
+    
+        // Login dengan Google
+        document.getElementById('google-login').addEventListener('click', () => {
             signInWithPopup(auth, googleProvider)
                 .then((result) => {
                     alert("Login dengan Google berhasil!");
@@ -114,7 +110,13 @@
                     alert("Login Google gagal: " + error.message);
                 });
         });
-
+    
+        // Login dengan email dan password
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Login berhasil!");
@@ -130,8 +132,7 @@
                     }
                 });
         });
-
-        
     </script>
+    
 </body>
 </html>
