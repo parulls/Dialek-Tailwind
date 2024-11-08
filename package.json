@@ -13,16 +13,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "npm start",
-<<<<<<< Updated upstream
     "watch": "npx tailwindcss -i ./src/styles/style.css -o ./src/styles/style2.css --watch"
-=======
-    "watch":"npx tailwindcss -i ./src/styles/style.css -o ./src/styles/style2.css --watch"
->>>>>>> Stashed changes
   },
   "name": "dialek-tailwind",
   "version": "1.0.0",
   "main": "main.js",
   "author": "",
   "license": "ISC",
+  "keywords": [],
   "description": ""
 }

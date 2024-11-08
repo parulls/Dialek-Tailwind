@@ -39,12 +39,12 @@
                 <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
                 <form id="login-form" action="" method="post">
                     <div class="mb-4">
-                        <label class="block text-custom2 text-lg font-semibold mb-2" for="email">E-mail</label>
+                        <label class="block text-custom2 text-lg font-semibold mb-2" for="login">E-mail atau Username</label>
                         <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                            <input type="email" name="email" id="email" placeholder="nama@domain.com" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email" />
+                            <input type="text" name="login" id="login" placeholder="nama@domain.com atau username" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Email or Username" />
                             <ion-icon name="mail" class="pr-4 items-center"></ion-icon>
                         </div>
-                        <p id="email-error" class="text-red-500 text-sm hidden">Email atau kata sandi salah.</p>
+                        <p id="login-error" class="text-red-500 text-sm hidden">Email atau kata sandi salah.</p>
                     </div>
                     <div class="mb-4">
                         <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
@@ -82,7 +82,8 @@
     <script type="module">
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
     
         const firebaseConfig = {
             apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
@@ -96,6 +97,7 @@
     
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
     
         // Login dengan Google
@@ -112,24 +114,45 @@
         });
     
         // Login dengan email dan password
-        document.getElementById('login-form').addEventListener('submit', function (event) {
+        document.getElementById('login-form').addEventListener('submit', async function (event) {
             event.preventDefault();
-            const email = document.getElementById('email').value;
+            const loginInput = document.getElementById('login').value;
             const password = document.getElementById('password').value;
-    
+
+            let email = loginInput;
+
+            // Check if input is a username
+            if (!loginInput.includes("@")) {
+                try {
+                    // Fetch email based on username from Firestore
+                    const userDoc = await getDoc(doc(db, "usernames", loginInput));
+                    if (userDoc.exists()) {
+                        email = userDoc.data().email;
+                    } else {
+                        document.getElementById('login-error').classList.remove('hidden');
+                        document.getElementById('login-error').innerText = "Username tidak ditemukan.";
+                        return;
+                    }
+                } catch (error) {
+                    console.error("Error fetching email for username:", error);
+                    document.getElementById('login-error').classList.remove('hidden');
+                    document.getElementById('login-error').innerText = "Terjadi kesalahan, coba lagi.";
+                    return;
+                }
+            }
+
+            // Firebase sign-in with email and password
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Login berhasil!");
-                    window.location.href = './Bahasa.html';
+                    window.location.href = './dashboardBatak.html';
                 })
                 .catch((error) => {
                     console.error("Error signing in:", error);
-                    document.getElementById('email-error').classList.remove('hidden');
-                    if (error.code === 'auth/too-many-requests') {
-                        document.getElementById('email-error').innerText = "Terlalu banyak permintaan, coba lagi nanti.";
-                    } else {
-                        document.getElementById('email-error').innerText = "Email atau kata sandi salah.";
-                    }
+                    document.getElementById('login-error').classList.remove('hidden');
+                    document.getElementById('login-error').innerText = error.code === 'auth/too-many-requests' 
+                        ? "Terlalu banyak permintaan, coba lagi nanti." 
+                        : "Email atau kata sandi salah.";
                 });
         });
     </script>
