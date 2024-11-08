@@ -35,7 +35,7 @@
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-gradient text-4xl font-bold text-center mb-6 w-full">Daftar</h2>
-            <form id="signup-form" action="" method="post">
+            <form id="signup-form">
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="nama">Nama</label>
                     <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -94,8 +94,10 @@
     </div>
 </section>
 <script type="module">
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
     
     const firebaseConfig = {
         apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
@@ -109,7 +111,43 @@
     
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
     const googleProvider = new GoogleAuthProvider();
+
+    // Signup form
+    document.getElementById('signup-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            alert("Kata sandi tidak cocok!");
+            return;
+        }
+
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Simpan data pengguna ke Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                name: name,
+                username: username,
+                email: email,
+                userId: user.uid
+            });
+
+            alert("Pendaftaran berhasil!");
+            window.location.href = './dashboardBatak.html';
+        } catch (error) {
+            console.error("Masalah error:", error.message);
+            alert("Registrasi Gagal: " + error.message);
+        }
+    });
 
     document.getElementById('googleLogin').addEventListener('click', () => {
         signInWithPopup(auth, googleProvider)
@@ -121,29 +159,6 @@
             .catch((error) => {
                 console.error("Error with Google sign-in:", error.message);
                 alert("Login dengan google gagal: " + error.message);
-            });
-    });
-
-    document.getElementById('signup-form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (password !== confirmPassword) {
-            alert("Kata sandi tidak cocok!");
-            return;
-        }
-
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                window.location.href = './dashboardBatak.html';
-            })
-            .catch((error) => {
-                console.error("Masalah error:", error.message);
-                alert("Registrasi Gagal: " + error.message);
             });
     });
 </script>
