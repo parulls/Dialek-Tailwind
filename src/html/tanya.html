@@ -81,6 +81,8 @@
     #account-username {
         font-size: 1rem;
         margin-bottom: 1rem;
+
+    
     }
 }
     </style>
@@ -149,7 +151,7 @@
             pertanyaanList.innerHTML = '';
             sortedArray.forEach((pertanyaan) => {
                 const questionElement = document.createElement('div');
-                questionElement.className = 'flex items-center p-3 rounded-lg shadow-md text-white ';
+                questionElement.className = 'flex items-center p-3 rounded-lg shadow-md text-white m-auto w-6/12'; 
                 questionElement.style.backgroundColor = '#4C968B';
                 questionElement.innerHTML = `
                     <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-2" />
