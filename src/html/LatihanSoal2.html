@@ -20,12 +20,12 @@
         </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-white bg-opacity-30 rounded-3xl shadow-lg min-h-[500px] h-full w-full border border-custom2">
             <div class="flex justify-center items-center font-bold text-lg">
                 <p>Latihan Soal</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex items-center justify-start mb-8 mt-28 px-4">
-                <p class="text-lg font-semibold mb-4">Pilih yang  benar</p>
+            <div class="bg-custom7 w-[70%] flex mb-8 mt-28 px-4 rounded-lg justify-center items-center"> 
+                <p class="text-lg font-semibold p-2">Pilih yang  benar</p>
             </div>
             <div class="flex flex-col items-center w-[70%] mb-28 space-y-4">
                 <button class="button-option option w-full" data-answer="Au">
@@ -47,14 +47,25 @@
     <script>
         const kembali = document.getElementById("kembali-button");
         const keluar = document.getElementById("keluar-button");
-
+        const options = document.querySelectorAll(".button-option"); // Pastikan menggunakan .button-option
+    
+        options.forEach((option) => {
+            option.addEventListener("click", () => {
+                // Hapus kelas "active" dari semua tombol
+                options.forEach((btn) => btn.classList.remove("active"));
+                
+                // Tambahkan kelas "active" ke tombol yang diklik
+                option.classList.add("active");
+            });
+        });
+    
         kembali.addEventListener("click", () => {
             window.location.href = "LatihanSoal1.html";
         });
-
+    
         keluar.addEventListener("click", () => {
             window.location.href = "dashboardBatak.html";
         });
-    </script>
+    </script>    
 </body>
 </html>
