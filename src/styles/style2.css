@@ -3561,6 +3561,11 @@ video {
   margin-right: auto;
 }
 
+.my-10{
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .my-4{
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -3668,10 +3673,6 @@ video {
   margin-right: 1rem;
 }
 
-.mr-7{
-  margin-right: 1.75rem;
-}
-
 .mt-0{
   margin-top: 0px;
 }
@@ -3724,6 +3725,109 @@ video {
   margin-top: 2rem;
 }
 
+<<<<<<< Updated upstream
+=======
+.-ml-5{
+  margin-left: -1.25rem;
+}
+
+.-ml-4{
+  margin-left: -1rem;
+}
+
+.-ml-14{
+  margin-left: -3.5rem;
+}
+
+.-ml-52{
+  margin-left: -13rem;
+}
+
+.-ml-\[210px\]{
+  margin-left: -210px;
+}
+
+.-ml-\[212px\]{
+  margin-left: -212px;
+}
+
+.-ml-\[214px\]{
+  margin-left: -214px;
+}
+
+.ml-56{
+  margin-left: 14rem;
+}
+
+.ml-80{
+  margin-left: 20rem;
+}
+
+.-ml-9{
+  margin-left: -2.25rem;
+}
+
+.-ml-56{
+  margin-left: -14rem;
+}
+
+.-mr-9{
+  margin-right: -2.25rem;
+}
+
+.-mr-36{
+  margin-right: -9rem;
+}
+
+.ml-60{
+  margin-left: 15rem;
+}
+
+.-mr-44{
+  margin-right: -11rem;
+}
+
+.-mr-80{
+  margin-right: -20rem;
+}
+
+.-mr-52{
+  margin-right: -13rem;
+}
+
+.ml-\[398px\]{
+  margin-left: 398px;
+}
+
+.ml-auto{
+  margin-left: auto;
+}
+
+.-ml-2{
+  margin-left: -0.5rem;
+}
+
+.ml-\[220px\]{
+  margin-left: 220px;
+}
+
+.-ml-20{
+  margin-left: -5rem;
+}
+
+.-ml-7{
+  margin-left: -1.75rem;
+}
+
+.-ml-\[86px\]{
+  margin-left: -86px;
+}
+
+.-ml-\[96px\]{
+  margin-left: -96px;
+}
+
+>>>>>>> Stashed changes
 .block{
   display: block;
 }
@@ -3770,6 +3874,10 @@ video {
 
 .h-4{
   height: 1rem;
+}
+
+.h-56{
+  height: 14rem;
 }
 
 .h-56{
@@ -3876,10 +3984,6 @@ video {
   width: 7rem;
 }
 
-.w-3\/4{
-  width: 75%;
-}
-
 .w-32{
   width: 8rem;
 }
@@ -3954,16 +4058,16 @@ video {
   max-width: 42rem;
 }
 
-.max-w-32{
-  max-width: 8rem;
-}
-
 .max-w-3xl{
   max-width: 48rem;
 }
 
 .max-w-44{
   max-width: 11rem;
+}
+
+.max-w-52{
+  max-width: 13rem;
 }
 
 .max-w-56{
@@ -4061,6 +4165,10 @@ video {
 
 .items-start{
   align-items: flex-start;
+}
+
+.items-end{
+  align-items: flex-end;
 }
 
 .items-center{
@@ -4494,6 +4602,10 @@ video {
   padding-bottom: 2.5rem;
 }
 
+.pb-12{
+  padding-bottom: 3rem;
+}
+
 .pb-2{
   padding-bottom: 0.5rem;
 }
@@ -4532,6 +4644,10 @@ video {
 
 .text-right{
   text-align: right;
+}
+
+.text-end{
+  text-align: end;
 }
 
 .font-inter{
@@ -5178,8 +5294,13 @@ video {
     width: 66.666667%;
   }
 
+<<<<<<< Updated upstream
   .md\:gap-8{
     gap: 2rem;
+=======
+  .md\:items-start{
+    align-items: flex-start;
+>>>>>>> Stashed changes
   }
 
   .md\:text-4xl{
