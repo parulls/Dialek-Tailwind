@@ -1,7 +1,3 @@
-<!-- <?php
-    require '.functions.php';
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,71 +25,8 @@
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16 text-xl p-8 text-custom2  min-h-[500px] h-full drop-shadow-2xl">
-            <p class="font-medium">
-                Dalam sebuah kalimat, subjek adalah orang atau benda yang melakukan tindakan. Dalam bahasa Batak Toba, subjek bisa berupa kata ganti orang atau nama benda/orang tertentu. 
-                Berikut ini adalah beberapa kata ganti orang yang digunakan sebagai subjek dalam Bahasa Batak Toba:
-            </p>
-            <div class="my-4 flex items-center justify-center">
-                <table class="bg-white table-auto border-collapse">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kata Ganti</th>
-                            <th>Arti</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Au / Ahu</td>
-                            <td>Aku</td>
-                            <td>Kata ganti orang pertama tunggal</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Ho</td>
-                            <td>Kamu</td>
-                            <td>Kurang halus, informal</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Ibana / Imana</td>
-                            <td>Dia (laki-laki/perempuan)</td>
-                            <td>Kurang halus, informal</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Hasida / Nasida / Halaki</td>
-                            <td>Mereka/Dia</td>
-                            <td>Halus, lebih sopan</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Hami</td>
-                            <td>Kami</td>
-                            <td>Kata ganti orang pertama jamak</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Hamu</td>
-                            <td>Kalian / Kamu</td>
-                            <td>Halus, lebih sopan</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>On</td>
-                            <td>Kata ganti benda</td>
-                            <td>Menggantikan "itu" untuk benda</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <p class="font-medium">
-                Penggunaan kata ganti dalam Bahasa Batak Toba sangat dipengaruhi oleh konteks formalitas dan hubungan sosial. Kata ganti yang lebih halus biasanya digunakan untuk menunjukkan rasa hormat, terutama kepada orang yang lebih tua atau dalam situasi formal.
-            </p>
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
+        <!-- Konten akan dimuat di sini -->
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">
@@ -114,6 +47,41 @@
         selanjutnya.addEventListener("click", () => {
             window.location.href = "MateriRating.html";
         });
+
+        // Fungsi untuk memuat data dari materi.php
+        function loadContent() {
+            fetch('../php/materi.php')
+    .then(response => response.text())  // Ambil sebagai teks terlebih dahulu
+    .then(text => {
+        console.log(text);  // Lihat isi response sebagai teks mentah
+        try {
+            const data = JSON.parse(text); // Parsing JSON secara manual
+            if (data.status === 'success') {
+                let content = data.materi.map(item => `
+                    <div class="materi-item">
+                        <h2>${item.judul_materi}</h2>
+                        <p>${item.isi_materi}</p>
+                    </div>
+                    <hr />
+                `).join('');
+                document.getElementById('content-section').innerHTML = content;
+            } else {
+                document.getElementById('content-section').innerHTML = `<p>${data.message}</p>`;
+            }
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            document.getElementById('content-section').innerHTML = `<p>Terjadi kesalahan dalam memuat data.</p>`;
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+        document.getElementById('content-section').innerHTML = `<p>Terjadi kesalahan dalam memuat data.</p>`;
+    });
+
+        }
+
+        // Panggil fungsi loadContent saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", loadContent);
     </script>
 </body>
 </html>
