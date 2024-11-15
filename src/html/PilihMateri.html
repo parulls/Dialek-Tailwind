@@ -1,3 +1,7 @@
+<!-- <?php
+    require '.functions.php';
+?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,50 +10,6 @@
     <title>Dialek.Id</title>
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        .stars i.active {
-            color: #177b49;
-        }
-        
-        /* CSS tambahan untuk progress bar, ikon kunci, dan memperbesar ukuran kolom */
-        .progress-container {
-            width: 70%;
-            height: 8px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-left: 10px;
-        }
-        
-        .progress-bar {
-            width: 50%; /* Contoh progress, bisa diatur sesuai kebutuhan */
-            height: 100%;
-            background-color: #177b49;
-        }
-
-        .card {
-            height: 100px; /* Memperbesar tinggi kolom */
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px;
-            border: 2px solid #ddd;
-            border-radius: 25px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%; /* Memperbesar lebar kolom */
-            margin-bottom: 16px;
-        }
-
-        .lock-icon {
-            font-size: 1.5em;
-            color: #888;
-        }
-
-        .button-custom {
-            width: 20%;
-        }
-    </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
@@ -60,70 +20,75 @@
         </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <main class="">
             <div class="flex justify-center items-center mb-12">
                 <h1 class="h3 md:text-4xl lg:text-4xl font-bold text-gradient">Materi</h1>
             </div>
-            <div class="grid grid-cols-2 gap-4 justify-center p-6">
-                
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 lg:gap-12 w-full px-4">
                 <!-- Card 1: Subjek -->
-                <div class="card">
-                    <i class="fa-solid fa-lock lock-icon"></i>
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg font-semibold text-gray-700">Subjek</span>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
                     </div>
-                    <button class="button-custom">Mulai</button>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Subjek</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
                 </div>
-
+            
                 <!-- Card 2: Kata Tanya -->
-                <div class="card">
-                    <i class="fa-solid fa-lock lock-icon"></i>
-                    <div class="flex items-center gap-2">
-                        <span class="items-center text-lg font-semibold text-gray-700">Kata Tanya</span>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
                     </div>
-                    <button class="button-custom">Mulai</button>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Kata Kerja</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
                 </div>
-
+            
                 <!-- Card 3: Cara Membaca -->
-                <div class="card">
-                    <i class="fa-solid fa-lock lock-icon"></i>
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg font-semibold text-gray-700">Cara Membaca</span>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
                     </div>
-                    <button class="button-custom">Mulai</button>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Kata Benda</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
                 </div>
-
+            
                 <!-- Card 4: Angka, Bilangan, dan Satuan -->
-                <div class="card">
-                    <i class="fa-solid fa-lock lock-icon"></i>
-                    <div class="flex items-center gap-2">
-                        <span class="text-lg font-semibold text-gray-700">Bilangan</span>
-                        <div class="progress-container">
-                            <div class="progress-bar"></div>
-                        </div>
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
                     </div>
-                    <button class="button-custom">Mulai</button>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Bilangan</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
                 </div>
-                
             </div>
-        </main>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button class="button-custom2 text-sm mx-6">
             Kembali
         </button>
-        <button class="button-custom2 text-sm mx-6">
-            Selanjutnya
-        </button>
     </footer>
+    <script>
+        const kembali = document.querySelector("button");
+        kembali.addEventListener("click", () => {
+            window.location.href = "./Materi.html";
+        });
+    </script>
 </body>
-</html>
