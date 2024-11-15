@@ -1,6 +1,6 @@
-<!-- <?php
-    require '.functions.php';
-?> -->
+<?php
+    include("./php/connect.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,15 +81,23 @@
         </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
-        <button class="button-custom2 text-sm mx-6">
+        <button class="button-custom2 text-sm mx-6" id="kembaliButton">
             Kembali
         </button>
     </footer>
 
     <script>
+        // Ambil elemen tombol
+        const button = document.getElementById("kembaliButton");
+
+        // Tambahkan event listener untuk navigasi
+        button.addEventListener("click", () => {
+            window.location.href = "dashboardbatak.html";
+        });
+
         const mulai = document.getElementById("mulai-button")
         mulai.addEventListener("click", () => {
-            window.location.href = "Materi2.html";
+            window.location.href = "../php/materi.php";
         });
     </script>
 </body>

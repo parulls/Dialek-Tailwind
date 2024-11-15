@@ -1,6 +1,6 @@
-<!-- <?php
-    require '.functions.php';
-?> -->
+<?php
+    include("connect.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +71,7 @@
 
         // Kembali ke halaman sebelumnya
         kembali.addEventListener("click", () => {
-            window.location.href = "Materi2.html";
+            window.location.href = "../php/materi.php";
         });
 
         // Menandai rating telah diberikan
@@ -121,7 +121,7 @@
         // Cek apakah bisa lanjut ke halaman berikutnya
         selanjutnya.addEventListener("click", () => {
             if (ratingGiven && komentarGiven) {
-                window.location.href = "./LatihanSoal1.html";
+                window.location.href = "../php/latihansoal1.php";
             } else {
                 alert("Harap isi komentar dan beri rating sebelum melanjutkan.");
             }

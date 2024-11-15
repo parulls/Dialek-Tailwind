@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
     <style>
        
         @media (max-width: 768px) {
@@ -63,7 +65,7 @@
 
     button {
         font-size: 0.875rem;
-        padding: 0.5\rem 1rem;
+        padding: 0.5rem 1rem;
     }
 
     .jawab-button, .like-button {
@@ -130,91 +132,84 @@
     </div>
 </div>
 
-
             <div id="pertanyaanList" class="space-y-2 w-11/12"></div> 
         </div>
     </main>
 
     <script>
-       
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+        authDomain: "dialek-6a219.firebaseapp.com",
+        projectId: "dialek-6a219",
+        storageBucket: "dialek-6a219.appspot.com",
+        messagingSenderId: "423916223695",
+        appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+        measurementId: "G-4SLBH47WTM"
+    };
+    
+    // Inisialisasi Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();  
 
-        const pertanyaanInput = document.getElementById('pertanyaanInput');
-        const tanyaButton = document.getElementById('tanyaButton');
-        const pertanyaanList = document.getElementById('pertanyaanList');
-        const popularButton = document.getElementById('popularButton');
-        const terbaruButton = document.getElementById('terbaruButton');
-        const profile = document.getElementById('profile-button')
+    const pertanyaanInput = document.getElementById('pertanyaanInput');
+    const tanyaButton = document.getElementById('tanyaButton');
+    const pertanyaanList = document.getElementById('pertanyaanList');
+    const popularButton = document.getElementById('popularButton');
+    const terbaruButton = document.getElementById('terbaruButton');
 
-        let pertanyaanArray = [];
+    async function loadPertanyaan(orderByField = "timestamp") {
+        const querySnapshot = await db.collection("pertanyaan").orderBy(orderByField, "desc").get();
+        pertanyaanList.innerHTML = '';  // Clear the list before adding new data
+        querySnapshot.forEach((doc) => {
+            const pertanyaan = doc.data();
+            const questionElement = document.createElement('div');
+            questionElement.className = 'flex items-center p-3 rounded-lg shadow-md text-white';
+            questionElement.style.backgroundColor = '#4C968B';
+            questionElement.innerHTML = `
+                <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-2" />
+                <div class="flex-grow">
+                    <span class="font-semibold text-white">username</span>
+                    <p>${pertanyaan.text}</p>
+                </div>
+                <button class="jawab-button bg-green-800 text-white py-1 px-3 rounded-full shadow-md hover:bg-green-600">Jawab</button>
+                <button class="like-button text-white text-sm ml-2 w-8 h-8 rounded-full flex items-center justify-center">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <span class="like-count text-white ml-2">${pertanyaan.likes}</span>
+            `;
+            pertanyaanList.appendChild(questionElement);
+        });
+    }
 
-        function renderPertanyaan(sortedArray) {
-            pertanyaanList.innerHTML = '';
-            sortedArray.forEach((pertanyaan) => {
-                const questionElement = document.createElement('div');
-                questionElement.className = 'flex items-center p-3 rounded-lg shadow-md text-white m-auto w-6/12'; 
-                questionElement.style.backgroundColor = '#4C968B';
-                questionElement.innerHTML = `
-                    <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-2" />
-                    <div class="flex-grow">
-                        <span class="font-semibold text-white">username</span>
-                        <p>${pertanyaan.text}</p>
-                    </div>
-                    <button class="jawab-button bg-green-800 text-white py-1 px-3 rounded-full shadow-md hover:bg-green-600">Jawab</button>
-                    <button class="like-button text-white text-sm ml-2 w-8 h-8 rounded-full flex items-center justify-center">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                    <span class="like-count text-white ml-2">${pertanyaan.likes}</span>
-                `;
+    tanyaButton.addEventListener('click', async () => {
+        const pertanyaanText = pertanyaanInput.value.trim();
+        if (pertanyaanText) {
+            const pertanyaanData = {
+                text: pertanyaanText,
+                likes: 0,
+                timestamp: Date.now()
+            };
 
-                pertanyaanList.appendChild(questionElement);
-
-                const jawabButton = questionElement.querySelector('.jawab-button');
-                jawabButton.addEventListener('click', () => {
-                    window.open(`jawab.html?question=${encodeURIComponent(pertanyaan.text)}`, '_blank');
-                });
-
-                profile.addEventListener("click", () => {
-                    window.location.href = "AkunUser.html";
-                });
-
-                const likeButton = questionElement.querySelector('.like-button');
-                const heartIcon = likeButton.querySelector('i');  
-                const likeCountElement = questionElement.querySelector('.like-count');
-
-                likeButton.addEventListener('click', () => {
-                    pertanyaan.liked = !pertanyaan.liked;
-                    heartIcon.classList.toggle('text-green-800', pertanyaan.liked);
-                    heartIcon.classList.toggle('text-white', !pertanyaan.liked);
-                    pertanyaan.likes += pertanyaan.liked ? 1 : -1;
-                    likeCountElement.textContent = pertanyaan.likes;
-                });
-            });
-        }
-
-        tanyaButton.addEventListener('click', () => {
-            const pertanyaanText = pertanyaanInput.value.trim();
-            if (pertanyaanText) {
-                const pertanyaanData = {
-                    text: pertanyaanText,
-                    likes: 0,
-                    liked: false,
-                    timestamp: Date.now()
-                };
-                pertanyaanArray.push(pertanyaanData);
-                pertanyaanInput.value = '';
-                renderPertanyaan(pertanyaanArray.slice().sort((a, b) => b.timestamp - a.timestamp));
-            } else {
-                alert('Tolong masukkan pertanyaan!');
+            try {
+                await db.collection("pertanyaan").add(pertanyaanData);
+                pertanyaanInput.value = '';  // Clear the input
+                loadPertanyaan(); // Refresh questions
+            } catch (error) {
+                console.error("Error adding document:", error);
             }
-        });
+        } else {
+            alert('Tolong masukkan pertanyaan!');
+        }
+    });
 
-        popularButton.addEventListener('click', () => {
-            renderPertanyaan(pertanyaanArray.slice().sort((a, b) => b.likes - a.likes));
-        });
+    // Urutkan berdasarkan popularitas (likes) ketika tombol "Populer" diklik
+    popularButton.addEventListener('click', () => loadPertanyaan("likes"));
 
-        terbaruButton.addEventListener('click', () => {
-            renderPertanyaan(pertanyaanArray.slice().sort((a, b) => b.timestamp - a.timestamp));
-        });
+    // Urutkan berdasarkan waktu terbaru ketika tombol "Terbaru" diklik
+    terbaruButton.addEventListener('click', () => loadPertanyaan("timestamp"));
+
+    document.addEventListener('DOMContentLoaded', () => loadPertanyaan());
     </script>
 </body>
 </html>
