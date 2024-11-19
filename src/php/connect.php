@@ -1,8 +1,8 @@
 <?php
-    $host = 'localhost';
-    $user = 'root';
-    $password = '';
-    $dbname = 'dialekid';
+    $host = 'aws-0-ap-southeast-1.pooler.supabase.com';
+    $user = 'postgres.ifhedwymtdwjybimejrq';
+    $password = 'dialekdevwomen';
+    $dbname = 'postgres';
 
     $conn = new mysqli($host, $user, $password, $dbname);
 
