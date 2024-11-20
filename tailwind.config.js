@@ -17,7 +17,7 @@ module.exports = {
         custom9: '#C1E1D6',
         custom10 : '#81C780',
         custom11 : '#135B35',
-        custom12 : '#7F1D1D',
+        custom12 : '#8b0000',
         border: '#492F22',
         bar:'#34343B',
         'bg-form': '#B1D5CE',
@@ -37,7 +37,7 @@ module.exports = {
         'custom-green-button': 'linear-gradient(90deg, #81C780 0%, #135B35 100%)',
         'custom-gradient-button': 'linear-gradient(90deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%)',
         'custom-gradient2-button' : 'linear-gradient(to bottom,#81C780, #135B35)',
-        'custom-gradient3-button' : 'linear-gradient(to bottom,#Dc2626, #7F1D1D )',
+        'custom-gradient3-button' : 'linear-gradient(to bottom,#Dc2626, #8b0000)',
       },
       borderRadius: {
         1: '2rem',
@@ -114,7 +114,7 @@ module.exports = {
           "@apply bg-custom-gradient-button text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80":{},
         },
         ".button-custom2" : {
-          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 active:border-b-0 border-custom11":{},
+          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:text-lg active:border-b-0 border-custom11":{},
         },
         ".button-custom2-red" : {
           "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 active:border-b-0 border-custom12":{},
