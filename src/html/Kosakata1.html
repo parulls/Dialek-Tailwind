@@ -15,31 +15,25 @@
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow">
-        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
-            <div class="flex justify-center items-center font-bold text-lg my-6">
-                <p>Belajar Kosakata</p>
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+        <div id="soal" class="flex flex-col items-center p-4 min-h-[500px] h-full w-full">
+            <div class="flex justify-center items-center font-bold my-8">
+                <p class="text-4xl text-custom2">Belajar Kosakata</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex items-center justify-center m-4 p-4 space-x-8">
-                <div class="w-28 rounded-full flex items-center">
-                    <img src="../assets/makan.webp" alt="Makan" class="rounded-full">
+            <div class="container-custom">
+                <div class="content-custom">
+                    <p class="word-custom">danog</p>
+                <div class="detail-custom my-5">
+                    <p class="hint text-lg mb-2">Petunjuk : <span>Menyatakan ada</span></p>
+                    <p class="time text-lg">Sisa Waktu : <span><b class="font-bold">30</b>d</span></p>
                 </div>
-                <div class="bg-[#53A596] p-2 flex items-center justify-center rounded-lg">
-                    <p class="text-lg text-white font-semibold">Mangan</p>
+                <input type="text" placeholder="Masukkan kata yang sesuai" class="w-full h-14 py-4 px-4 rounded-lg border-solid border-black outline-none">
+                <div class="button flex flex-row text-lg gap-4">
+                    <button class="refresh-word button-custom w-1/2 py-3 font-medium rounded-md">Ganti Kata</button>
+                    <button class="check-word button-custom w-1/2 py-3 font-medium rounded-md">Periksa</button>
+                </div>
                 </div>
             </div>
-            <div class="flex flex-col items-center w-[70%] space-y-4 mb-10">
-                <button class="button-option option w-full" data-answer="A">
-                    Minum
-                </button>
-                <button class="button-option option w-full" data-answer="B">
-                    Makan
-                </button>
-                <button class="button-option option w-full" data-answer="C">
-                    Duduk
-                </button>
-            </div>
-            <p id="feedback" class="text-red-500 font-semibold"></p>
         </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
@@ -47,37 +41,7 @@
         <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
     <script>
-        const kembali = document.getElementById("kembali-button");
-        const selanjutnya = document.getElementById("selanjutnya-button");
-        const feedback = document.getElementById("feedback");
-
-        kembali.addEventListener("click", () => {
-            window.location.href = "./dashboardBatak.html";
-        });
-
-        selanjutnya.addEventListener("click", () => {
-            window.location.href = "./Kosakata2.html";
-        });
-
-        function saveAnswer(answer) {
-            const correctAnswer = "B"; 
-            if (answer === correctAnswer) {
-                feedback.textContent = "Jawaban benar!";
-                feedback.classList.remove("text-red-500");
-                feedback.classList.add("text-custom2");
-            } else {
-                feedback.textContent = "Jawaban salah. Coba lagi.";
-                feedback.classList.remove("text-custom2");
-                feedback.classList.add("text-red-500");
-            }
-        }
-
-        document.querySelectorAll('.option').forEach(button => {
-            button.addEventListener('click', () => {
-                const answer = button.getAttribute('data-answer');
-                saveAnswer(answer);
-            });
-        });
+        
     </script>
 </body>
 </html>
