@@ -41,7 +41,18 @@
         <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
     <script>
-        
+        const kembali = document.getElementById("kembali-button");
+        const selanjutnya = document.getElementById("selanjutnya-button");
+        const answerChain = document.getElementById("answer-chain");
+        const answerLine = document.getElementById("answer-line");
+
+        kembali.addEventListener("click", () => {
+            window.location.href = "./dashboardBatak.html";
+        });
+
+        selanjutnya.addEventListener("click", () => {
+            window.location.href = "./Kosakata2.html";
+        });
     </script>
 </body>
 </html>
