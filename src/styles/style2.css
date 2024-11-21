@@ -3140,7 +3140,8 @@ video {
 
 .button-custom{
   border-radius: 9999px;
-  background-image: linear-gradient(90deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%);
+  --tw-bg-opacity: 1;
+  background-color: rgb(23 123 73 / var(--tw-bg-opacity));
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
@@ -3157,18 +3158,463 @@ video {
   opacity: 0.8;
 }
 
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        @media (min-width: 640px){
+          .button-custom2{
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+          }
+        }
+
+        @media (min-width: 768px){
+          .button-custom2{
+            font-size: 3rem;
+            line-height: 1;
+          }
+        }
+
+        @media (min-width: 1024px){
+          .button-custom2{
+            font-size: 3.75rem;
+            line-height: 1;
+          }
+        }
+
+        @media (min-width: 1280px){
+          .button-custom2{
+            font-size: 4.5rem;
+            line-height: 1;
+          }
+        }
+
+        .button-custom2{
+          font-size: 1.875rem;
+          line-height: 2.25rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    @media (min-width: 768px){
+      @media (min-width: 640px){
+        .button-custom2{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    @media (min-width: 640px){
+      .button-custom2{
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 1024px){
+    @media (min-width: 640px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2{
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1280px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .button-custom2{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .button-custom2{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .button-custom2{
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (min-width: 768px){
+  .button-custom2{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .button-custom2{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .button-custom2{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
 .button-custom2{
   display: flex;
   width: 10rem;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
+  border-bottom-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: rgb(19 91 53 / var(--tw-border-opacity));
   background-image: linear-gradient(to bottom,#81C780, #135B35);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
   text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   font-weight: 700;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -3177,8 +3623,716 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@media (min-width: 640px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2:hover{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2:hover{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2:hover{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2:hover{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2:hover{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .button-custom2:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2:hover{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2:hover{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2:hover{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .button-custom2:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2:hover{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .button-custom2:hover{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2:hover{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    .button-custom2:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2:hover{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2:hover{
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .button-custom2:hover{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 768px){
+  .button-custom2:hover{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .button-custom2:hover{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .button-custom2:hover{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
 .button-custom2:hover{
-  opacity: 0.8;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.button-custom2:active{
+  border-bottom-width: 0px;
+}
+
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        @media (min-width: 640px){
+          .button-custom2-red{
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+          }
+        }
+
+        @media (min-width: 768px){
+          .button-custom2-red{
+            font-size: 3rem;
+            line-height: 1;
+          }
+        }
+
+        @media (min-width: 1024px){
+          .button-custom2-red{
+            font-size: 3.75rem;
+            line-height: 1;
+          }
+        }
+
+        @media (min-width: 1280px){
+          .button-custom2-red{
+            font-size: 4.5rem;
+            line-height: 1;
+          }
+        }
+
+        .button-custom2-red{
+          font-size: 1.875rem;
+          line-height: 2.25rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2-red{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2-red{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2-red{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    @media (min-width: 768px){
+      @media (min-width: 640px){
+        .button-custom2-red{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2-red{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2-red{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2-red{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+    }
+
+    @media (min-width: 640px){
+      .button-custom2-red{
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2-red{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2-red{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2-red{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2-red{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2-red{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 1024px){
+    @media (min-width: 640px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2-red{
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2-red{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2-red{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2-red{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2-red{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2-red{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2-red{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1280px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .button-custom2-red{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .button-custom2-red{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .button-custom2-red{
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+@media (min-width: 768px){
+  .button-custom2-red{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .button-custom2-red{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .button-custom2-red{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+.button-custom2-red{
+  display: flex;
+  width: 10rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border-bottom-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: rgb(139 0 0 / var(--tw-border-opacity));
+  background-image: linear-gradient(to bottom,#Dc2626, #8b0000);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.button-custom2-red:active{
+  border-bottom-width: 0px;
 }
 
 .button-option{
@@ -3478,6 +4632,557 @@ video {
   }
 }
 
+.word-custom{
+  font-family: Poppins, sans-serif;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 640px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .container-custom{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .container-custom{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .container-custom{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .container-custom{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .container-custom{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .container-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .container-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .container-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .container-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .container-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .container-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .container-custom{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .container-custom{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .container-custom{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .container-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .container-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .container-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .container-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .container-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .container-custom{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .container-custom{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .container-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .container-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .container-custom{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    .container-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .container-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .container-custom{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .container-custom{
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .container-custom{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 768px){
+  .container-custom{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .container-custom{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .container-custom{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+.container-custom{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-family: Poppins, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+}
+
+@media (min-width: 768px){
+  .container-custom{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .container-custom{
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+  }
+}
+
+@media (min-width: 640px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .content-custom{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .content-custom{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .content-custom{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .content-custom{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .content-custom{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .content-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .content-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .content-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .content-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .content-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .content-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .content-custom{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .content-custom{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .content-custom{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .content-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .content-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .content-custom{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .content-custom{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .content-custom{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .content-custom{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .content-custom{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .content-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .content-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .content-custom{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    .content-custom{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .content-custom{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .content-custom{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .content-custom{
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .content-custom{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 768px){
+  .content-custom{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .content-custom{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .content-custom{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+.content-custom{
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  display: flex;
+  width: 66.666667%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(13 68 34 / var(--tw-border-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.3;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  font-family: Poppins, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 500;
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+@media (min-width: 768px){
+  .content-custom{
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .content-custom{
+    padding-left: 3.75rem;
+    padding-right: 3.75rem;
+  }
+}
+
 .invisible{
   visibility: hidden;
 }
@@ -3538,10 +5243,6 @@ video {
   margin: 0px;
 }
 
-.m-4{
-  margin: 1rem;
-}
-
 .mx-4{
   margin-left: 1rem;
   margin-right: 1rem;
@@ -3562,9 +5263,9 @@ video {
   margin-bottom: 1rem;
 }
 
-.my-6{
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+.my-5{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .my-8{
@@ -3582,10 +5283,6 @@ video {
 
 .-mt-5{
   margin-top: -1.25rem;
-}
-
-.-mt-72{
-  margin-top: -18rem;
 }
 
 .mb-10{
@@ -3644,12 +5341,12 @@ video {
   margin-left: 1rem;
 }
 
-.ml-\[320px\]{
-  margin-left: 320px;
+.ml-\[265px\]{
+  margin-left: 265px;
 }
 
-.ml-\[450px\]{
-  margin-left: 450px;
+.ml-\[320px\]{
+  margin-left: 320px;
 }
 
 .mr-2{
@@ -3666,10 +5363,6 @@ video {
 
 .mt-10{
   margin-top: 2.5rem;
-}
-
-.mt-12{
-  margin-top: 3rem;
 }
 
 .mt-16{
@@ -3704,6 +5397,26 @@ video {
   margin-top: 1.5rem;
 }
 
+.-mt-64{
+  margin-top: -16rem;
+}
+
+.ml-\[450px\]{
+  margin-left: 450px;
+}
+
+.mt-12{
+  margin-top: 3rem;
+}
+
+.mt-7{
+  margin-top: 1.75rem;
+}
+
+.mt-8{
+  margin-top: 2rem;
+}
+
 .block{
   display: block;
 }
@@ -3734,6 +5447,10 @@ video {
 
 .h-12{
   height: 3rem;
+}
+
+.h-14{
+  height: 3.5rem;
 }
 
 .h-16{
@@ -3942,10 +5659,6 @@ video {
   max-width: 42rem;
 }
 
-.max-w-3xl{
-  max-width: 48rem;
-}
-
 .max-w-44{
   max-width: 11rem;
 }
@@ -3972,6 +5685,10 @@ video {
 
 .max-w-sm{
   max-width: 24rem;
+}
+
+.max-w-3xl{
+  max-width: 48rem;
 }
 
 .flex-1{
@@ -4085,6 +5802,10 @@ video {
 
 .gap-8{
   gap: 2rem;
+}
+
+.gap-10{
+  gap: 2.5rem;
 }
 
 .gap-x-20{
@@ -4241,6 +5962,10 @@ video {
   border-top-width: 2px;
 }
 
+.border-solid{
+  border-style: solid;
+}
+
 .border-none{
   border-style: none;
 }
@@ -4278,11 +6003,6 @@ video {
 .border-green-600{
   --tw-border-opacity: 1;
   border-color: rgb(22 163 74 / var(--tw-border-opacity));
-}
-
-.bg-\[\#53A596\]{
-  --tw-bg-opacity: 1;
-  background-color: rgb(83 165 150 / var(--tw-bg-opacity));
 }
 
 .bg-bar{
@@ -4368,10 +6088,6 @@ video {
 .bg-slate-700{
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-
-.bg-transparent{
-  background-color: transparent;
 }
 
 .bg-white{
@@ -4729,16 +6445,6 @@ video {
   opacity: 0.8;
 }
 
-.opacity-90{
-  opacity: 0.9;
-}
-
-.shadow-2xl{
-  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .shadow-lg{
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -4749,6 +6455,11 @@ video {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.outline-none{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .drop-shadow-2xl{
@@ -5454,10 +7165,6 @@ video {
     width: 4rem;
   }
 
-  .md\:w-2\/3{
-    width: 66.666667%;
-  }
-
   .md\:w-20{
     width: 5rem;
   }
@@ -5467,6 +7174,10 @@ video {
   }
 
   .md\:w-8\/12{
+    width: 66.666667%;
+  }
+
+  .md\:w-2\/3{
     width: 66.666667%;
   }
 

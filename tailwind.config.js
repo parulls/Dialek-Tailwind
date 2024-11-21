@@ -15,6 +15,9 @@ module.exports = {
         custom7:'#BBDFD9',
         custom8:'#F5EBC3',
         custom9: '#C1E1D6',
+        custom10 : '#81C780',
+        custom11 : '#135B35',
+        custom12 : '#8b0000',
         border: '#492F22',
         bar:'#34343B',
         'bg-form': '#B1D5CE',
@@ -34,6 +37,7 @@ module.exports = {
         'custom-green-button': 'linear-gradient(90deg, #81C780 0%, #135B35 100%)',
         'custom-gradient-button': 'linear-gradient(90deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%)',
         'custom-gradient2-button' : 'linear-gradient(to bottom,#81C780, #135B35)',
+        'custom-gradient3-button' : 'linear-gradient(to bottom,#Dc2626, #8b0000)',
       },
       borderRadius: {
         1: '2rem',
@@ -107,10 +111,13 @@ module.exports = {
           "@apply p-4 bg-white bg-opacity-0 rounded-1 shadow-lg border border-black py-8 w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
         ".button-custom" : {
-          "@apply bg-custom-gradient-button text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80":{},
+          "@apply bg-custom1 text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80":{},
         },
         ".button-custom2" : {
-          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex hover:opacity-80":{},
+          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:text-lg active:border-b-0 border-custom11":{},
+        },
+        ".button-custom2-red" : {
+          "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 active:border-b-0 border-custom12":{},
         },
         ".button-option" : {
           "@apply bg-custom6 w-max py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},
@@ -123,6 +130,15 @@ module.exports = {
         },
         ".level-lock" : {
           "@apply w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 flex items-center justify-center rounded-full border-[3px] sm:border-[5px] md:border-[6px] border-gray-400 bg-gray-200 text-gray-600 font-bold font-irish text-2xl sm:text-3xl md:text-4xl hover:opacity-80 cursor-pointer":{},
+        },
+        ".word-custom" : {
+          "@apply text-4xl font-poppins font-bold tracking-widest uppercase":{},
+        },
+        ".container-custom" : {
+          "@apply text-lg font-poppins font-medium flex flex-col justify-center items-center w-4/5 rounded-lg mx-auto px-5 md:px-10 lg:px-p1":{},
+        },
+        ".content-custom" :{
+          "@apply text-lg font-poppins font-medium flex flex-col justify-center items-center w-2/3 rounded-lg mx-5 my-20 px-5 py-5 md:px-10 lg:px-p1 border border-custom2 bg-white bg-opacity-30 rounded-3xl shadow-lg":{},
         },
       });
       addUtilities({
