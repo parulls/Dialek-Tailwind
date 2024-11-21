@@ -4331,6 +4331,245 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@media (min-width: 640px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      @media (min-width: 640px){
+        .button-custom2-red:hover{
+          font-size: 2.25rem;
+          line-height: 2.5rem;
+        }
+      }
+
+      @media (min-width: 768px){
+        .button-custom2-red:hover{
+          font-size: 3rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1024px){
+        .button-custom2-red:hover{
+          font-size: 3.75rem;
+          line-height: 1;
+        }
+      }
+
+      @media (min-width: 1280px){
+        .button-custom2-red:hover{
+          font-size: 4.5rem;
+          line-height: 1;
+        }
+      }
+
+      .button-custom2-red:hover{
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 768px){
+    @media (min-width: 640px){
+      .button-custom2-red:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red:hover{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+  }
+
+  @media (min-width: 640px){
+    .button-custom2-red:hover{
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red:hover{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 768px){
+  @media (min-width: 640px){
+    @media (min-width: 640px){
+      .button-custom2-red:hover{
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+
+    @media (min-width: 768px){
+      .button-custom2-red:hover{
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1024px){
+      .button-custom2-red:hover{
+        font-size: 3.75rem;
+        line-height: 1;
+      }
+    }
+
+    @media (min-width: 1280px){
+      .button-custom2-red:hover{
+        font-size: 4.5rem;
+        line-height: 1;
+      }
+    }
+
+    .button-custom2-red:hover{
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red:hover{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 1024px){
+  @media (min-width: 640px){
+    .button-custom2-red:hover{
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 768px){
+    .button-custom2-red:hover{
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .button-custom2-red:hover{
+      font-size: 3.75rem;
+      line-height: 1;
+    }
+  }
+
+  @media (min-width: 1280px){
+    .button-custom2-red:hover{
+      font-size: 4.5rem;
+      line-height: 1;
+    }
+  }
+}
+
+@media (min-width: 640px){
+  .button-custom2-red:hover{
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+@media (min-width: 768px){
+  .button-custom2-red:hover{
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .button-custom2-red:hover{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+}
+
+@media (min-width: 1280px){
+  .button-custom2-red:hover{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+}
+
+.button-custom2-red:hover{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .button-custom2-red:active{
   border-bottom-width: 0px;
 }
@@ -5371,10 +5610,6 @@ video {
 
 .mt-10{
   margin-top: 2.5rem;
-}
-
-.mt-12{
-  margin-top: 3rem;
 }
 
 .mt-16{
