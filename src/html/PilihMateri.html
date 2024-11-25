@@ -34,7 +34,7 @@
                           <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
                         </div>
                       </div>
-                    <button class="button-custom w-1/4">Mulai</button>
+                    <button id="Materi1" class="button-custom w-1/4">Mulai</button>
                 </div>
             
                 <!-- Card 2: Kata Tanya -->
@@ -81,14 +81,18 @@
             </div>
     </section>
     <footer class="flex items-center justify-between w-full px-4 py-4">
-        <button class="button-custom2 text-sm mx-6">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">
             Kembali
         </button>
     </footer>
     <script>
-        const kembali = document.querySelector("button");
+        const kembali = document.getElementById("kembali-button");
         kembali.addEventListener("click", () => {
-            window.location.href = "./materi.html";
+            window.location.href = "./dashboardBatak.html";
+        });
+        const pageMateri = document.getElementById("Materi1");
+        pageMateri.addEventListener("click", () => {
+            window.location.href = "./Materi.html";
         });
     </script>
 </body>
