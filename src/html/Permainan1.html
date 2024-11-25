@@ -53,7 +53,8 @@
             <div class="rounded-lg shadow-lg p-4" style="background-color: rgba(243, 245, 243, 0.4)">
                 <h2 class="text-2xl font-extrabold text-center" 
                 style="background-image: linear-gradient(180deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%);
-                -webkit-background-clip: text; color: transparent;">
+                 -webkit-background-clip: text;
+                color: transparent;">
                 Peringkat Harian
                 </h2>
                 <ul id="daily-rankings" class="mt-4">
@@ -115,12 +116,20 @@
         <div id="info-popup" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" style="display: none;">
             <div class="p-6 rounded-lg shadow-lg text-center" style="background-color: #CBEADF;">
                 <p id="popup-message" class="text-lg font-bold mb-4">
-                    Instruksi:
-                    <ul>
-                        <li>1. Ketik kata Batak Toba yang valid di kotak input dan tekan Enter. Kata harus dimulai dengan huruf terakhir dari kata sebelumnya dan belum pernah digunakan.</li>
-                        <li>2. Kata baru yang valid +10, kata yang pernah digunakan +5</li>
-                        <li>3.  Setelah giliran Anda, AI akan mencari kata yang valid. Skor AI bertambah sesuai aturan yang sama.</li>
-                        <li>4.Anda menang jika AI tidak bisa menemukan kata yang valid, atau skor akhir Anda lebih tinggi saat waktu habis.</li>
+                    Instruksi Permainan:
+                    <ul class="text-left">
+                        <li>1. Klik tombol "Mulai" untuk memulai permainan.</li>
+                        <li>2. Ketikkan kata Batak Toba yang valid di kotak input:
+                            <ul>
+                                <li>Kata harus dimulai dengan huruf terakhir dari kata sebelumnya.</li>
+                                <li>Kata harus berasal dari kosakata Batak Toba yang valid.</li>
+                                <li>Kata tidak boleh pernah digunakan sebelumnya.</li>
+                            </ul>
+                        </li>
+                        <li>3. Kata valid memberikan +10 poin, kata yang pernah digunakan memberikan +5 poin.</li>
+                        <li>4. Setelah giliran Anda, Komputer akan mencoba menemukan kata yang valid.</li>
+                        <li>5. Anda menang jika Komputer tidak dapat menemukan kata valid, atau skor Anda lebih tinggi saat waktu habis.</li>
+                        <li>6. Waktu bermain adalah 75 detik.</li>
                     </ul>
                 </p>
                 <button onclick="closePopup()" class="bg-green-900 hover:bg-green-800 text-white font-bold py-2 px-4 rounded">OK</button>
@@ -145,7 +154,7 @@
         new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Successful Words', 'Failed Words'],
+            labels: ['Kata Berhasil', 'Kata Gagal'],
             datasets: [{
                 data: [successfulWordsCount, failedWordsCount],
                 backgroundColor: ['#ADDFB3', '#62AA6D'],
