@@ -67,8 +67,8 @@
     </div>
     </section>
     <script>
-        // Preview profile picture
-        function previewProfilePicture(event) {
+       // Preview profile picture
+       function previewProfilePicture(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
@@ -80,7 +80,7 @@
             }
         }
 
-        // Load user data from database and populate the form
+        // Load user data from localStorage or fetch from database
         document.addEventListener("DOMContentLoaded", async () => {
             const firebaseUid = localStorage.getItem("firebase_uid"); // Get firebase_uid from localStorage
 
