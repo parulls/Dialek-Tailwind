@@ -211,17 +211,23 @@
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-    // Ambil username dari localStorage
-    const username = localStorage.getItem("username");
+        const username = localStorage.getItem("username");
+        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
+        const name = localStorage.getItem("profileName") || "Nama User";
 
-    // Periksa apakah username tersedia
-    if (username) {
-        document.getElementById("account-username").textContent = username;
-    } else {
-        alert("Silakan login terlebih dahulu.");
-        window.location.href = "login.html"; // Redirect ke halaman login jika belum login
-    }
-});
+        if (username) {
+            document.getElementById("account-username").textContent = username;
+            document.getElementById("profile-name").textContent = name;
+            document.getElementById("profile-image").src = profileImage;
+        } else {
+            alert("Silakan login terlebih dahulu.");
+            window.location.href = "login.html";
+        }
+    });
+
+    document.getElementById("SettingButton").addEventListener("click", () => {
+        window.location.href = "Pengaturan.html";
+    });
     
 </script>
 </body>
