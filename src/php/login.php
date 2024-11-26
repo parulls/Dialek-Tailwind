@@ -1,5 +1,6 @@
 <?php
 include("connect.php");
+
 header("Content-Type: application/json");
 
 try {
@@ -7,57 +8,41 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $firebaseUid = $data['firebase_uid'] ?? null;
-        $manualLogin = $data['manual_login'] ?? false; // Indikator apakah login manual
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
 
-        if ($manualLogin) {
-            $email = $data['email'] ?? null;
-
-            // Validasi input login manual
-            if (!$email || !$firebaseUid) {
-                echo json_encode(["success" => false, "message" => "Email dan UID Firebase diperlukan!"]);
-                exit;
-            }
-
-            // Cek apakah email ada di database
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email AND firebase_uid = :firebase_uid");
-            $stmt->execute([':email' => $email, ':firebase_uid' => $firebaseUid]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user) {
-                // Simpan sesi pengguna
-                session_start();
-                $_SESSION['user_id'] = $user['id_user'];
-                $_SESSION['username'] = $user['username'];
-
-                echo json_encode(["success" => true, "message" => "Login berhasil!"]);
-            } else {
-                echo json_encode(["success" => false, "message" => "Email atau UID tidak ditemukan!"]);
-            }
-        } else {
-            // Login Google: hanya gunakan UID untuk mencocokkan data
-            if (!$firebaseUid) {
-                echo json_encode(["success" => false, "message" => "UID Firebase diperlukan!"]);
-                exit;
-            }
-
-            // Periksa UID Firebase
+        // Check if login via Google or manual
+        if ($firebaseUid) {
+            // Google Login
             $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid");
             $stmt->execute([':firebase_uid' => $firebaseUid]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user) {
-                // Simpan sesi pengguna
-                session_start();
-                $_SESSION['user_id'] = $user['id_user'];
-                $_SESSION['username'] = $user['username'];
-
-                echo json_encode(["success" => true, "message" => "Login berhasil!"]);
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "message" => "Login berhasil!", "user" => $user]);
             } else {
-                echo json_encode(["success" => false, "message" => "UID tidak ditemukan di database."]);
+                echo json_encode(["success" => false, "message" => "Akun belum terdaftar."]);
             }
+        } else if ($email && $password) {
+            // Manual Login
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
+            $stmt->execute([':email' => $email]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (password_verify($password, $user['password'])) {
+                    echo json_encode(["success" => true, "message" => "Login berhasil!", "user" => $user]);
+                } else {
+                    echo json_encode(["success" => false, "message" => "Kata sandi salah."]);
+                }
+            } else {
+                echo json_encode(["success" => false, "message" => "Email atau username tidak ditemukan."]);
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
         }
     } else {
-        echo json_encode(["success" => false, "message" => "Metode request tidak valid."]);
+        echo json_encode(["success" => false, "message" => "Invalid request method."]);
     }
 } catch (Exception $e) {
     echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
