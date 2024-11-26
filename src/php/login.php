@@ -1,6 +1,5 @@
 <?php
 include("connect.php");
-
 header("Content-Type: application/json");
 
 try {
@@ -11,9 +10,8 @@ try {
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
 
-        // Check if login via Google or manual
         if ($firebaseUid) {
-            // Google Login
+            // Login menggunakan Firebase UID (contoh: Google Login)
             $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid");
             $stmt->execute([':firebase_uid' => $firebaseUid]);
 
@@ -24,7 +22,7 @@ try {
                 echo json_encode(["success" => false, "message" => "Akun belum terdaftar."]);
             }
         } else if ($email && $password) {
-            // Manual Login
+            // Login menggunakan email atau username dan password
             $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
             $stmt->execute([':email' => $email]);
 

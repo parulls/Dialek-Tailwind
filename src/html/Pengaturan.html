@@ -78,7 +78,7 @@
         }
 
         // Load profile data from localStorage on page load
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", () => {
             const profileName = localStorage.getItem("profileName");
             const profileUsername = localStorage.getItem("profileUsername");
             const profileImage = localStorage.getItem("profileImage");
@@ -90,15 +90,24 @@
 
         // Save profile data to localStorage
         function saveProfile() {
-            const name = document.getElementById("name").value;
-            const username = document.getElementById("username").value;
-            
-            // Store text values
-            localStorage.setItem("profileName", name);
-            localStorage.setItem("profileUsername", username);
-            
-            alert("Profile saved successfully!");
-        }
+        const name = document.getElementById("name").value;
+        const username = document.getElementById("username").value;
+
+        // Simpan data di localStorage
+        localStorage.setItem("profileName", name);
+        localStorage.setItem("profileUsername", username);
+
+        alert("Profil berhasil diperbarui!");
+    }
+
+    function deleteAccount() {
+    if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
+        localStorage.clear();
+        alert("Akun berhasil dihapus!");
+        window.location.href = "signup.html";
+    }
+}
+
     </script>
 
 </body>

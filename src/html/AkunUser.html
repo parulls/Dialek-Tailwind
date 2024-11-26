@@ -65,18 +65,24 @@
 </section>
 
 <script>
-        // Load and display profile data from localStorage
         document.addEventListener("DOMContentLoaded", function() {
             const profileName = localStorage.getItem("profileName") || "Nama User";
             const profileUsername = localStorage.getItem("profileUsername") || "@username";
             const profileImage = localStorage.getItem("profileImage") || "default-profile.png";
             
-            document.getElementById("display-name").innerText = profileName;
-            document.getElementById("display-username").innerText = profileUsername;
-            document.getElementById("display-profile-image").src = profileImage;
+            document.getElementById("profile-name").innerText = profileName;
+            document.getElementById("profile-username").innerText = profileUsername;
+            document.getElementById("profile-image").src = profileImage;
+
+            const username = localStorage.getItem("username");
+            if (username) {
+            document.getElementById("profile-username").textContent = username;
+            } else {
+            alert("Silakan login terlebih dahulu.");
+            window.location.href = "login.html";
+            }
         });
 
-        //ke halaman setting
         document.getElementById("SettingButton").addEventListener("click", () => {
             window.location.href = "Pengaturan.html";
         });

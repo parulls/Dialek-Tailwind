@@ -20,27 +20,25 @@ try {
         $name = trim($data['name'] ?? '');
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? null;
+        $username = trim($data['username'] ?? generateRandomUsername());
 
-        if (!$firebaseUid || !$name || !$email) {
+        if (!$name || !$email || !$username) {
             echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
             exit;
         }
 
-        // Jika password tidak ada (Google Signup), gunakan placeholder
         $hashedPassword = $password ? password_hash($password, PASSWORD_BCRYPT) : "GOOGLE_SIGNUP";
 
-        // Buat username acak jika mendaftar menggunakan Google
-        $username = $password ? trim($data['username'] ?? '') : generateRandomUsername();
+        // Periksa apakah email atau username sudah ada
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
+        $stmt->execute([':email' => $email, ':username' => $username]);
 
-        // Periksa apakah pengguna sudah terdaftar
-        $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid OR email = :email");
-        $stmt->execute([':firebase_uid' => $firebaseUid, ':email' => $email]);
         if ($stmt->rowCount() > 0) {
-            echo json_encode(["success" => false, "message" => "Pengguna sudah terdaftar!"]);
+            echo json_encode(["success" => false, "message" => "Email atau username sudah digunakan!"]);
             exit;
         }
 
-        // Simpan data ke database
+        // Simpan data pengguna ke database
         $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, email, password, username) VALUES (:firebase_uid, :name, :email, :password, :username)");
         $stmt->execute([
             ':firebase_uid' => $firebaseUid,

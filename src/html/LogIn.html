@@ -105,54 +105,52 @@
             const password = document.getElementById("password").value;
 
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, login, password);
-                const user = userCredential.user;
+        const userCredential = await signInWithEmailAndPassword(auth, login, password);
+        const user = userCredential.user;
 
-                // Post data to backend
-                const response = await fetch("../php/login.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email: user.email, firebase_uid: user.uid }),
-                });
-
-                const result = await response.json();
-                if (result.success) {
-                    alert("Login berhasil!");
-                    window.location.href = "dashboardBatak.html";
-                } else {
-                    alert("Login gagal: " + result.message);
-                }
-            } catch (error) {
-                console.error("Login Error:", error.message);
-                alert("Login gagal: " + error.message);
-            }
+        const response = await fetch("../php/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: user.email, firebase_uid: user.uid }),
         });
 
-        // Google Login
-        document.getElementById("google-login").addEventListener("click", async () => {
-            try {
-                const result = await signInWithPopup(auth, googleProvider);
-                const user = result.user;
+        const result = await response.json();
+        if (result.success) {
+            localStorage.setItem("username", result.user.username);
+            alert("Login berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert("Login gagal: " + result.message);
+        }
+    } catch (error) {
+        alert("Login gagal: " + error.message);
+    }
+});
 
-                // Send Google user UID to backend
-                const response = await fetch("../php/login.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ firebase_uid: user.uid }),
-                });
+// Google Login
+document.getElementById("google-login").addEventListener("click", async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
 
-                const resultData = await response.json();
-                if (resultData.success) {
-                    alert("Login berhasil!");
-                    window.location.href = "dashboardBatak.html";
-                } else {
-                    alert("Login gagal: " + resultData.message);
-                }
-            } catch (error) {
-                console.error("Google Login Error:", error.message);
-                alert("Login gagal: " + error.message);
-            }
+        const response = await fetch("../php/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firebase_uid: user.uid }),
         });
+
+        const resultData = await response.json();
+        if (resultData.success) {
+            localStorage.setItem("username", resultData.user.username);
+            alert("Login berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert("Login gagal: " + resultData.message);
+        }
+    } catch (error) {
+        alert("Google Login Error: " + error.message);
+    }
+});
     </script>
     
 </body>

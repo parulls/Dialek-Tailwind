@@ -118,69 +118,67 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
         event.preventDefault();
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-            // Send data to backend
-            const response = await fetch("../php/signup.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    firebase_uid: user.uid,
-                    name: name,
-                    email: email,
-                    password: password,
-                }),
-            });
+        const response = await fetch("../php/signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
+                name: name,
+                email: email,
+                username: username,
+                password: password,
+            }),
+        });
 
-            const result = await response.json();
-            if (result.success) {
-                alert("Pendaftaran berhasil!");
-                window.location.href = "dashboardBatak.html"; // Redirect to dashboardBatak.html
-            } else {
-                alert(result.message);
-            }
-        } catch (error) {
-            alert("Error: " + error.message);
+        const result = await response.json();
+        if (result.success) {
+            localStorage.setItem("username", result.username);
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert(result.message);
         }
-    });
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+});
 
-    // Google Signup
-    document.getElementById("googleLogin").addEventListener("click", async () => {
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
+// Google Signup
+document.getElementById("googleLogin").addEventListener("click", async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
 
-            // Send Google user data to backend
-            const response = await fetch("../php/signup.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    firebase_uid: user.uid,
-                    name: user.displayName,
-                    email: user.email,
-                    password: null, // Password tidak digunakan untuk Google Signup
-                }),
-            });
+        const response = await fetch("../php/signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                password: null,
+            }),
+        });
 
-            const resultData = await response.json();
-            if (resultData.success) {
-                alert("Signup berhasil!");
-                window.location.href = "dashboardBatak.html"; // Redirect to dashboardBatak.html
-            } else {
-                alert(resultData.message);
-            }
-        } catch (error) {
-            alert("Google Signup Error: " + error.message);
+        const resultData = await response.json();
+        if (resultData.success) {
+            localStorage.setItem("username", resultData.username);
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert(resultData.message);
         }
-    });
+    } catch (error) {
+        alert("Google Signup Error: " + error.message);
+    }
+});
 </script>
 </body>
 </html>
