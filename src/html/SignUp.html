@@ -97,24 +97,23 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    // Firebase configuration
-    const firebaseConfig = {
-            apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
-            authDomain: "dialek-6a219.firebaseapp.com",
-            projectId: "dialek-6a219",
-            storageBucket: "dialek-6a219.appspot.com",
-            messagingSenderId: "423916223695",
-            appId: "1:423916223695:web:449bd44c54cad998d8cbba",
-            measurementId: "G-4SLBH47WTM"
-        };
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+    authDomain: "dialek-6a219.firebaseapp.com",
+    projectId: "dialek-6a219",
+    storageBucket: "dialek-6a219.appspot.com",
+    messagingSenderId: "423916223695",
+    appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+    measurementId: "G-4SLBH47WTM"
+};
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-    // Manual Signup
-    // Manual Signup
+// Manual Signup
 document.getElementById("signup-form").addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -153,8 +152,11 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
 
         const result = await response.json();
         if (result.success) {
+            // Save user data in localStorage
+            localStorage.setItem("firebase_uid", user.uid);
             localStorage.setItem("username", result.username);
-            localStorage.setItem("profileImage", result.profile_image); // Simpan foto profil
+            localStorage.setItem("profileImage", result.profile_image); // Save profile image URL
+            localStorage.setItem("email", email);
             alert("Signup berhasil!");
             window.location.href = "dashboardBatak.html";
         } else {
@@ -179,15 +181,18 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
                 name: user.displayName || "User",
                 email: user.email,
                 profile_image: user.photoURL || "default_profile_image_url",
-                username: null,
-                password: null,
+                username: null, // Username is null initially, you can handle it as needed
+                password: null, // No password for Google sign up
             }),
         });
 
         const resultData = await response.json();
         if (resultData.success) {
+            // Save user data in localStorage
+            localStorage.setItem("firebase_uid", user.uid);
             localStorage.setItem("username", resultData.username);
             localStorage.setItem("profileImage", resultData.profile_image);
+            localStorage.setItem("email", user.email);
             alert("Signup berhasil!");
             window.location.href = "dashboardBatak.html";
         } else {
@@ -197,6 +202,81 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
         alert("Google Signup Error: " + error.message);
     }
 });
+
+// Manual Login
+document.getElementById("login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const login = document.getElementById("login").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!login || !password) {
+        alert("Email/Username dan kata sandi wajib diisi.");
+        return;
+    }
+
+    try {
+        const response = await fetch("../php/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: login, password: password }), // For normal email/password login
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Save user data in localStorage
+            localStorage.setItem("firebase_uid", result.user.firebase_uid);
+            localStorage.setItem("username", result.user.username);
+            localStorage.setItem("profileImage", result.user.profile_image);
+            localStorage.setItem("email", result.user.email);
+
+            alert("Login berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert("Login gagal: " + result.message);
+        }
+    } catch (error) {
+        alert("Terjadi kesalahan saat login: " + error.message);
+    }
+});
+
+// Google Login
+document.getElementById("google-login").addEventListener("click", async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+
+        // Get ID token from Firebase user
+        const idToken = await user.getIdToken();
+
+        const response = await fetch("../php/login.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,  // Send the firebase_uid to the backend
+                id_token: idToken, // Send ID token to the backend (optional, if you want to validate server-side)
+            }),
+        });
+
+        const resultData = await response.json();
+
+        if (resultData.success) {
+            // Save user data in localStorage and redirect
+            localStorage.setItem("firebase_uid", user.uid);
+            localStorage.setItem("username", resultData.user.username);
+            localStorage.setItem("profileImage", resultData.user.profile_image);
+            localStorage.setItem("email", user.email);
+            alert("Login berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert("Login gagal: " + resultData.message);
+        }
+    } catch (error) {
+        alert("Google Login Error: " + error.message);
+    }
+});
+
 </script>
 </body>
 </html>
