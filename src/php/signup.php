@@ -1,27 +1,41 @@
-<?php 
-    include("connect.php");
+<?php
+include("connect.php");
+header("Content-Type: application/json");
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
-        $name = $conn->quote($_POST['name']);
-        $username = $conn->quote($_POST['username']);
-        $email = $conn->quote($_POST['email']);
-        $password = $conn->quote($_POST['password']);
-        $confirmPassword = $conn->quote($_POST['confirmPassword']);
+try {
+    $data = json_decode(file_get_contents("php://input"), true);
 
-        if ($password !== $confirmPassword) {
-            echo "<script>alert('Kata sandi tidak cocok!');</script>";
-        } else {
-            // Enkripsi kata sandi
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $name = $data['name'] ?? null;
+        $username = $data['username'] ?? null;
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
 
-            // Masukkan data ke database
-            $sql = "INSERT INTO users (name, username, email, password) VALUES ('$name', '$username', '$email', '$hashedPassword')";
-            if ($conn->exec($sql)) {
-                echo "<script>alert('Pendaftaran berhasil!'); window.location.href='./dashboardBatak.html';</script>";
-            } else {
-                $errorInfo = $conn->errorInfo();
-                echo "<script>alert('Registrasi gagal: " . $errorInfo[2] . "');</script>";
-            }
+        // Validasi input
+        if (!$firebaseUid || !$name || !$username || !$email || !$password) {
+            echo json_encode(["success" => false, "message" => "Semua data harus diisi!"]);
+            exit;
         }
+
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Masukkan data ke database
+        $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, username, email, password) VALUES (:firebase_uid, :name, :username, :email, :password)");
+        $stmt->execute([
+            ':firebase_uid' => $firebaseUid,
+            ':name' => $name,
+            ':username' => $username,
+            ':email' => $email,
+            ':password' => $hashedPassword,
+        ]);
+
+        echo json_encode(["success" => true, "message" => "Pendaftaran berhasil!"]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Invalid request method."]);
     }
+} catch (Exception $e) {
+    echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
+}
 ?>

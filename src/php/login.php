@@ -1,31 +1,35 @@
 <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $login = $_POST['login']; // Email atau username
-        $password = $_POST['password'];
+session_start();
+include("connect.php");
 
-        try {
-            // Periksa apakah input adalah email atau username
-            $query = strpos($login, '@') !== false
-                ? "SELECT * FROM users WHERE email = :login"
-                : "SELECT * FROM users WHERE username = :login";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $login = trim($_POST['login']); // Email atau username
+    $password = $_POST['password'];
 
-            $stmt = $conn->prepare($query);
-            $stmt->execute([':login' => $login]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    try {
+        // Cek apakah input adalah email atau username
+        $query = strpos($login, '@') !== false
+            ? "SELECT * FROM users WHERE email = :login"
+            : "SELECT * FROM users WHERE username = :login";
 
-            if ($user && password_verify($password, $user['password'])) {
-                // Set session
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':login' => $login]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // Redirect ke halaman dashboard
-                header("Location: dashboardBatak.html");
-                exit();
-            } else {
-                $error = "Email atau kata sandi salah.";
-            }
-        } catch (PDOException $e) {
-            $error = "Terjadi kesalahan, coba lagi nanti.";
+        if ($user && password_verify($password, $user['password'])) {
+            // Set session jika login berhasil
+            $_SESSION['user_id'] = $user['id_user'];
+            $_SESSION['username'] = $user['username'];
+
+            // Redirect ke dashboard
+            header("Location: dashboardBatak.html");
+            exit();
+        } else {
+            echo "<script>alert('Email atau kata sandi salah!');</script>";
         }
+    } catch (PDOException $e) {
+        echo "<script>alert('Terjadi kesalahan, coba lagi nanti.');</script>";
     }
+}
+
 ?>
