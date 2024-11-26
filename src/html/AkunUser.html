@@ -65,27 +65,28 @@
 </section>
 
 <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const profileName = localStorage.getItem("profileName") || "Nama User";
-            const profileUsername = localStorage.getItem("profileUsername") || "@username";
-            const profileImage = localStorage.getItem("profileImage") || "default-profile.png";
-            
-            document.getElementById("profile-name").innerText = profileName;
-            document.getElementById("profile-username").innerText = profileUsername;
-            document.getElementById("profile-image").src = profileImage;
+     document.addEventListener("DOMContentLoaded", function () {
+        // Ambil data dari localStorage
+        const profileName = localStorage.getItem("profileName") || "Nama User";
+        const profileUsername = localStorage.getItem("username") || "@username";
+        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
 
-            const username = localStorage.getItem("username");
-            if (username) {
-            document.getElementById("profile-username").textContent = username;
-            } else {
+        // Tampilkan data di halaman
+        document.getElementById("profile-name").textContent = profileName;
+        document.getElementById("profile-username").textContent = profileUsername;
+        document.getElementById("profile-image").src = profileImage;
+
+        // Redirect ke login jika username kosong
+        if (!profileUsername || profileUsername === "@username") {
             alert("Silakan login terlebih dahulu.");
             window.location.href = "login.html";
-            }
-        });
+        }
+    });
 
-        document.getElementById("SettingButton").addEventListener("click", () => {
-            window.location.href = "Pengaturan.html";
-        });
+    // Arahkan ke halaman Pengaturan
+    document.getElementById("SettingButton").addEventListener("click", () => {
+        window.location.href = "Pengaturan.html";
+    });
 </script>
 </body> 
 </html>
