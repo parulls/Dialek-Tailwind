@@ -1,5 +1,5 @@
 <?php 
-    include("connect.php"); // Pastikan file ini berisi koneksi ke database.
+    include("../../connect.php"); // Pastikan file ini berisi koneksi ke database.
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dialek.Id</title>
-    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="../../../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
@@ -28,19 +28,19 @@
             <div class="bg-custom7 w-[70%] flex justify-start items-center mb-12 mt-28 px-4">
                 <!-- Bagian PHP untuk menampilkan soal -->
                 <?php
-                // Query untuk mengambil soal
-                $sql = "SELECT id, question_text FROM questions LIMIT 1"; // Ambil satu soal sebagai contoh
-                $result = $conn->query($sql);
+                // Query untuk mengambil soal dengan id = 2
+                $question_id = 2; // ID soal yang ingin diambil
+                $sql = "SELECT id, question_text FROM questions WHERE id = :id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':id', $question_id, PDO::PARAM_INT);
+                $stmt->execute();
 
-                if ($result->rowCount() > 0) {
+                if ($stmt->rowCount() > 0) {
                     // Menampilkan soal
-                    $row = $result->fetch(PDO::FETCH_ASSOC);
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     echo "<p class='text-lg font-semibold mb-4'>" . $row['question_text'] . "</p>";
-
-                    // Simpan question_id untuk digunakan dalam query jawaban
-                    $question_id = $row['id'];
                 } else {
-                    echo "<p class='text-lg font-semibold mb-4'>Tidak ada soal</p>";
+                    echo "<p class='text-lg font-semibold mb-4'>Soal dengan ID $question_id tidak ditemukan</p>";
                 }
                 ?>
             </div>
@@ -49,23 +49,23 @@
                 <!-- Bagian PHP untuk menampilkan pilihan jawaban -->
                 <?php
                 // Query untuk mengambil jawaban berdasarkan question_id
-                if (isset($question_id)) {
-                    $sql_answers = "SELECT id, answer_text FROM answers WHERE question_id = $question_id";
-                    $result_answers = $conn->query($sql_answers);
+                $sql_answers = "SELECT id, answer_text FROM answers WHERE question_id = :question_id";
+                $stmt_answers = $conn->prepare($sql_answers);
+                $stmt_answers->bindParam(':question_id', $question_id, PDO::PARAM_INT);
+                $stmt_answers->execute();
 
-                    if ($result_answers->rowCount() > 0) {
-                        while ($answer = $result_answers->fetch(PDO::FETCH_ASSOC)) {
-                            // Membuat formulir untuk setiap jawaban
-                            echo "<form method='POST' action='submit_answer.php' class='inline-block'>";
-                            echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
-                            echo "<input type='hidden' name='question_id' value='$question_id'>";
-                            echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
-                            echo "<button type='submit' class='option button-option w-32'>" . $answer['answer_text'] . "</button>";
-                            echo "</form>";
-                        }
-                    } else {
-                        echo "<p>Tidak ada pilihan jawaban</p>";
+                if ($stmt_answers->rowCount() > 0) {
+                    while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
+                        // Membuat formulir untuk setiap jawaban
+                        echo "<form method='POST' action='submit_answer.php' class='inline-block'>";
+                        echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
+                        echo "<input type='hidden' name='question_id' value='$question_id'>";
+                        echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
+                        echo "<button type='submit' class='option button-option w-32'>" . $answer['answer_text'] . "</button>";
+                        echo "</form>";
                     }
+                } else {
+                    echo "<p>Tidak ada pilihan jawaban</p>";
                 }
 
                 $conn = null;

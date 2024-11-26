@@ -35,7 +35,7 @@
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-gradient text-4xl font-bold text-center mb-6 w-full">Daftar</h2>
-            <form id="signup-form">
+            <form id="signup-form" >
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="nama">Nama</label>
                     <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -93,74 +93,92 @@
         </div>
     </div>
 </section>
-<script type="module">
+<script  type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    
+    // Firebase configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
-        authDomain: "dialek-6a219.firebaseapp.com",
-        projectId: "dialek-6a219",
-        storageBucket: "dialek-6a219.firebasestorage.app",
-        messagingSenderId: "423916223695",
-        appId: "1:423916223695:web:449bd44c54cad998d8cbba",
-        measurementId: "G-4SLBH47WTM"
-    };
-    
+            apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+            authDomain: "dialek-6a219.firebaseapp.com",
+            projectId: "dialek-6a219",
+            storageBucket: "dialek-6a219.appspot.com",
+            messagingSenderId: "423916223695",
+            appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+            measurementId: "G-4SLBH47WTM"
+        };
+
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
     const googleProvider = new GoogleAuthProvider();
 
-    // Signup form
-    document.getElementById('signup-form').addEventListener('submit', async (event) => {
+    // Manual Signup
+    document.getElementById("signup-form").addEventListener("submit", async (event) => {
         event.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (password !== confirmPassword) {
-            alert("Kata sandi tidak cocok!");
-            return;
-        }
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-            // Simpan data pengguna ke Firestore
-            await setDoc(doc(db, "users", user.uid), {
+        const response = await fetch("../php/signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
                 name: name,
-                username: username,
                 email: email,
-                userId: user.uid
-            });
+                username: username,
+                password: password,
+            }),
+        });
 
-            alert("Pendaftaran berhasil!");
-            window.location.href = './dashboardBatak.html';
-        } catch (error) {
-            console.error("Masalah error:", error.message);
-            alert("Registrasi Gagal: " + error.message);
+        const result = await response.json();
+        if (result.success) {
+            localStorage.setItem("username", result.username);
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert(result.message);
         }
-    });
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+});
 
-    document.getElementById('googleLogin').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                console.log("Pengguna google terdaftar:", user);
-                window.location.href = './dashboardBatak.html';
-            })
-            .catch((error) => {
-                console.error("Error with Google sign-in:", error.message);
-                alert("Login dengan google gagal: " + error.message);
-            });
-    });
+// Google Signup
+document.getElementById("googleLogin").addEventListener("click", async () => {
+    try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+
+        const response = await fetch("../php/signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                password: null,
+            }),
+        });
+
+        const resultData = await response.json();
+        if (resultData.success) {
+            localStorage.setItem("username", resultData.username);
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html";
+        } else {
+            alert(resultData.message);
+        }
+    } catch (error) {
+        alert("Google Signup Error: " + error.message);
+    }
+});
 </script>
 </body>
-</html
+</html>
