@@ -1,35 +1,65 @@
 <?php
-session_start();
 include("connect.php");
+header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login = trim($_POST['login']); // Email atau username
-    $password = $_POST['password'];
+try {
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    try {
-        // Cek apakah input adalah email atau username
-        $query = strpos($login, '@') !== false
-            ? "SELECT * FROM users WHERE email = :login"
-            : "SELECT * FROM users WHERE username = :login";
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $manualLogin = $data['manual_login'] ?? false; // Indikator apakah login manual
 
-        $stmt = $conn->prepare($query);
-        $stmt->execute([':login' => $login]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($manualLogin) {
+            $email = $data['email'] ?? null;
 
-        if ($user && password_verify($password, $user['password'])) {
-            // Set session jika login berhasil
-            $_SESSION['user_id'] = $user['id_user'];
-            $_SESSION['username'] = $user['username'];
+            // Validasi input login manual
+            if (!$email || !$firebaseUid) {
+                echo json_encode(["success" => false, "message" => "Email dan UID Firebase diperlukan!"]);
+                exit;
+            }
 
-            // Redirect ke dashboard
-            header("Location: dashboardBatak.html");
-            exit();
+            // Cek apakah email ada di database
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email AND firebase_uid = :firebase_uid");
+            $stmt->execute([':email' => $email, ':firebase_uid' => $firebaseUid]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                // Simpan sesi pengguna
+                session_start();
+                $_SESSION['user_id'] = $user['id_user'];
+                $_SESSION['username'] = $user['username'];
+
+                echo json_encode(["success" => true, "message" => "Login berhasil!"]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Email atau UID tidak ditemukan!"]);
+            }
         } else {
-            echo "<script>alert('Email atau kata sandi salah!');</script>";
-        }
-    } catch (PDOException $e) {
-        echo "<script>alert('Terjadi kesalahan, coba lagi nanti.');</script>";
-    }
-}
+            // Login Google: hanya gunakan UID untuk mencocokkan data
+            if (!$firebaseUid) {
+                echo json_encode(["success" => false, "message" => "UID Firebase diperlukan!"]);
+                exit;
+            }
 
+            // Periksa UID Firebase
+            $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                // Simpan sesi pengguna
+                session_start();
+                $_SESSION['user_id'] = $user['id_user'];
+                $_SESSION['username'] = $user['username'];
+
+                echo json_encode(["success" => true, "message" => "Login berhasil!"]);
+            } else {
+                echo json_encode(["success" => false, "message" => "UID tidak ditemukan di database."]);
+            }
+        }
+    } else {
+        echo json_encode(["success" => false, "message" => "Metode request tidak valid."]);
+    }
+} catch (Exception $e) {
+    echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
+}
 ?>

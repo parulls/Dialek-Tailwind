@@ -1,3 +1,5 @@
+
+
 <?php
 include("connect.php");
 header("Content-Type: application/json");
@@ -7,31 +9,36 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $firebaseUid = $data['firebase_uid'] ?? null;
-        $name = $data['name'] ?? null;
-        $username = $data['username'] ?? null;
-        $email = $data['email'] ?? null;
+        $name = trim($data['name'] ?? '');
+        $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? null;
 
-        // Validasi input
-        if (!$firebaseUid || !$name || !$username || !$email || !$password) {
-            echo json_encode(["success" => false, "message" => "Semua data harus diisi!"]);
+        if (!$firebaseUid || !$name || !$email) {
+            echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
             exit;
         }
 
-        // Hash password
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        // Jika password tidak ada (Google Signup), gunakan placeholder
+        $hashedPassword = $password ? password_hash($password, PASSWORD_BCRYPT) : "GOOGLE_SIGNUP";
 
-        // Masukkan data ke database
-        $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, username, email, password) VALUES (:firebase_uid, :name, :username, :email, :password)");
+        // Periksa apakah pengguna sudah terdaftar
+        $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid OR email = :email");
+        $stmt->execute([':firebase_uid' => $firebaseUid, ':email' => $email]);
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(["success" => false, "message" => "Pengguna sudah terdaftar!"]);
+            exit;
+        }
+
+        // Simpan data ke database
+        $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, email, password) VALUES (:firebase_uid, :name, :email, :password)");
         $stmt->execute([
             ':firebase_uid' => $firebaseUid,
             ':name' => $name,
-            ':username' => $username,
             ':email' => $email,
             ':password' => $hashedPassword,
         ]);
 
-        echo json_encode(["success" => true, "message" => "Pendaftaran berhasil!"]);
+        echo json_encode(["success" => true, "message" => "Signup berhasil!"]);
     } else {
         echo json_encode(["success" => false, "message" => "Invalid request method."]);
     }
@@ -39,3 +46,4 @@ try {
     echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
 }
 ?>
+

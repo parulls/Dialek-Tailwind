@@ -97,63 +97,70 @@
     
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
-    
-        // Login dengan Google
-        document.getElementById('google-login').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    alert("Login dengan Google berhasil!");
-                    window.location.href = './dashboardBatak.html';
-                })
-                .catch((error) => {
-                    console.error("Error with Google sign-in:", error.message);
-                    alert("Login Google gagal: " + error.message);
-                });
-        });
-    
-        // Login dengan email dan password
-        document.getElementById('login-form').addEventListener('submit', async function (event) {
+
+        // Login manual
+        document.getElementById("manual-login-form").addEventListener("submit", async (event) => {
             event.preventDefault();
-            const loginInput = document.getElementById('login').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-            let email = loginInput;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            // Check if input is a username
-            if (!loginInput.includes("@")) {
-                try {
-                    // Fetch email based on username from Firestore
-                    const userDoc = await getDoc(doc(db, "usernames", loginInput));
-                    if (userDoc.exists()) {
-                        email = userDoc.data().email;
-                    } else {
-                        document.getElementById('login-error').classList.remove('hidden');
-                        document.getElementById('login-error').innerText = "Username tidak ditemukan.";
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Error fetching email for username:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = "Terjadi kesalahan, coba lagi.";
-                    return;
-                }
-            }
-
-            // Firebase sign-in with email and password
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    alert("Login berhasil!");
-                    window.location.href = './dashboardBatak.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = error.code === 'auth/too-many-requests' 
-                        ? "Terlalu banyak permintaan, coba lagi nanti." 
-                        : "Email atau kata sandi salah.";
+                // Kirim data ke backend
+                const response = await fetch("../php/login.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        manual_login: true,
+                        email: user.email,
+                        firebase_uid: user.uid,
+                    }),
                 });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert("Login berhasil!");
+                    window.location.href = "dashboardBatak.html";
+                } else {
+                    alert("Login gagal: " + result.message);
+                }
+            } catch (error) {
+                console.error("Error manual login:", error.message);
+                alert("Login gagal: " + error.message);
+            }
+        });
+
+        // Login dengan Google
+        document.getElementById("google-login").addEventListener("click", async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+
+                // Kirim UID ke backend
+                const response = await fetch("../php/login.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ firebase_uid: user.uid }),
+                });
+
+                const resultData = await response.json();
+                if (resultData.success) {
+                    alert("Login berhasil!");
+                    window.location.href = "dashboardBatak.html";
+                } else {
+                    alert("Login gagal: " + resultData.message);
+                }
+            } catch (error) {
+                console.error("Google Login Error:", error.message);
+                alert("Google Login gagal: " + error.message);
+            }
         });
     </script>
     
