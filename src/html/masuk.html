@@ -31,13 +31,13 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full p-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="landing-page" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 flex-grow">
         <div data-aos="fade-up" class="flex items-center justify-center px-4">
             <div class="bg-shadow p-6 rounded-lg">
                 <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
-                <form id="login-form" action="" method="post">
+                <form id="login-form" action="../php/login.php" method="post">
                     <div class="mb-4">
                         <label class="block text-custom2 text-lg font-semibold mb-2" for="login">E-mail atau Username</label>
                         <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -82,9 +82,8 @@
     <script type="module">
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    
+        import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
             authDomain: "dialek-6a219.firebaseapp.com",
@@ -94,67 +93,90 @@
             appId: "1:423916223695:web:449bd44c54cad998d8cbba",
             measurementId: "G-4SLBH47WTM"
         };
-    
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
-    
-        // Login dengan Google
-        document.getElementById('google-login').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    alert("Login dengan Google berhasil!");
-                    window.location.href = './dashboard-batak.html';
-                })
-                .catch((error) => {
-                    console.error("Error with Google sign-in:", error.message);
-                    alert("Login Google gagal: " + error.message);
-                });
-        });
-    
-        // Login dengan email dan password
-        document.getElementById('login-form').addEventListener('submit', async function (event) {
+
+        // Function to handle storing user data in localStorage
+        const storeUserData = (userData) => {
+        localStorage.setItem("firebase_uid", userData.firebase_uid); // Simpan firebase_uid
+        localStorage.setItem("username", userData.username || "User");
+        localStorage.setItem("profileImage", userData.profile_image || "default_profile_image_url");
+        localStorage.setItem("email", userData.email || "");
+        localStorage.setItem("phone", userData.phone || "");
+        };
+
+        // Manual Login
+        document.getElementById("login-form").addEventListener("submit", async (event) => {
             event.preventDefault();
-            const loginInput = document.getElementById('login').value;
-            const password = document.getElementById('password').value;
 
-            let email = loginInput;
+            const login = document.getElementById("login").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-            // Check if input is a username
-            if (!loginInput.includes("@")) {
-                try {
-                    // Fetch email based on username from Firestore
-                    const userDoc = await getDoc(doc(db, "usernames", loginInput));
-                    if (userDoc.exists()) {
-                        email = userDoc.data().email;
-                    } else {
-                        document.getElementById('login-error').classList.remove('hidden');
-                        document.getElementById('login-error').innerText = "Username tidak ditemukan.";
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Error fetching email for username:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = "Terjadi kesalahan, coba lagi.";
-                    return;
-                }
+            if (!login || !password) {
+                alert("Email/Username dan kata sandi wajib diisi.");
+                return;
             }
 
-            // Firebase sign-in with email and password
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    alert("Login berhasil!");
-                    window.location.href = './dashboard-batak.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = error.code === 'auth/too-many-requests' 
-                        ? "Terlalu banyak permintaan, coba lagi nanti." 
-                        : "Email atau kata sandi salah.";
+            try {
+                const response = await fetch("../php/login.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: login, password }),
                 });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    storeUserData(result.user);
+                    alert("Login berhasil!");
+                    window.location.href = "dashboardBatak.html";
+                } else {
+                    alert("Login gagal: " + result.message);
+                }
+            } catch (error) {
+                alert("Terjadi kesalahan saat login: " + error.message);
+            }
         });
+
+        // Google Login
+        document.getElementById("google-login").addEventListener("click", async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+
+                // Get ID token from Firebase user
+                const idToken = await user.getIdToken();
+
+                const response = await fetch("../php/login.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        firebase_uid: user.uid,
+                        id_token: idToken,
+                    }),
+                });
+
+                const resultData = await response.json();
+
+                if (resultData.success) {
+                    storeUserData(resultData.user);
+                    alert("Login berhasil!");
+                    window.location.href = "dashboardBatak.html";
+                } else {
+                    alert("Login gagal: " + resultData.message);
+                }
+            } catch (error) {
+                alert("Google Login Error: " + error.message);
+            }
+        });
+
+        const landingPage = document.getElementById("landing-page");
+        landingPage.addEventListener("click", () => {
+            window.location.href = "/index.html";
+        });
+
     </script>
     
 </body>

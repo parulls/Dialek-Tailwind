@@ -1,7 +1,3 @@
-<!-- <?php
-    require '.functions.php';
-?> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -215,6 +211,26 @@
     KosaKata.addEventListener("click", () => {
         window.location.href = "./kosakata-model1.html";
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const username = localStorage.getItem("username");
+        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
+        const name = localStorage.getItem("profileName") || "Nama User";
+
+        if (username) {
+            document.getElementById("account-username").textContent = username;
+            document.getElementById("profile-name").textContent = name;
+            document.getElementById("profile-image").src = profileImage;
+        } else {
+            alert("Silakan login terlebih dahulu.");
+            window.location.href = "./masuk.html";
+        }
+    });
+
+    document.getElementById("SettingButton").addEventListener("click", () => {
+        window.location.href = "./pengaturan.html";
+    });
+    
 </script>
 </body>
 </html>

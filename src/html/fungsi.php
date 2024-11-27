@@ -1,66 +1,34 @@
-<?php 
-    // koneksi ke database
-    $conn = mysqli_connect("192.168.0.103", "root", "", "dialekid");
+<?php
+function registrasi($data) {
+    global $conn;
 
-    function query($query) {
-        global $conn;
-        $result = mysqli_query($conn, $query);
-        $rows = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $rows[] = $row;
-        }
-        return $rows;
+    $firebaseUid = $data['firebase_uid'];
+    $name = $data['name'];
+    $username = $data['username'];
+    $email = $data['email'];
+    $password = password_hash($data['password'], PASSWORD_BCRYPT);
+
+    // Validasi input
+    if (empty($firebaseUid) || empty($name) || empty($username) || empty($email)) {
+        echo "<script>alert('Semua kolom harus diisi!');</script>";
+        return false;
     }
 
-    function registrasi($data) {
-        global $conn;
-
-        $name = strtolower(stripslashes($data["name"]));
-        $username = strtolower(stripslashes($data["username"]));
-        $email = strtolower(stripslashes($data["email"]));
-        $password = mysqli_real_escape_string($conn, $data["password"]);
-        $confirmPassword = mysqli_real_escape_string($conn, $data["confirmPassword"]);
-
-        // cek apakah kolom ada yang kosong
-        if (empty($name) || empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
-            echo "<script>
-                    alert('semua kolom harus diisi!');
-                  </script>";
-            return false;
-        }
-
-        // cek username sudah ada atau belum
-        $result = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
-        if (mysqli_fetch_assoc($result)) {  
-            echo "<script>
-                    alert('username sudah terdaftar!');
-                  </script>";
-            return false;
-        }
-
-        // cek email sudah ada atau belum
-        $result = mysqli_query($conn, "SELECT email FROM user WHERE email = '$email'");
-        if (mysqli_fetch_assoc($result)) {
-            echo "<script>
-                    alert('E-Mail sudah terdaftar!');
-                  </script>";
-            return false;
-        }
-
-        // cek konfirmasi password
-        if ($password !== $confirmPassword) {
-            echo "<script>
-                    alert('konfirmasi password tidak sesuai!');
-                  </script>";
-            return false;
-        }
-
-        // enkripsi password
-        // $password = password_hash($password, PASSWORD_DEFAULT);
-
-        // tambahkan user baru ke database
-        mysqli_query($conn, "INSERT INTO user VALUES('', '$name', '$username', '$email', '$password', '', '')");
-
-        return mysqli_affected_rows($conn);
+    try {
+        // Masukkan data ke database
+        $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, username, email, password) VALUES (:firebase_uid, :name, :username, :email, :password)");
+        $stmt->execute([
+            ':firebase_uid' => $firebaseUid,
+            ':name' => $name,
+            ':username' => $username,
+            ':email' => $email,
+            ':password' => $password,
+        ]);
+        return true;
+    } catch (PDOException $e) {
+        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
+        return false;
     }
+}
+
 ?>
