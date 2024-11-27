@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/style2.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> 
     <title>Dialek.id</title>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
-    <nav class="flex items-center justify-between w-full px-4 py-4">
-        <div class="logo font-irish text-2xl">dialek.id</div>
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
 
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-    <h1 class="text-3xl font-bold text-custom2 mb-6 font-bold">Pengaturan</h1>
+    <h1 class="text-3xl font-bold text-custom2 mb-6">Pengaturan</h1>
     <!-- Main Container -->
     <div class="flex flex-col items-center p-8 mt-10 w-11/12 md:w-8/12 lg:w-6/12 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
 
@@ -32,74 +32,151 @@
         <form id="settings-form" class="w-max mt-6 space-y-4">
             <div class="flex flex-row justify-center space-x-7">
                 <div class="flex flex-col">
-                    <label class="text-gray-600">Nama</label>
-                    <input type="text" id="name" class="max-w-96 p-2 border rounded-lg" placeholder="Nama">
+                    <label class="text-gray-600" for="name">Nama</label>
+                    <input type="text" id="name" class="max-w-96 p-2 border rounded-lg" placeholder="Nama" required>
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-gray-600">Username</label>
-                    <input type="text" id="username" class="w-full p-2 border rounded-md" placeholder="Username">
+                    <label class="text-gray-600" for="username">Username</label>
+                    <input type="text" id="username" class="w-full p-2 border rounded-md" placeholder="Username" required>
                 </div>
             </div>
             <div class="flex flex-row justify-center space-x-7">
                 <div class="flex flex-col">
-                    <label class="text-gray-600">Alamat E-mail</label>
+                    <label class="text-gray-600" for="email">Alamat E-mail</label>
                     <input type="email" id="email" class="w-full p-2 border rounded-md" placeholder="Alamat E-mail">
                 </div>
                 <div class="flex flex-col">
-                    <label class="text-gray-600">Nomor Telepon</label>
-                    <input type="text" id="phone" class="w-full p-2 border rounded-md" placeholder="+62">
+                    <label class="text-gray-600" for="phone">Nomor Telepon</label>
+                    <input type="tel" id="phone" class="w-full p-2 border rounded-md" placeholder="+62" required>
                 </div>
             </div>
+          
+
+           
         </form>
 
-        <!-- Buttons -->
+
+         <!-- Buttons -->
         <div class="flex justify-between w-full mt-6 space-x-4">
             <button onclick="deleteAccount()" class="flex-1 py-2 bg-custom4 text-white rounded-full hover:bg-red-900">Hapus Akun</button>
             <button onclick="saveProfile()" class="flex-1 py-2 bg-custom1 text-white rounded-full hover:bg-green-900">Simpan</button>
         </div>
     </div>
     </section>
-
+        
+    </div>
+    </section>
     <script>
-        // Preview selected profile picture and save it as base64
-        function previewProfilePicture(event) {
-            const profileImage = document.getElementById("profile-image");
+       // Preview profile picture
+       function previewProfilePicture(event) {
             const file = event.target.files[0];
-            
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    profileImage.src = e.target.result; // Show preview
-                    // Save image as base64 in localStorage
+                reader.onload = function (e) {
+                    document.getElementById("profile-image").src = e.target.result;
                     localStorage.setItem("profileImage", e.target.result);
                 };
-                reader.readAsDataURL(file); // Convert to base64
+                reader.readAsDataURL(file);
             }
         }
 
-        // Load profile data from localStorage on page load
-        document.addEventListener("DOMContentLoaded", function() {
-            const profileName = localStorage.getItem("profileName");
-            const profileUsername = localStorage.getItem("profileUsername");
-            const profileImage = localStorage.getItem("profileImage");
+        // Load user data from localStorage or fetch from database
+        document.addEventListener("DOMContentLoaded", async () => {
+            const firebaseUid = localStorage.getItem("firebase_uid"); // Get firebase_uid from localStorage
 
-            if (profileName) document.getElementById("name").value = profileName;
-            if (profileUsername) document.getElementById("username").value = profileUsername;
-            if (profileImage) document.getElementById("profile-image").src = profileImage;
+            if (!firebaseUid) {
+                alert("Silakan login terlebih dahulu.");
+                window.location.href = "login.html"; // Redirect to login page
+                return;
+            }
+
+            try {
+                // Fetch user data based on firebase_uid
+                const response = await fetch(`../php/getUserData.php?firebase_uid=${firebaseUid}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const userData = result.data;
+                    document.getElementById("name").value = userData.name || "";
+                    document.getElementById("username").value = userData.username || "";
+                    document.getElementById("email").value = userData.email || "";
+                    document.getElementById("phone").value = userData.phone || "";
+                    document.getElementById("profile-image").src = userData.profile_image || "../assets/pp.webp";
+
+                    // Temporarily store data in localStorage for future use
+                    localStorage.setItem("profileName", userData.name);
+                    localStorage.setItem("username", userData.username);
+                    localStorage.setItem("email", userData.email);
+                    localStorage.setItem("phone", userData.phone);
+                    localStorage.setItem("profileImage", userData.profile_image || "../assets/pp.webp");
+                } else {
+                    alert("Gagal memuat data pengguna: " + result.message);
+                }
+            } catch (error) {
+                alert("Terjadi kesalahan: " + error.message);
+            }
         });
 
-        // Save profile data to localStorage
-        function saveProfile() {
-            const name = document.getElementById("name").value;
-            const username = document.getElementById("username").value;
-            
-            // Store text values
-            localStorage.setItem("profileName", name);
-            localStorage.setItem("profileUsername", username);
-            
-            alert("Profile saved successfully!");
+        // Save profile data to the database
+        async function saveProfile() {
+            const firebaseUid = localStorage.getItem("firebase_uid"); // Get firebase_uid from localStorage
+            const name = document.getElementById("name").value.trim();
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const profileImage = localStorage.getItem("profileImage") || "";
+
+            if (!firebaseUid) {
+                alert("Firebase UID tidak ditemukan. Silakan login ulang.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            if (!name || !username || !email || !phone) {
+                alert("Nama, username, email, dan nomor telepon wajib diisi!");
+                return;
+            }
+
+            try {
+                const response = await fetch("../php/updateProfile.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ firebase_uid: firebaseUid, name, username, email, phone, profileImage }),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert("Profil berhasil diperbarui!");
+                    localStorage.setItem("profileName", name);
+                    localStorage.setItem("username", username);
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("phone", phone);
+                } else {
+                    alert("Gagal memperbarui profil: " + result.message);
+                }
+            } catch (error) {
+                alert("Terjadi kesalahan: " + error.message);
+            }
         }
+
+        // Delete user account
+        function deleteAccount() {
+            if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
+                localStorage.clear();
+                alert("Akun berhasil dihapus!");
+                window.location.href = "signup.html";
+            }
+        }
+
+        const home = document.getElementById("home");
+
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.html";
+        });
     </script>
+    
+    
 
 </body>
 </html>

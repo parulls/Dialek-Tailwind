@@ -1,0 +1,108 @@
+<!-- <?php
+    require '.functions.php';
+?> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialek.Id</title>
+    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
+            <p id="account-username" class="px-4 text-xl">username</p>
+            <i class="fa-solid fa-user text-2xl"></i> 
+        </div>
+    </nav>
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+            <div class="flex justify-center items-center mb-12">
+                <h1 class="h3 md:text-4xl lg:text-4xl font-bold text-gradient">Materi</h1>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10 lg:gap-12 w-full px-4">
+                <!-- Card 1: Subjek -->
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                    </div>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Subjek</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button id="masuk-materi" class="button-custom w-1/4">Mulai</button>
+                </div>
+            
+                <!-- Card 2: Kata Tanya -->
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
+                    </div>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Kata Kerja</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
+                </div>
+            
+                <!-- Card 3: Cara Membaca -->
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
+                    </div>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Kata Benda</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
+                </div>
+            
+                <!-- Card 4: Angka, Bilangan, dan Satuan -->
+                <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
+                    <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
+                        <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
+                    </div>
+                    <div class="flex flex-col gap-3 w-1/2 md:w-6/12">
+                        <span class="text-2xl md:text-xl font-semibold text-gray-700">Bilangan</span>
+                        <div class="w-full h-3 bg-gray-200 rounded-md overflow-hidden">
+                          <div class="progress-bar w-1/2 h-full bg-custom-gradient2-button"></div>
+                        </div>
+                      </div>
+                    <button class="button-custom w-1/4">Mulai</button>
+                </div>
+            </div>
+    </section>
+    <footer class="flex items-center justify-between w-full px-4 py-4">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">
+            Kembali
+        </button>
+    </footer>
+    <script>
+        const home = document.getElementById("home");
+        const profile = document.getElementById("profile-button");
+    
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.html";
+        });
+        profile.addEventListener("click", () => {
+            window.location.href = "./profil-pengguna.html";
+        });
+
+        const kembaliButton = document.getElementById("kembali-button");
+        kembaliButton.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.html";
+        });
+        const pageMateri = document.getElementById("masuk-materi");
+        pageMateri.addEventListener("click", () => {
+            window.location.href = "./materi-topik.html";
+        });
+    </script>
+</body>
