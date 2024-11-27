@@ -10,15 +10,81 @@
     <title>Dialek.Id</title>
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.5s ease;
+            z-index: 1000;
+        }
+        #sidebar.open {
+            left: 0;
+        }
+    </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
+    <div id="sidebar">
+        <div class="flex items-center justify-between w-full px-12 py-12">
+            <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        </div>
+        <ul class="mt-4 space-y-2">
+            <li>
+                <a href="./dashboard-batak.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">dashboard</span>
+                    <span class="text-black font-medium">Dasbor</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">forum</span>
+                    <span class="text-black font-medium">Forum Diskusi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./materi-pilih-topik.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">book</span>
+                    <span class="text-black font-medium">Materi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./permainan-hasil.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">extension</span>
+                    <span class="text-black font-medium">Permainan</span>
+                </a>
+            </li>
+            <li>
+                <a href="./literasi-budaya-level.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">auto_stories</span>
+                    <span class="text-black font-medium">Literasi Budaya</span>
+                </a>
+            </li>
+            <li>
+                <a href="./kosakata-model1.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">note_stack</span>
+                    <span class="text-black font-medium">Kosakata</span>
+                </a>
+            </li>
+            <li>
+                <a id="logout-button" href="/index.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">logout</span>
+                    <span class="text-black font-medium">Keluar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
             <div class="flex justify-center items-center mb-12">
                 <h1 class="h3 md:text-4xl lg:text-4xl font-bold text-gradient">Materi</h1>
@@ -86,23 +152,34 @@
         </button>
     </footer>
     <script>
-        const home = document.getElementById("home");
         const profile = document.getElementById("profile-button");
-    
-        home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.html";
-        });
         profile.addEventListener("click", () => {
             window.location.href = "./profil-pengguna.html";
         });
+
+        // Sidebar toggle function
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+        }
 
         const kembaliButton = document.getElementById("kembali-button");
         kembaliButton.addEventListener("click", () => {
             window.location.href = "./dashboard-batak.html";
         });
+
         const pageMateri = document.getElementById("masuk-materi");
         pageMateri.addEventListener("click", () => {
             window.location.href = "./materi-topik.html";
+        });
+
+        const logoutButton = document.getElementById("logout-button");
+        logoutButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            const confirmed = confirm("Apakah Anda yakin ingin keluar?");
+            if (confirmed) {
+                window.location.href = "/index.html";
+            }
         });
     </script>
 </body>

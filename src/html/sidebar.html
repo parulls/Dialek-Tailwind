@@ -3,15 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dialek.id Sidebar</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <nav id="sidebar ">
-        <ul>
-            <li><a href="./dashboard-batak.html">Home</a></li>
-            <li><a href="./materi-pilih-topik.html">Account</a></li>
-            <li><a href="">Contact</a></li>
+<body class="bg-gray-100 font-sans">
+
+    <!-- Hamburger Menu -->
+    <button id="hamburger" class="fixed top-4 left-4 z-50 p-2 bg-blue-600 text-white rounded-md shadow-lg lg:hidden">
+        <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <!-- Sidebar -->
+    <nav id="sidebar" class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <nav class="flex items-center justify-between w-full p-12">
+            <div id="landing-page" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        </nav>
+        <ul class="mt-4 space-y-2">
+            <li>
+                <a href="./dashboard-batak.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">dashboard</span>
+                    <span class="text-gray-800 font-medium">Dasbor</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">forum</span>
+                    <span class="text-gray-800 font-medium">Forum Diskusi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./materi-pilih-topik.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">book</span>
+                    <span class="text-gray-800 font-medium">Materi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./permainan-model.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">extension</span>
+                    <span class="text-gray-800 font-medium">Permainan</span>
+                </a>
+            </li>
+            <li>
+                <a href="./literasi-budaya-level.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">auto_stories</span>
+                    <span class="text-gray-800 font-medium">Literasi Budaya</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">note_stack</span>
+                    <span class="text-gray-800 font-medium">Kosakata</span>
+                </a>
+            </li>
+            <li>
+                <a href="/index.html" class="flex items-center space-x-3 px-4 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-blue-500">logout</span>
+                    <span class="text-gray-800 font-medium">Keluar</span>
+                </a>
+            </li>
         </ul>
     </nav>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 p-8">
+        <h1 class="text-3xl font-semibold text-gray-800">Selamat Datang di Dialek.id</h1>
+        <p class="mt-4 text-gray- 600">Pilih menu di sebelah kiri untuk melanjutkan.</p>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+
 </body>
-</html>
+</html> ⬤
