@@ -110,14 +110,17 @@ module.exports = {
         ".bg-shadow2": {
           "@apply p-4 bg-white bg-opacity-0 rounded-1 shadow-lg border border-black py-8 w-full max-w-md md:max-w-lg lg:max-w-xl": {},
         },
+        ".button-lock": {
+          "@apply bg-gray-400 text-white py-2 px-4 rounded-full font-bold shadow-xl w-full": {},
+        },
         ".button-custom" : {
           "@apply bg-custom1 text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80 w-full":{},
         },
         ".button-custom2" : {
-          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:text-lg active:border-b-0 border-custom11":{},
+          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 transition duration-300 active:border-b-0 border-custom11":{},
         },
         ".button-custom2-red" : {
-          "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:text-lg active:border-b-0 border-custom12":{},
+          "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 active:border-b-0 border-custom12":{},
         },
         ".button-option" : {
           "@apply bg-custom6 w-max py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},

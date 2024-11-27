@@ -25,7 +25,7 @@
                     <div class="flex flex-col">
                         <h1 class="text-4xl font-bold text-gradient font-poppins text-center">Bahasa Batak Toba</h1>
                         <a href="./forum-diskusi-tanya.html">
-                            <img src="../assets/ForumDiskusi.webp" alt="ForumDiskusi" class="max-w-sm flex hover:opacity-80 cursor-pointer transition duration-300" />
+                            <img src="../assets/ForumDiskusi.webp" alt="ForumDiskusi" class="max-w-sm hover:scale-90 cursor-pointer transition duration-300 transform" />
                         </a>
                     </div>
                 </div>
@@ -217,14 +217,14 @@
         const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
         const name = localStorage.getItem("profileName") || "Nama User";
 
-        if (username) {
-            document.getElementById("account-username").textContent = username;
-            document.getElementById("profile-name").textContent = name;
-            document.getElementById("profile-image").src = profileImage;
-        } else {
-            alert("Silakan login terlebih dahulu.");
-            window.location.href = "./masuk.html";
-        }
+        // if (username) {
+        //     document.getElementById("account-username").textContent = username;
+        //     document.getElementById("profile-name").textContent = name;
+        //     document.getElementById("profile-image").src = profileImage;
+        // } else {
+        //     alert("Silakan login terlebih dahulu.");
+        //     window.location.href = "./masuk.html";
+        // }
     });
 
     document.getElementById("SettingButton").addEventListener("click", () => {
