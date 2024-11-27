@@ -142,7 +142,7 @@
             });
 
             alert("Pendaftaran berhasil!");
-            window.location.href = './dashboardBatak.html';
+            window.location.href = './dashboard-batak.html';
         } catch (error) {
             console.error("Masalah error:", error.message);
             alert("Registrasi Gagal: " + error.message);
@@ -154,7 +154,7 @@
             .then((result) => {
                 const user = result.user;
                 console.log("Pengguna google terdaftar:", user);
-                window.location.href = './dashboardBatak.html';
+                window.location.href = './dashboard-batak.html';
             })
             .catch((error) => {
                 console.error("Error with Google sign-in:", error.message);

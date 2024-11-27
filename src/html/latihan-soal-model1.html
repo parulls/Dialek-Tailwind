@@ -13,8 +13,8 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -49,17 +49,22 @@
         const profile = document.getElementById("profile-button");
         const kembali = document.getElementById("kembali-button");
         const selanjutnya = document.getElementById("selanjutnya-button");
+        const home = document.getElementById("home");
+
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.html";
+        });
 
         profile.addEventListener("click", () => {
-            window.location.href = "AkunUser.html";
+            window.location.href = "./profil-pengguna.html";
         });
 
         kembali.addEventListener("click", () => {
-            window.location.href = "./MateriRating.html";
+            window.location.href = "./materi-isi.html";
         });
 
         selanjutnya.addEventListener("click", () => {
-            window.location.href = "./LatihanSoal2.html";
+            window.location.href = "./latihan-soal-model2.html";
         });
     </script>
 </body>

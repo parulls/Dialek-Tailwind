@@ -1,4 +1,8 @@
 <?php
+    require "connect.php";
+    require '.functions.php';
+    session_start();
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $login = $_POST['login']; // Email atau username
         $password = $_POST['password'];

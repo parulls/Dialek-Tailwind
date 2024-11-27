@@ -88,7 +88,7 @@
 <script>
   function navigateTo(path) {
     if (path === '/daftar') {
-      window.location.href = 'src/html/SignUp.php';
+      window.location.href = './src/html/SignUp.php';
     } else if (path === '/masuk') {
       window.location.href = 'src/html/LogIn.php';
     }

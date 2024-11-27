@@ -8,12 +8,12 @@
     <title>Dialek.id</title>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
-    <nav class="flex items-center justify-between w-full px-4 py-4">
-        <div class="logo font-irish text-2xl">dialek.id</div>
+    <nav class="flex items-center justify-between w-full px-12 py-12">
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
 
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-    <h1 class="text-3xl font-bold text-custom2 mb-6 font-bold">Pengaturan</h1>
+    <h1 class="text-3xl font-bold text-custom2 mb-6">Pengaturan</h1>
     <!-- Main Container -->
     <div class="flex flex-col items-center p-8 mt-10 w-11/12 md:w-8/12 lg:w-6/12 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
 
@@ -99,6 +99,12 @@
             
             alert("Profile saved successfully!");
         }
+
+        const home = document.getElementById("home");
+
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.html";
+        });
     </script>
 
 </body>

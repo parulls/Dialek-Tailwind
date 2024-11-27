@@ -46,7 +46,7 @@
             <textarea name="komentar" id="komentar-materi" class="bg-custom6 opacity-50 min-w-96 min-h-60 p-4 font-semibold text-xl rounded-3xl placeholder-white text-white border-black focus:outline-none focus:ring-2" placeholder="Tuliskan Komentar"></textarea>
         </div>
         <div class="flex items-center justify-center w-full px-4 py-4">
-            <button id="kirim-button" class="button-custom2 rounded-md text-sm mx-6">
+            <button id="kirim-button" class="button-custom w-1/5 h-5 rounded-md text-sm mx-6">
                 Kirim
             </button>
         </div>
@@ -76,7 +76,7 @@
 
         // Menandai rating telah diberikan
         stars.forEach((star, index1) => {
-            star.addEventListener("click", () => {
+            star.addEventListener("click", () => { 
                 stars.forEach((star, index2) => {
                     if (index1 >= index2) {
                         star.classList.remove("fa-regular");

@@ -53,7 +53,7 @@ try {
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
+    <section class="main flex flex-col mx-auto w-full items-center flex-grow space-y-16">
         <div id="soal" class="flex flex-col items-center p-4 min-h-[500px] h-full w-full">
             <div class="flex justify-center items-center font-bold my-8">
                 <p class="text-4xl text-custom2">Belajar Kosakata</p>
@@ -61,7 +61,7 @@ try {
             <div class="content-custom">
                 <!-- Tampilkan pesan jika ada -->
                 <?php if (!empty($message)): ?>
-                    <p class="text-lg text-red-500 mb-4"><?php echo $message; ?></p>
+                    <p class="text-lg text-red-600 mb-4"><?php echo $message; ?></p>
                 <?php endif; ?>
                 <!-- Tampilkan kata acak -->
                 <p class="word-custom text-3xl font-bold"><?php echo str_shuffle($word); ?></p>

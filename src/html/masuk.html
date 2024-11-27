@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <p class="text-black">Belum Punya Akun? <a href="./SignUp.html" class="text-custom1 font-bold hover:underline">Daftar</a></p>
+                        <p class="text-black">Belum Punya Akun? <a href="./daftar.html" class="text-custom1 font-bold hover:underline">Daftar</a></p>
                     </div>
                 </form>
             </div>
@@ -105,7 +105,7 @@
             signInWithPopup(auth, googleProvider)
                 .then((result) => {
                     alert("Login dengan Google berhasil!");
-                    window.location.href = './dashboardBatak.html';
+                    window.location.href = './dashboard-batak.html';
                 })
                 .catch((error) => {
                     console.error("Error with Google sign-in:", error.message);
@@ -145,7 +145,7 @@
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     alert("Login berhasil!");
-                    window.location.href = './dashboardBatak.html';
+                    window.location.href = './dashboard-batak.html';
                 })
                 .catch((error) => {
                     console.error("Error signing in:", error);
