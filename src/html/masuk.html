@@ -79,7 +79,7 @@
         </div>
     </section>
 
-    <script type="module">
+   <script type="module">
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
@@ -102,11 +102,12 @@
         const storeUserData = (userData) => {
         localStorage.setItem("firebase_uid", userData.firebase_uid); // Simpan firebase_uid
         localStorage.setItem("username", userData.username || "User");
+        localStorage.setItem("profileName", userData.profile_name || "User");
         localStorage.setItem("profileImage", userData.profile_image || "default_profile_image_url");
         localStorage.setItem("email", userData.email || "");
         localStorage.setItem("phone", userData.phone || "");
         };
-
+ 
         // Manual Login
         document.getElementById("login-form").addEventListener("submit", async (event) => {
             event.preventDefault();
@@ -170,11 +171,6 @@
             } catch (error) {
                 alert("Google Login Error: " + error.message);
             }
-        });
-
-        const landingPage = document.getElementById("landing-page");
-        landingPage.addEventListener("click", () => {
-            window.location.href = "/index.html";
         });
 
     </script>
