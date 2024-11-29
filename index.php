@@ -204,7 +204,7 @@
       });
   
       document.getElementById("batak").addEventListener("click", function() {
-        window.location.href = "./src/html/masuk.html";
+        window.location.href = "./src/php/login.php";
       });
     });
   </script>
