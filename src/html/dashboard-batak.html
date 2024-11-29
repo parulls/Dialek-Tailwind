@@ -186,50 +186,41 @@
 </section>
 <script>
     AOS.init();
-    const home = document.getElementById("home");
+
     const profile = document.getElementById("profile-button");
     const Materi = document.getElementById("goto-materi");
     const Game = document.getElementById("goto-game");
     const Literasi = document.getElementById("goto-literasi");
     const KosaKata = document.getElementById("goto-kosaKata");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.html";
-    });
     profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.html";
-    });
+            window.location.href = "AkunUser.html";
+        });
     Materi.addEventListener("click", () => {
-        window.location.href = "./materi-pilih-topik.html";
+        window.location.href = "./PilihMateri.html";
     });
     Game.addEventListener("click", () => {
-        window.location.href = "./permainan-model.html";
+        window.location.href = "Permainan1.html";
     });
     Literasi.addEventListener("click", () => {
-        window.location.href = "./literasi-budaya-level.html";
+        window.location.href = "./LiterasiBudaya.html";
     });
     KosaKata.addEventListener("click", () => {
-        window.location.href = "./kosakata-model1.html";
+        window.location.href = "./Kosakata1.html";
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-        const username = localStorage.getItem("username");
-        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
-        const name = localStorage.getItem("profileName") || "Nama User";
+    console.log("Script berjalan");
+    const username = localStorage.getItem("username");
+    console.log("Username dari localStorage:", username);
 
-        // if (username) {
-        //     document.getElementById("account-username").textContent = username;
-        //     document.getElementById("profile-name").textContent = name;
-        //     document.getElementById("profile-image").src = profileImage;
-        // } else {
-        //     alert("Silakan login terlebih dahulu.");
-        //     window.location.href = "./masuk.html";
-        // }
-    });
-
-    document.getElementById("SettingButton").addEventListener("click", () => {
-        window.location.href = "./pengaturan.html";
-    });
+    // Periksa apakah username tersedia
+    if (username) {
+        document.getElementById("account-username").textContent = username;
+    } else {
+        alert("Silakan login terlebih dahulu.");
+        window.location.href = "login.html"; 
+    }
+});
     
 </script>
 </body>
