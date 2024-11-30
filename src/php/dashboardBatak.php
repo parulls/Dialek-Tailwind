@@ -203,7 +203,7 @@
         window.location.href = "./PilihMateri.php";
     });
     Game.addEventListener("click", () => {
-        window.location.href = "Permainan1.php";
+        window.location.href = "permainan_hasil.php";
     });
     Literasi.addEventListener("click", () => {
         window.location.href = "./LiterasiBudaya.php";
