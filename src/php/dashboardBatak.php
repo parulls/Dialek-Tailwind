@@ -1,5 +1,43 @@
 <?php
-    require 'functions.php';
+    include("connect.php");
+
+    // Periksa apakah ini adalah permintaan POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        header("Content-Type: application/json");
+        try {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $firebaseUid = $data['firebase_uid'] ?? null;
+    
+            if ($firebaseUid) {
+                $stmt = $conn->prepare("
+                    SELECT name, username, email, phone, 
+                           COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+                    FROM users 
+                    WHERE firebase_uid = :firebase_uid
+                ");
+                $stmt->execute([':firebase_uid' => $firebaseUid]);
+    
+                if ($stmt->rowCount() > 0) {
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    echo json_encode(["success" => true, "user" => $user]);
+                    exit;
+                } else {
+                    echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+                    exit;
+                }
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+                exit;
+            }
+        } catch (PDOException $e) {
+            echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
+            exit;
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
+            exit;
+        }
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +55,7 @@
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">loading...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
@@ -212,19 +250,31 @@
         window.location.href = "./Kosakata1.php";
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-    console.log("Script berjalan");
-    const username = localStorage.getItem("username");
-    console.log("Username dari localStorage:", username);
+    document.addEventListener("DOMContentLoaded", async () => {
+    const firebaseUid = localStorage.getItem("firebase_uid");
 
-    // Periksa apakah username tersedia
-    if (username) {
-        document.getElementById("account-username").textContent = username;
-    } else {
-        alert("Silakan login terlebih dahulu.");
-        window.location.href = "login.php"; 
+    try {
+        const response = await fetch(window.location.href, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firebase_uid: firebaseUid }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            const userData = result.user;
+            document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+
+        } else {
+            alert("Gagal memuat data pengguna: " + result.message);
+            window.location.href = "login.php";
+        }
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        alert("Terjadi kesalahan saat memuat data pengguna.");
     }
 });
+
     
 </script>
 </body>
