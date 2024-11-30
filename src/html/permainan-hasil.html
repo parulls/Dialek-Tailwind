@@ -30,8 +30,8 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -115,22 +115,7 @@
                 Peringkat Harian
                 </h2>
                 <ul id="daily-rankings" class="mt-4">
-                    <li>
-                        <div class="flex items-center space-x-2">
-                            <p class="font-semibold text-green-900 text-md " >1.</p>
-                            <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4 ml-4" />
-                            <p class="font-semibold text-green-900 flex-grow text-md md:text-base flex-1">username</p>
-                        </div></li>
-                    <li><div class="flex items-center space-x-2 space-y-2">
-                        <p class="font-semibold text-green-900 text-md " >2.</p>
-                        <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4 ml-4" />
-                        <p class="font-semibold text-green-900 flex-grow text-md md:text-base flex-1">username</p>
-                    </div></li>
-                    <li><div class="flex items-center space-x-2 space-y-2">
-                        <p class="font-semibold text-green-900 text-md " >3.</p>
-                        <img src="https://img.icons8.com/color/48/000000/user.png" alt="user" class="w-8 h-8 rounded-full mr-4 ml-4" />
-                        <p class="font-semibold text-green-900 flex-grow text-md md:text-base flex-1">username</p>
-                    </div></li>
+                    <li></li>
                 </ul>
             </div>
 
@@ -198,18 +183,38 @@
     <script src="game.js"></script>
     <script>
         // Ambil data permainan dari local storage
-        const successfulWordsCount = parseInt(localStorage.getItem('successfulWordsCount') || '0', 10);
-        const failedWordsCount = parseInt(localStorage.getItem('failedWordsCount') || '0', 10);
-        const totalScore = parseInt(localStorage.getItem('totalScore') || '0', 10);
-        const usedVocabulary = JSON.parse(localStorage.getItem('usedVocabulary') || '[]');
+const successfulWordsCount = parseInt(localStorage.getItem('successfulWordsCount') || '0', 10);
+const failedWordsCount = parseInt(localStorage.getItem('failedWordsCount') || '0', 10);
+const totalScore = parseInt(localStorage.getItem('totalScore') || '0', 10);
+const usedVocabulary = JSON.parse(localStorage.getItem('usedVocabulary') || '[]');
 
-        // Hitung akurasi
-        const totalAttempts = successfulWordsCount + failedWordsCount;
-        const accuracy = totalAttempts > 0 ? Math.round((successfulWordsCount / totalAttempts) * 100) : 0;
+document.addEventListener("DOMContentLoaded", async () => {
+    // Ambil username dari localStorage
+    const username = localStorage.getItem("username");
+    const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
 
+    // Validasi login
+    if (username) {
+        document.getElementById("account-username").textContent = username;
+    } else {
+        alert("Silakan login terlebih dahulu.");
+        window.location.href = "masuk.html";
+        return;
+    }
 
-        const ctx = document.getElementById('accuracyChart').getContext('2d');
-        new Chart(ctx, {
+    // Tampilkan statistik permainan
+    document.getElementById("total-score").textContent = totalScore;
+    document.getElementById("successful-words").textContent = successfulWordsCount;
+    document.getElementById("failed-words").textContent = failedWordsCount;
+
+    const accuracy = successfulWordsCount + failedWordsCount > 0
+        ? Math.round((successfulWordsCount / (successfulWordsCount + failedWordsCount)) * 100)
+        : 0;
+    document.getElementById("accuracy").textContent = accuracy + "%";
+
+    // Render grafik akurasi
+    const ctx = document.getElementById('accuracyChart').getContext('2d');
+    new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Kata Berhasil', 'Kata Gagal'],
@@ -229,56 +234,71 @@
         }
     });
 
-        // Tampilkan data permainan di halaman
-        document.getElementById("total-score").textContent = totalScore;
-        document.getElementById("successful-words").textContent = successfulWordsCount;
-        document.getElementById("failed-words").textContent = failedWordsCount;
-        document.getElementById("accuracy").textContent = accuracy + "%";
+    // Tampilkan kosakata yang digunakan
+    const usedVocabularyContainer = document.getElementById("used-vocabulary");
+    usedVocabulary.forEach(word => {
+        const wordElement = document.createElement("p");
+        wordElement.textContent = word;
+        wordElement.className = "text-lg text-green-900";
+        usedVocabularyContainer.appendChild(wordElement);
+    });
 
-        // Tampilkan kosakata yang digunakan
-        const usedVocabularyContainer = document.getElementById("used-vocabulary");
-        usedVocabulary.forEach(word => {
-            const wordElement = document.createElement("p");
-            wordElement.textContent = word;
-            wordElement.className = "text-lg text-green-900";
-            usedVocabularyContainer.appendChild(wordElement);
+    // Tampilkan peringkat harian
+    try {
+    const response = await fetch('../php/get_daily_rankings.php');
+    const data = await response.json();
+
+    if (!data || typeof data !== 'object' || !data.success) {
+        console.error("JSON tidak sesuai format yang diharapkan:", data);
+        document.getElementById("daily-rankings").innerHTML = '<li>Peringkat tidak tersedia.</li>';
+        return;
+    }
+
+    // Proses JSON jika valid
+    if (data.rankings && data.rankings.length > 0) {
+        const rankingsContainer = document.getElementById("daily-rankings");
+        data.rankings.forEach((rank, index) => {
+            const rankElement = document.createElement("li");
+            rankElement.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <p class="font-semibold text-green-900 text-md">${index + 1}.</p>
+                    <img src="${rank.profile_image}" alt="user" class="w-8 h-8 rounded-full" />
+                    <p class="font-semibold text-green-900 text-md flex-1">${rank.username}</p>
+                    <p class="font-semibold text-green-900 text-md">${rank.score}</p>
+                </div>
+            `;
+            rankingsContainer.appendChild(rankElement);
         });
+    } else {
+        console.error("Peringkat kosong:", data);
+        document.getElementById("daily-rankings").innerHTML = '<li>Peringkat tidak tersedia.</li>';
+    }
+} catch (error) {
+    console.error("Gagal memproses JSON:", error);
+    document.getElementById("daily-rankings").innerHTML = '<li>Kesalahan saat memuat data.</li>';
+}
 
-        const play = document.getElementById("startbutton");
-        const Back = document.querySelector("backbutton");
-        const infoButton = document.getElementById("infoButton");
+    // Tombol untuk mulai permainan
+    document.getElementById("startbutton").addEventListener("click", () => {
+        window.location.href = "permainan-model.html";
+    });
 
-        startbutton.addEventListener("click", () => {
-            window.location.href = "./permainan-model.html";
-        });
+    // Tombol info
+    document.getElementById("infoButton").addEventListener("click", () => {
+        document.getElementById("info-popup").style.display = "flex";
+    });
 
-       
+    window.closePopup = () => {
+        document.getElementById("info-popup").style.display = "none";
+    };
 
-        infoButton.addEventListener("click", () => {
-            document.getElementById("info-popup").style.display = "flex";
-        });
+    // Hapus data dari localStorage setelah ditampilkan
+    localStorage.removeItem('successfulWordsCount');
+    localStorage.removeItem('failedWordsCount');
+    localStorage.removeItem('totalScore');
+    localStorage.removeItem('usedVocabulary');
+});
 
-        closePopup = () => {
-            document.getElementById("info-popup").style.display = "none";
-        };
-
-        // Hapus data dari local storage setelah ditampilkan
-        localStorage.removeItem('successfulWordsCount');
-        localStorage.removeItem('failedWordsCount');
-        localStorage.removeItem('totalScore');
-        localStorage.removeItem('usedVocabulary');
-
-        const profile = document.getElementById("profile-button");
-
-        profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.html";
-        });
-
-        // Sidebar toggle function
-        function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
-        }
     </script>
 
 </body>

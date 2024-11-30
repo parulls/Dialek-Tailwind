@@ -67,113 +67,124 @@
     </div>
     </section>
     <script>
-       // Preview profile picture
-       function previewProfilePicture(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("profile-image").src = e.target.result;
-                    localStorage.setItem("profileImage", e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
+       <script>
+    // Fungsi untuk memuat data profil pengguna
+    function loadProfileData() {
+    const name = localStorage.getItem("profileName") || "Nama User";
+    const username = localStorage.getItem("username") || "username";
+    const email = localStorage.getItem("email") || "";
+    const phone = localStorage.getItem("phone") || "";
+    const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
+
+    // Tampilkan data ke form
+    document.getElementById("name").value = name;
+    document.getElementById("username").value = username;
+    document.getElementById("email").value = email;
+    document.getElementById("phone").value = phone;
+    document.getElementById("profile-image").src = profileImage;
+
+    console.log("Profil pengguna berhasil dimuat dari localStorage.");
+    }
+
+    // Fungsi untuk menyimpan gambar profil yang diunggah
+    function previewProfilePicture(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("profile-image").src = e.target.result;
+                localStorage.setItem("profileImage", e.target.result); // Simpan gambar profil di localStorage
+            };
+            reader.readAsDataURL(file);
         }
+    }
 
-        // Load user data from localStorage or fetch from database
-        document.addEventListener("DOMContentLoaded", async () => {
-            const firebaseUid = localStorage.getItem("firebase_uid"); // Get firebase_uid from localStorage
+    // Fungsi untuk menyimpan profil ke database
+    async function saveProfile() {
+        const firebaseUid = localStorage.getItem("firebase_uid");
+        const name = document.getElementById("name").value.trim();
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
 
-            if (!firebaseUid) {
-                alert("Silakan login terlebih dahulu.");
-                window.location.href = "login.html"; // Redirect to login page
-                return;
-            }
+    if (!firebaseUid) {
+        alert("Firebase UID tidak ditemukan. Silakan login ulang.");
+        window.location.href = "login.html";
+        return;
+    }
 
-            try {
-                // Fetch user data based on firebase_uid
-                const response = await fetch(`../php/getUserData.php?firebase_uid=${firebaseUid}`);
-                const result = await response.json();
+    if (!name || !username || !email || !phone) {
+        alert("Nama, username, email, dan nomor telepon wajib diisi.");
+        return;
+    }
 
-                if (result.success) {
-                    const userData = result.data;
-                    document.getElementById("name").value = userData.name || "";
-                    document.getElementById("username").value = userData.username || "";
-                    document.getElementById("email").value = userData.email || "";
-                    document.getElementById("phone").value = userData.phone || "";
-                    document.getElementById("profile-image").src = userData.profile_image || "../assets/pp.webp";
-
-                    // Temporarily store data in localStorage for future use
-                    localStorage.setItem("profileName", userData.name);
-                    localStorage.setItem("username", userData.username);
-                    localStorage.setItem("email", userData.email);
-                    localStorage.setItem("phone", userData.phone);
-                    localStorage.setItem("profileImage", userData.profile_image || "../assets/pp.webp");
-                } else {
-                    alert("Gagal memuat data pengguna: " + result.message);
-                }
-            } catch (error) {
-                alert("Terjadi kesalahan: " + error.message);
-            }
+    try {
+        const response = await fetch("../php/updateProfile.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firebase_uid: firebaseUid, name, username, email, phone, profileImage }),
         });
 
-        // Save profile data to the database
-        async function saveProfile() {
-            const firebaseUid = localStorage.getItem("firebase_uid"); // Get firebase_uid from localStorage
-            const name = document.getElementById("name").value.trim();
-            const username = document.getElementById("username").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-            const profileImage = localStorage.getItem("profileImage") || "";
+        const result = await response.json();
 
-            if (!firebaseUid) {
-                alert("Firebase UID tidak ditemukan. Silakan login ulang.");
-                window.location.href = "login.html";
-                return;
-            }
-
-            if (!name || !username || !email || !phone) {
-                alert("Nama, username, email, dan nomor telepon wajib diisi!");
-                return;
-            }
-
-            try {
-                const response = await fetch("../php/updateProfile.php", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ firebase_uid: firebaseUid, name, username, email, phone, profileImage }),
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    alert("Profil berhasil diperbarui!");
-                    localStorage.setItem("profileName", name);
-                    localStorage.setItem("username", username);
-                    localStorage.setItem("email", email);
-                    localStorage.setItem("phone", phone);
-                } else {
-                    alert("Gagal memperbarui profil: " + result.message);
-                }
-            } catch (error) {
-                alert("Terjadi kesalahan: " + error.message);
-            }
+        if (result.success) {
+            alert("Profil berhasil diperbarui.");
+            localStorage.setItem("profileName", name);
+            localStorage.setItem("username", username);
+            localStorage.setItem("email", email);
+            localStorage.setItem("phone", phone);
+        } else {
+            alert("Gagal memperbarui profil: " + result.message);
         }
+    } catch (error) {
+        alert("Terjadi kesalahan: " + error.message);
+    }
+}
 
-        // Delete user account
-        function deleteAccount() {
-            if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
-                localStorage.clear();
-                alert("Akun berhasil dihapus!");
-                window.location.href = "signup.html";
-            }
+    // Fungsi untuk menghapus akun
+    function deleteAccount() {
+    if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
+        localStorage.clear(); 
+        alert("Akun berhasil dihapus!");
+        window.location.href = "signup.html"; 
+    }
+}
+
+    // Fungsi untuk memuat data pengguna saat halaman dimuat
+    document.addEventListener("DOMContentLoaded", async () => {
+    const firebaseUid = localStorage.getItem("firebase_uid");
+
+    if (!firebaseUid) {
+        alert("Silakan login terlebih dahulu.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(`../php/getUserData.php?firebase_uid=${firebaseUid}`);
+        const result = await response.json();
+
+        if (result.success) {
+            const userData = result.data;
+
+            // Tampilkan data di halaman
+            document.getElementById("name").value = userData.name || "";
+            document.getElementById("username").value = userData.username || "";
+            document.getElementById("email").value = userData.email || "";
+            document.getElementById("phone").value = userData.phone || "";
+            document.getElementById("profile-image").src = userData.profile_image || "../assets/pp.webp";
+        } else {
+            alert("Gagal memuat data pengguna: " + result.message);
         }
+    } catch (error) {
+        alert("Terjadi kesalahan: " + error.message);
+    }
+});
 
-        const home = document.getElementById("home");
+    // Muat data profil dari localStorage saat halaman pertama kali dimuat
+    loadProfileData();
 
-        home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.html";
-        });
     </script>
     
     

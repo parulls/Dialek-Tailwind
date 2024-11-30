@@ -3138,6 +3138,23 @@ video {
   }
 }
 
+.button-lock{
+  width: 100%;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .button-custom{
   width: 100%;
   border-radius: 9999px;
@@ -3622,245 +3639,17 @@ video {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-@media (min-width: 640px){
-  @media (min-width: 640px){
-    @media (min-width: 640px){
-      @media (min-width: 640px){
-        .button-custom2:hover{
-          font-size: 2.25rem;
-          line-height: 2.5rem;
-        }
-      }
-
-      @media (min-width: 768px){
-        .button-custom2:hover{
-          font-size: 3rem;
-          line-height: 1;
-        }
-      }
-
-      @media (min-width: 1024px){
-        .button-custom2:hover{
-          font-size: 3.75rem;
-          line-height: 1;
-        }
-      }
-
-      @media (min-width: 1280px){
-        .button-custom2:hover{
-          font-size: 4.5rem;
-          line-height: 1;
-        }
-      }
-
-      .button-custom2:hover{
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  @media (min-width: 768px){
-    @media (min-width: 640px){
-      .button-custom2:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2:hover{
-        font-size: 4.5rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  @media (min-width: 640px){
-    .button-custom2:hover{
-      font-size: 1.5rem;
-      line-height: 2rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2:hover{
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 768px){
-  @media (min-width: 640px){
-    @media (min-width: 640px){
-      .button-custom2:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2:hover{
-        font-size: 4.5rem;
-        line-height: 1;
-      }
-    }
-
-    .button-custom2:hover{
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2:hover{
-      font-size: 3.75rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 1024px){
-  @media (min-width: 640px){
-    .button-custom2:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2:hover{
-      font-size: 3.75rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2:hover{
-      font-size: 4.5rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 640px){
-  .button-custom2:hover{
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-}
-
-@media (min-width: 768px){
-  .button-custom2:hover{
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-}
-
-@media (min-width: 1024px){
-  .button-custom2:hover{
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-}
-
-@media (min-width: 1280px){
-  .button-custom2:hover{
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 .button-custom2:hover{
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .button-custom2:active{
@@ -4332,243 +4121,10 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-@media (min-width: 640px){
-  @media (min-width: 640px){
-    @media (min-width: 640px){
-      @media (min-width: 640px){
-        .button-custom2-red:hover{
-          font-size: 2.25rem;
-          line-height: 2.5rem;
-        }
-      }
-
-      @media (min-width: 768px){
-        .button-custom2-red:hover{
-          font-size: 3rem;
-          line-height: 1;
-        }
-      }
-
-      @media (min-width: 1024px){
-        .button-custom2-red:hover{
-          font-size: 3.75rem;
-          line-height: 1;
-        }
-      }
-
-      @media (min-width: 1280px){
-        .button-custom2-red:hover{
-          font-size: 4.5rem;
-          line-height: 1;
-        }
-      }
-
-      .button-custom2-red:hover{
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2-red:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2-red:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2-red:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  @media (min-width: 768px){
-    @media (min-width: 640px){
-      .button-custom2-red:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2-red:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2-red:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2-red:hover{
-        font-size: 4.5rem;
-        line-height: 1;
-      }
-    }
-  }
-
-  @media (min-width: 640px){
-    .button-custom2-red:hover{
-      font-size: 1.5rem;
-      line-height: 2rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2-red:hover{
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2-red:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2-red:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 768px){
-  @media (min-width: 640px){
-    @media (min-width: 640px){
-      .button-custom2-red:hover{
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-
-    @media (min-width: 768px){
-      .button-custom2-red:hover{
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1024px){
-      .button-custom2-red:hover{
-        font-size: 3.75rem;
-        line-height: 1;
-      }
-    }
-
-    @media (min-width: 1280px){
-      .button-custom2-red:hover{
-        font-size: 4.5rem;
-        line-height: 1;
-      }
-    }
-
-    .button-custom2-red:hover{
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2-red:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2-red:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2-red:hover{
-      font-size: 3.75rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 1024px){
-  @media (min-width: 640px){
-    .button-custom2-red:hover{
-      font-size: 2.25rem;
-      line-height: 2.5rem;
-    }
-  }
-
-  @media (min-width: 768px){
-    .button-custom2-red:hover{
-      font-size: 3rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1024px){
-    .button-custom2-red:hover{
-      font-size: 3.75rem;
-      line-height: 1;
-    }
-  }
-
-  @media (min-width: 1280px){
-    .button-custom2-red:hover{
-      font-size: 4.5rem;
-      line-height: 1;
-    }
-  }
-}
-
-@media (min-width: 640px){
-  .button-custom2-red:hover{
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-}
-
-@media (min-width: 768px){
-  .button-custom2-red:hover{
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-}
-
-@media (min-width: 1024px){
-  .button-custom2-red:hover{
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-}
-
-@media (min-width: 1280px){
-  .button-custom2-red:hover{
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-  }
-}
-
 .button-custom2-red:hover{
-  font-size: 1.125rem;
-  line-height: 1.75rem;
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .button-custom2-red:active{
@@ -5894,7 +5450,7 @@ video {
   width: 100%;
   border-radius: 9999px;
   --tw-bg-opacity: 1;
-  background-color: rgb(63 63 70 / var(--tw-bg-opacity, 1));
+  background-color: rgb(63 63 70 / var(--tw-bg-opacity));
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
@@ -5903,7 +5459,7 @@ video {
   line-height: 1.25rem;
   font-weight: 700;
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -9563,9 +9119,10 @@ video {
   }
 }
 
-.hover\:bg-gray-100:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+.hover\:scale-90:hover{
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .hover\:bg-green-50:hover{
@@ -9590,7 +9147,7 @@ video {
 
 .hover\:bg-green-900:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(20 83 45 / var(--tw-bg-opacity, 1));
+  background-color: rgb(20 83 45 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-lime-900:hover{
@@ -9600,7 +9157,7 @@ video {
 
 .hover\:bg-red-900:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(127 29 29 / var(--tw-bg-opacity, 1));
+  background-color: rgb(127 29 29 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-custom-green-button:hover{

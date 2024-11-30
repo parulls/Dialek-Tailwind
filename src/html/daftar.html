@@ -89,6 +89,9 @@
                         <img src="../assets/Facebook.webp" alt="Facebook Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <p class="text-black">Sudah Punya Akun? <a href="./masuk.html" class="text-custom1 font-bold hover:underline">Masuk</a></p>
+                </div>
             </form>
         </div>
     </div>
@@ -157,8 +160,9 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
             localStorage.setItem("username", result.username);
             localStorage.setItem("profileImage", result.profile_image); 
             localStorage.setItem("email", email);
+            localStorage.setItem("profileName", result.name);
             alert("Signup berhasil!");
-            window.location.href = "./dashboard-batak.html";
+            window.location.href = "dashboardBatak.html";
         } else {
             alert(result.message);
         }
@@ -193,8 +197,9 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
             localStorage.setItem("username", resultData.username);
             localStorage.setItem("profileImage", resultData.profile_image);
             localStorage.setItem("email", user.email);
+            lodalStorage.setItem("profileName", result.name);
             alert("Signup berhasil!");
-            window.location.href = "./dashboard-batak.html";
+            window.location.href = "dashboardBatak.html";
         } else {
             alert(resultData.message);
         }
@@ -228,11 +233,12 @@ document.getElementById("login-form").addEventListener("submit", async (event) =
             // Save user data in localStorage
             localStorage.setItem("firebase_uid", result.user.firebase_uid);
             localStorage.setItem("username", result.user.username);
+            localStorage.setItem("profileName", result.user.profile_name);
             localStorage.setItem("profileImage", result.user.profile_image);
             localStorage.setItem("email", result.user.email);
 
             alert("Login berhasil!");
-            window.location.href = "./dashboard-batak.html";
+            window.location.href = "dashboardBatak.html";
         } else {
             alert("Login gagal: " + result.message);
         }
@@ -267,8 +273,9 @@ document.getElementById("google-login").addEventListener("click", async () => {
             localStorage.setItem("username", resultData.user.username);
             localStorage.setItem("profileImage", resultData.user.profile_image);
             localStorage.setItem("email", user.email);
+            localStorage.setItem("profileName", resultData.user.profile_name);
             alert("Login berhasil!");
-            window.location.href = "./dashboard-batak.html";
+            window.location.href = "dashboardBatak.html";
         } else {
             alert("Login gagal: " + resultData.message);
         }
@@ -277,10 +284,6 @@ document.getElementById("google-login").addEventListener("click", async () => {
     }
 });
 
-const landingPage = document.getElementById("landing-page");
-landingPage.addEventListener("click", () => {
-    window.location.href = "/index.html";
-});
 </script>
 </body>
 </html>

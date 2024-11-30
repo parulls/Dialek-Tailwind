@@ -1,98 +1,52 @@
 <?php
-    include("connect.php");
+// Bagian Backend
+include("connect.php");
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $login = $_POST['login']; // Email atau username
-        $password = $_POST['password'];
-
-        try {
-            // Periksa apakah input adalah email atau username
-            $query = strpos($login, '@') !== false
-                ? "SELECT * FROM users WHERE email = :login"
-                : "SELECT * FROM users WHERE username = :login";
-
-            $stmt = $conn->prepare($query);
-            $stmt->execute([':login' => $login]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($user && password_verify($password, $user['password'])) {
-                // Set session
-                $_SESSION['id_user'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-
-                // Redirect ke halaman dashboard
-                header("Location: dashboardBatak.html");
-                exit();
-            } else {
-                $error = "Email atau kata sandi salah.";
-            }
-        } catch (PDOException $e) {
-            $error = "Terjadi kesalahan, coba lagi nanti.";
-        }
-    }
-
+// Tangani permintaan POST untuk API
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
-
     try {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $firebaseUid = $data['firebase_uid'] ?? null;
-            $email = $data['email'] ?? null;
-            $password = $data['password'] ?? null;
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $email = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
 
-            if ($firebaseUid) {
-                $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid");
-                $stmt->execute([':firebase_uid' => $firebaseUid]);
+        if ($firebaseUid) {
+            $stmt = $conn->prepare("SELECT * FROM users WHERE firebase_uid = :firebase_uid");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
 
-                if ($stmt->rowCount() > 0) {
-                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                    echo json_encode([
-                        "success" => true,
-                        "user" => [
-                            "firebase_uid" => $user['firebase_uid'],
-                            "name" => $user['name'],
-                            "username" => $user['username'],
-                            "profile_image" => $user['profile_image'] ?? "../assets/pp.webp",
-                            "email" => $user['email'],
-                        ],
-                    ]);
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "user" => $user]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+            }
+        } elseif ($email && $password) {
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
+            $stmt->execute([':email' => $email]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                if (password_verify($password, $user['password'])) {
+                    echo json_encode(["success" => true, "user" => $user]);
                 } else {
-                    echo json_encode(["success" => false, "message" => "Akun belum terdaftar."]);
-                }
-            } else if ($email && $password) {
-                $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :email");
-                $stmt->execute([':email' => $email]);
-
-                if ($stmt->rowCount() > 0) {
-                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if (password_verify($password, $user['password'])) {
-                        echo json_encode([
-                            "success" => true,
-                            "user" => [
-                                "name" => $user['name'],
-                                "username" => $user['username'],
-                                "profile_image" => $user['profile_image'] ?? "../assets/pp.webp",
-                                "email" => $user['email'],
-                            ],
-                        ]);
-                    } else {
-                        echo json_encode(["success" => false, "message" => "Kata sandi salah."]);
-                    }
-                } else {
-                    echo json_encode(["success" => false, "message" => "Email atau username tidak ditemukan."]);
+                    echo json_encode(["success" => false, "message" => "Password salah."]);
                 }
             } else {
-                echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
+                echo json_encode(["success" => false, "message" => "Email/Username tidak ditemukan."]);
             }
         } else {
-            echo json_encode(["success" => false, "message" => "Invalid request method."]);
+            echo json_encode(["success" => false, "message" => "Data tidak lengkap."]);
         }
     } catch (Exception $e) {
-        echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
     }
-?>
+    exit;
+}
 
+// Tangani permintaan GET untuk menampilkan halaman login
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,7 +86,7 @@
         <div data-aos="fade-up" class="flex items-center justify-center px-4">
             <div class="bg-shadow p-6 rounded-lg">
                 <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
-                <form id="login-form" action="" method="post">
+                <form id="login-form" action="../php/login.php" method="post">
                     <div class="mb-4">
                         <label class="block text-custom2 text-lg font-semibold mb-2" for="login">E-mail atau Username</label>
                         <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -177,9 +131,8 @@
     <script type="module">
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    
+        import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
             authDomain: "dialek-6a219.firebaseapp.com",
@@ -189,67 +142,79 @@
             appId: "1:423916223695:web:449bd44c54cad998d8cbba",
             measurementId: "G-4SLBH47WTM"
         };
-    
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
-    
-        // Login dengan Google
-        document.getElementById('google-login').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    alert("Login dengan Google berhasil!");
-                    window.location.href = './dashboardBatak.html';
-                })
-                .catch((error) => {
-                    console.error("Error with Google sign-in:", error.message);
-                    alert("Login Google gagal: " + error.message);
+
+        // Function to handle storing user data in localStorage
+        const storeUserData = (userData) => {
+        localStorage.setItem("firebase_uid", userData.firebase_uid); // Simpan firebase_uid
+        localStorage.setItem("username", userData.username || "User");
+        localStorage.setItem("profileName", userData.profile_name || "User");
+        localStorage.setItem("profileImage", userData.profile_image || "default_profile_image_url");
+        localStorage.setItem("email", userData.email || "");
+        localStorage.setItem("phone", userData.phone || "");
+        };
+ 
+        // Manual Login
+        document.getElementById("login-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const login = document.getElementById("login").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch(window.location.href, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: login, password })
                 });
-        });
-    
-        // Login dengan email dan password
-        document.getElementById('login-form').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const loginInput = document.getElementById('login').value;
-            const password = document.getElementById('password').value;
-
-            let email = loginInput;
-
-            // Check if input is a username
-            if (!loginInput.includes("@")) {
-                try {
-                    // Fetch email based on username from Firestore
-                    const userDoc = await getDoc(doc(db, "usernames", loginInput));
-                    if (userDoc.exists()) {
-                        email = userDoc.data().email;
-                    } else {
-                        document.getElementById('login-error').classList.remove('hidden');
-                        document.getElementById('login-error').innerText = "Username tidak ditemukan.";
-                        return;
-                    }
-                } catch (error) {
-                    console.error("Error fetching email for username:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = "Terjadi kesalahan, coba lagi.";
-                    return;
-                }
-            }
-
-            // Firebase sign-in with email and password
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
+                const result = await response.json();
+                if (result.success) {
                     alert("Login berhasil!");
-                    window.location.href = './dashboardBatak.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                    document.getElementById('login-error').classList.remove('hidden');
-                    document.getElementById('login-error').innerText = error.code === 'auth/too-many-requests' 
-                        ? "Terlalu banyak permintaan, coba lagi nanti." 
-                        : "Email atau kata sandi salah.";
-                });
+                    storeUserData(result.user);
+                    window.location.href = "dashboardBatak.php";
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Terjadi kesalahan.");
+            }
         });
+
+        // Google Login
+        document.getElementById("google-login").addEventListener("click", async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+
+                // Get ID token from Firebase user
+                const idToken = await user.getIdToken();
+
+                const response = await fetch(window.location.href, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        firebase_uid: user.uid,
+                        id_token: idToken,
+                    }),
+                });
+
+                const resultData = await response.json();
+
+                if (resultData.success) {
+                    storeUserData(resultData.user);
+                    alert("Login berhasil!");
+                    window.location.href = "dashboardBatak.php";
+                } else {
+                    alert("Login gagal: " + resultData.message);
+                }
+            } catch (error) {
+                alert("Google Login Error: " + error.message);
+            }
+        });
+
     </script>
     
 </body>
