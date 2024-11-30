@@ -1,14 +1,25 @@
 <?php
+
 include("connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     $data = json_decode(file_get_contents("php://input"), true);
 
+    function generateRandomUsername($length = 7) {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $charactersLength = strlen($characters);
+        $randomUsername = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomUsername .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomUsername;
+    }
+
     try {
         $firebaseUid = $data['firebase_uid'] ?? null;
         $name = trim($data['name'] ?? '');
-        $username = trim($data['username'] ?? '');
+        $username = trim($data['username'] ?? generateRandomUsername()); // Generate username jika kosong
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? null;
         $profileImage = $data['profile_image'] ?? 'default_profile_image_url';
@@ -52,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -152,8 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </section>
-    <script type="module">
-        // Import Firebase modules
+<script type="module">
+// Import Firebase Modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
@@ -173,34 +185,35 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-// Signup form submission handler
+// Handle Signup Form Submission
 document.getElementById("signup-form").addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    // Get form data
+    // Get user inputs
     const name = document.getElementById("name").value.trim();
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-    // Validate form inputs
+    // Validate form fields
     if (!name || !username || !email || !password || !confirmPassword) {
         alert("Semua field wajib diisi.");
         return;
     }
+
     if (password !== confirmPassword) {
         alert("Kata sandi dan konfirmasi kata sandi tidak cocok.");
         return;
     }
 
     try {
-        // Create user with Firebase Authentication
+        // Create user in Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Send user data to backend
-        const response = await fetch("http://localhost/your-backend-endpoint.php", {
+        // Send user data to the backend
+        const response = await fetch("signup.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -208,39 +221,39 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
                 name: name,
                 username: username,
                 email: email,
+                profile_image: "default_profile_image_url", // Default profile image
                 password: password,
-                profile_image: "default_profile_image_url", 
             }),
         });
 
         const result = await response.json();
-
         if (result.success) {
-            alert("Pendaftaran berhasil!");
+            // Save user data in localStorage
             localStorage.setItem("firebase_uid", user.uid);
-            localStorage.setItem("name", name);
-            localStorage.setItem("username", username);
+            localStorage.setItem("username", result.username);
+            localStorage.setItem("profileImage", result.profile_image);
             localStorage.setItem("email", email);
-            localStorage.setItem("profileImage", "default_profile_image_url");
-            window.location.href = "dashboardBatak.php";
+            localStorage.setItem("profileName", result.name);
+
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
         } else {
-            alert("Pendaftaran gagal: " + result.message);
+            alert(result.message);
         }
     } catch (error) {
-        console.error("Error during signup:", error.message);
-        alert("Terjadi kesalahan: " + error.message);
+        alert("Terjadi kesalahan saat mendaftar: " + error.message);
     }
 });
 
-// Google signup/login handler
+// Handle Google Signup
 document.getElementById("googleLogin").addEventListener("click", async () => {
     try {
-        // Sign in with Google popup
+        // Sign in using Google
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
 
-        // Send Google user data to backend
-        const response = await fetch("http://localhost/your-backend-endpoint.php", {
+        // Send user data to the backend
+        const response = await fetch("signup.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -254,23 +267,24 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
         });
 
         const resultData = await response.json();
-
         if (resultData.success) {
-            alert("Pendaftaran dengan Google berhasil!");
+            // Save user data in localStorage
             localStorage.setItem("firebase_uid", user.uid);
-            localStorage.setItem("name", user.displayName || "User");
+            localStorage.setItem("username", resultData.username);
+            localStorage.setItem("profileImage", resultData.profile_image);
             localStorage.setItem("email", user.email);
-            localStorage.setItem("profileImage", user.photoURL || "default_profile_image_url");
-            window.location.href = "dashboardBatak.php"; 
+            localStorage.setItem("profileName", resultData.name);
+
+            alert("Signup berhasil dengan Google!");
+            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
         } else {
-            alert("Pendaftaran dengan Google gagal: " + resultData.message);
+            alert(resultData.message);
         }
     } catch (error) {
-        console.error("Error during Google signup:", error.message);
-        alert("Terjadi kesalahan: " + error.message);
+        alert("Google Signup Error: " + error.message);
     }
 });
 
-    </script>
+</script>
 </body>
 </html>
