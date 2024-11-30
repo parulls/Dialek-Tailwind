@@ -88,14 +88,14 @@
       <!-- Section: "Pilih Bahasa Yang Ingin Dipelajari" -->
       <div class="section-title text-lg text-custom2" data-aos="fade-up" id="bahasa">Pilih Bahasa Yang Ingin Dipelajari</div>
       <div class="language-selection-container text-white font-semibold" data-aos="fade-up">
-        <div class="language-option" data-aos="fade-right" data-aos-delay="100">
-          <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa">
-          <p>Jawa</p>
-        </div>
-        <div class="language-option" data-aos="fade-left" data-aos-delay="200">
-          <img src="./src/assets/batak.webp" alt="Batak" id="batak">
-          <p>Batak</p>
-        </div>  
+      <div class="language-option w-full flex items-start justify-start space-x-4" data-aos="fade-right" data-aos-delay="200">
+        <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa" class="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain">
+        <p class="text-base leading-normal align-middle">(Segera Hadir)</p>
+      </div>
+      <div class="language-option w-full flex items-start justify-start space-x-4" data-aos="fade-left" data-aos-delay="200">
+        <img src="./src/assets/batak.webp" alt="Batak" id="batak" class="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain">
+        <p class="text-base leading-normal align-middle">Batak Toba</p>
+      </div>
       </div>
 
       <!-- Section: "Lestarikan Budaya Kita" -->
@@ -159,10 +159,10 @@
   <footer class="flex flex-col items-center justify-between bg-custom3 text-white py-6">
     <div class="container mx-auto px-6 text-center space-y-4">
       <div class="flex justify-center space-x-4 text-sm font-inter">
-        <a href="#" class="text-white hover:text-custom9">Kebijakan Privasi</a>
-        <a href="#" class="text-white hover:text-custom9">Syarat & Ketentuan</a>
-        <a href="#" class="text-white hover:text-custom9">Keamanan</a>
-        <a href="#" class="text-white hover:text-custom9">Hubungi Kami</a>
+        <a href="#" class="text-white hover:text-custom6">Kebijakan Privasi</a>
+        <a href="#" class="text-white hover:text-custom6">Syarat & Ketentuan</a>
+        <a href="#" class="text-white hover:text-custom6">Keamanan</a>
+        <a href="#" class="text-white hover:text-custom6">Hubungi Kami</a>
       </div>
       <div class="flex justify-center space-x-6">
         <a href="#" class="text-white hover:text-custom6 text-lg"><i class="fab fa-facebook"></i></a>
