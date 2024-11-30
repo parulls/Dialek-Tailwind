@@ -197,7 +197,7 @@
     const Literasi = document.getElementById("goto-literasi");
     const KosaKata = document.getElementById("goto-kosaKata");
     profile.addEventListener("click", () => {
-            window.location.href = "AkunUser.php";
+            window.location.href = "./AkunUser.php";
         });
     Materi.addEventListener("click", () => {
         window.location.href = "./PilihMateri.php";
