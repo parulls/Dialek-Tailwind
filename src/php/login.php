@@ -121,7 +121,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <p class="text-black">Belum Punya Akun? <a href="./SignUp.html" class="text-custom1 font-bold hover:underline">Daftar</a></p>
+                        <p class="text-black">
+                            Belum Punya Akun? 
+                            <button id="signup-button" class="text-custom1 font-bold hover:underline">Daftar</button>
+                        </p>
                     </div>
                 </form>
             </div>
@@ -129,6 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <script type="module">
+        document.getElementById("signup-button").addEventListener("click", () => {
+        window.location.href = "signup.php"; // Arahkan ke signup.php
+        });
+
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
