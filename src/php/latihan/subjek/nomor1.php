@@ -14,10 +14,6 @@
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
-        </div>
     </nav>
 
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
@@ -57,7 +53,7 @@
                 if ($stmt_answers->rowCount() > 0) {
                     while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
                         // Membuat formulir untuk setiap jawaban
-                        echo "<form method='POST' action='submit_answer.php' class='inline-block'>";
+                        echo "<form method='POST' action='' class='inline-block'>";
                         echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
                         echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
@@ -78,5 +74,18 @@
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
         <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
+
+    <script>
+        const kembaliButton = document.getElementById("kembali-button");
+        const selanjutnyaButton = document.getElementById("selanjutnya-button");
+
+        kembaliButton.addEventListener("click", () => {
+            window.location.href = "../../materi/subjek.php";
+        });
+
+        selanjutnyaButton.addEventListener("click", () => {
+            window.location.href = "nomor2.php";
+        });
+    </script>
 </body>
 </html>

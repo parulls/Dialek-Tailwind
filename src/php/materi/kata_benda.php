@@ -8,7 +8,7 @@ if (!$conn) {
     exit;
 }
 
-// Query untuk mengambil data dengan id_materi = 2
+// Query untuk mengambil data dengan id_materi = 3
 $id_material = 3; // ID yang ingin diambil
 $query = "SELECT id_material, material_title, material_content FROM materials WHERE id_material = :id_material";
 $stmt = $conn->prepare($query);

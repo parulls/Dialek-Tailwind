@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+include("../connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Sanitasi input materi_id
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                         "1" => intval($result['star_1'])
                     ]
                 ];
-                echo json_encode($response);
+                // echo json_encode($response);
             } else {
                 // Penanganan error jika query gagal
                 echo json_encode(["status" => "error", "message" => "Gagal mendapatkan data rating."]);
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     <meta name="description" content="Dialek.id - Platform untuk belajar topik dengan rating pengguna">
     <meta name="author" content="Dialek.id">
     <title>Dialek.Id</title>
-    <link rel="stylesheet" href="../styles/style2.css">
+    <link rel="stylesheet" href="../../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         .stars i.active {
@@ -149,6 +149,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     </footer>
 
     <script>
+        const mulaiButton = document.getElementById("mulai-button");
+        const kembaliButton = document.getElementById("kembali-button");
+
+        mulaiButton.addEventListener("click", () => {
+            window.location.href = "../materi/subjek.php";
+        });
+
+        kembaliButton.addEventListener("click", () => {
+            window.location.href = "../../html/materi-pilih-topik.html";
+        });
+
         const stars = document.querySelectorAll(".stars i");
         const ratingValue = document.getElementById("rating-value");
         const progressBars = document.querySelectorAll(".progress .fill");

@@ -57,7 +57,7 @@
                 if ($stmt_answers->rowCount() > 0) {
                     while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
                         // Membuat formulir untuk setiap jawaban
-                        echo "<form method='POST' action='submit_answer.php' class='inline-block'>";
+                        echo "<form method='POST' action='' class='inline-block'>";
                         echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
                         echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
@@ -78,5 +78,18 @@
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
         <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
+
+    <script>
+        const kembaliButton = document.getElementById("kembali-button");
+        const selanjutnyaButton = document.getElementById("selanjutnya-button");
+
+        kembaliButton.addEventListener("click", () => {
+            window.location.href = "nomor1.php";
+        });
+
+        selanjutnyaButton.addEventListener("click", () => {
+            window.location.href = "nomor3.php";
+        });
+    </script>
 </body>
 </html>
