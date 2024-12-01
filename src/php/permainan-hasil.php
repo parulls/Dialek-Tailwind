@@ -221,13 +221,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    // Tampilkan kosakata yang digunakan
-    usedVocabulary.forEach(word => {
-        const wordElement = document.createElement("p");
-        wordElement.textContent = word;
-        wordElement.className = "text-lg text-green-900";
-        usedVocabularyContainer.appendChild(wordElement);
-    });
+    // Tampilkan kosakata di UI
+    if (usedVocabulary.length > 0) {
+        usedVocabulary.forEach((word) => {
+            const wordElement = document.createElement("p");
+            wordElement.textContent = word;
+            wordElement.classList.add("text-lg", "text-green-900");
+            usedVocabularyContainer.appendChild(wordElement);
+        });
+    } else {
+        usedVocabularyContainer.innerHTML = `<p class="text-lg text-red-500"></p>`;
+    }
 
     // Tampilkan peringkat harian
     try {
@@ -273,6 +277,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("successfulWordsCount");
     localStorage.removeItem("failedWordsCount");
     localStorage.removeItem("totalScore");
+    localStorage.removeItem("usedVocabulary");
     localStorage.removeItem("usedVocabulary");
 });
 
