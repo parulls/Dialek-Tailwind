@@ -156,6 +156,14 @@
     document.getElementById("loading-bar").style.width = "0";
 
 });
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
+        });
+        const home = document.querySelector('.logo');
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
     </script>
 </body>
 </html>
