@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Name and Setting Button -->
                 <div class="flex items-center justify-between w-full">
                     <div class="text-center md:text-left">
-                        <p id="profile-name" class="text-xl font-semibold text-custom2">Loading...</p>
-                        <p id="profile-username" class="text-gray-500">loading...</p>
+                        <p id="profile-name" class="text-xl font-semibold text-custom2">Memuat...</p>
+                        <p id="profile-username" class="text-gray-500">memuat...</p>
                     </div>
                     <button id="SettingButton" class="text-custom2">
                         <i class="fa-solid fa-gear text-3xl"></i>

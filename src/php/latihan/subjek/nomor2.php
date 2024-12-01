@@ -14,21 +14,18 @@
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
-        </div>
     </nav>
 
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-transparent shadow-2xl opacity-90 min-h-[500px] h-full w-full">
-            <div class="flex justify-center items-center font-bold text-lg">
-                <p>Latihan Soal</p>
+    <section class="main flex flex-col mx-auto w-11/12 sm:w-4/5 items-center flex-grow space-y-8 sm:space-y-16">
+        <div id="soal" class="flex flex-col items-center text-sm p-4 text-custom2 bg-white bg-opacity-30 rounded-3xl shadow-lg min-h-[300px] sm:min-h-[500px] h-auto w-full border border-custom2 justify-center">
+            <!-- Judul Soal -->
+            <div class="flex justify-center items-center font-bold text-xl sm:text-2xl md:text-3xl pt-8 sm:pt-12 font-poppins text-center">
+                <p>Pilih sambungan kata yang tepat</p>
             </div>
-            <div class="bg-custom7 w-[70%] flex justify-start items-center mb-12 mt-28 px-4">
+            <div class="bg-custom7 w-full sm:w-4/5 lg:w-[70%] flex justify-start items-center mb-8 sm:mb-12 mt-16 sm:mt-28 px-4 py-3 rounded-lg">
                 <!-- Bagian PHP untuk menampilkan soal -->
                 <?php
-                // Query untuk mengambil soal dengan id = 2
+                // Query untuk mengambil soal dengan id = 1
                 $question_id = 2; // ID soal yang ingin diambil
                 $sql = "SELECT id, question_text FROM questions WHERE id = :id";
                 $stmt = $conn->prepare($sql);
@@ -38,14 +35,14 @@
                 if ($stmt->rowCount() > 0) {
                     // Menampilkan soal
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                    echo "<p class='text-lg font-semibold mb-4'>" . $row['question_text'] . "</p>";
+                    echo "<p class='text-base sm:text-lg font-semibold p-2'>" . $row['question_text'] . "</p>";
                 } else {
-                    echo "<p class='text-lg font-semibold mb-4'>Soal dengan ID $question_id tidak ditemukan</p>";
+                    echo "<p class='text-base sm:text-lg font-semibold p-2'>Soal dengan ID $question_id tidak ditemukan</p>";
                 }
                 ?>
             </div>
 
-            <div class="flex justify-between w-[70%] mb-40">
+            <div class="flex flex-col sm:flex-row sm:justify-between items-center w-full sm:w-4/5 lg:w-[70%] space-y-4 sm:space-y-0 sm:space-x-4 mb-20 sm:mb-40">
                 <!-- Bagian PHP untuk menampilkan pilihan jawaban -->
                 <?php
                 // Query untuk mengambil jawaban berdasarkan question_id
@@ -61,7 +58,7 @@
                         echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
                         echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
-                        echo "<button type='submit' class='option button-option w-32'>" . $answer['answer_text'] . "</button>";
+                        echo "<button type='submit' class='option button-option w-28 sm:w-32 h-10 sm:h-11 text-sm sm:text-lg'>" . $answer['answer_text'] . "</button>";
                         echo "</form>";
                     }
                 } else {
