@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <p class="text-black">Belum Punya Akun? <a href="./signup.php" class="text-custom1 font-bold hover:underline">Daftar</a></p>
+                        <p class="text-black">Belum Punya Akun? <a href="./SignUp.php" class="text-custom1 font-bold hover:underline">Daftar</a></p>
                     </div>
                 </form>
             </div>

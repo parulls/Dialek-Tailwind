@@ -32,13 +32,6 @@ $stmt_check_next_level = $conn->prepare($query_check_next_level);
 $stmt_check_next_level->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
 $stmt_check_next_level->execute();
 $nextLevelExists = $stmt_check_next_level->fetchColumn() > 0;
-
-// Periksa apakah task pertama untuk level berikutnya ada
-$query_check_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = :nextLevel AND id = 1"; 
-$stmt_check_task = $conn->prepare($query_check_task);
-$stmt_check_task->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
-$stmt_check_task->execute();
-$taskExists = $stmt_check_task->fetchColumn() > 0;
 ?>
 
 <!DOCTYPE html>
@@ -79,24 +72,9 @@ $taskExists = $stmt_check_task->fetchColumn() > 0;
     <!-- Footer with Navigation Buttons -->
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        
-        <?php if ($nextLevelExists): ?>
-            <!-- If task exists for the next level -->
-            <?php if ($taskExists): ?>
-                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selesaikan Level</button>
-            <?php else: ?>
-                <!-- Level 1 without task but next level exists -->
-                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Level Berikutnya</button>
-            <?php endif; ?>
-        <?php else: ?>
-            <!-- If it's the last level (e.g., level 2) and no next level exists -->
-            <?php if ($level == 2): ?>
-                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selesaikan Level</button>
-            <?php else: ?>
-                <!-- No button if it's the last level -->
-            <?php endif; ?>
-        <?php endif; ?>
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
+
 
     <script>
     const home = document.getElementById("home");
@@ -112,25 +90,22 @@ $taskExists = $stmt_check_task->fetchColumn() > 0;
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
 
-        const taskExists = <?php echo $taskExists ? 'true' : 'false'; ?>; // Pass PHP value to JavaScript
-
-        kembaliButton.addEventListener('click', function() {
-            // If level > 1, go to previous level
+        kembaliButton.addEventListener('click', function () {
+            // Jika level > 1, pergi ke level sebelumnya
             if (<?php echo $level; ?> > 1) {
                 window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
             } else {
-                // If level = 1, go back to level page
+                // Jika level = 1, kembali ke halaman level
                 window.location.href = './literasi-budaya-level.php';
             }
         });
 
-        selanjutnyaButton.addEventListener('click', function() {
-            // Check if task exists
-            if (taskExists) {
-                // Redirect to task page for the next level
-                window.location.href = './literasi-budaya-latihan.php?level=<?php echo $nextLevel; ?>&task_id=1';
-            } else {
-                // Redirect to next level's material page if no task exists
+        selanjutnyaButton.addEventListener('click', function () {
+            if (<?php echo $level; ?> === 2) {
+                // Jika level 2, langsung masuk ke latihan level 2
+                window.location.href = './literasi-budaya-latihan.php';
+            } else if (<?php echo $nextLevelExists ? 'true' : 'false'; ?>) {
+                // Untuk level lainnya, jika level berikutnya ada
                 window.location.href = './literasi-budaya-materi.php?level=<?php echo $nextLevel; ?>';
             }
         });

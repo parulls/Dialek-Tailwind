@@ -82,7 +82,7 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
 <footer class="flex items-center justify-between w-full px-4 py-4">
     <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-    <button id="selesai-button" class="button-custom2-red text-sm mx-6" disabled>Keluar</button>
+    <button id="selesai-button" class="button-custom2-red text-sm mx-6" disabled>Selesai</button>
 </footer>
 
 <script>
@@ -96,29 +96,32 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
         window.location.href = "./AkunUser.php";
     });
 
+    // Fungsi validasi jawaban
     function validateAnswer(selectedOption) {
         if (selectedOption === correctOption) {
             feedbackMessage.textContent = "Keren! Jawaban Anda Benar";
             feedbackMessage.style.color = "green";
-            selesaiButton.disabled = false; // Aktifkan tombol 'Selanjutnya'
+            selesaiButton.disabled = false; // Aktifkan tombol 'Selesai'
         } else {
             feedbackMessage.textContent = "Maaf, Silahkan Coba Lagi";
             feedbackMessage.style.color = "red";
-            selesaiButton.disabled = true; // Nonaktifkan tombol 'Selanjutnya'
+            selesaiButton.disabled = true; // Nonaktifkan tombol 'Selesai'
         }
     }
 
-    kembaliButton.addEventListener('click', function() {
-        window.location.href = './literasi-budaya-materi1.php?level=<?php echo $prevLevel; ?>&task_id=<?php echo $prevTask; ?>';
-        });
+    // Tombol kembali ke halaman materi
+    kembaliButton.addEventListener('click', function () {
+        if (<?php echo $level; ?> === 2) {
+            window.location.href = './literasi-budaya-materi.php?level=2';
+        } else {
+            window.location.href = './literasi-budaya-materi.php?level=<?php echo $prevLevel; ?>';
+        }
+    });
 
-        selesaiButton.addEventListener('click', function() {
-            <?php if ($nextTaskExists): ?>
-                window.location.href = './literasi-budaya-latihan.php?level=<?php echo $level; ?>&task_id=<?php echo $nextTask; ?>';
-            <?php else: ?>
-                window.location.href = './literasi-budaya-level.php';
-            <?php endif; ?>
-        });
+    // Tombol selesai menuju halaman level
+    selesaiButton.addEventListener('click', function () {
+        window.location.href = './literasi-budaya-level.php';
+    });
 </script>
 </body>
 </html>

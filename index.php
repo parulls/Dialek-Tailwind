@@ -92,8 +92,8 @@
         <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa" class="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain">
         <p class="text-base leading-normal align-middle">Jawa</p>
       </div>
-      <div class="language-option w-full flex items-start justify-start space-x-4" data-aos="fade-left" data-aos-delay="200">
-        <img src="./src/assets/batak.webp" alt="Batak" id="batak" class="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain">
+      <div class="language-option w-full flex items-center justify-center space-x-4" data-aos="fade-left" data-aos-delay="200">
+        <img src="./src/assets/batak.webp" alt="Batak" id="batak" class="w-full">
         <p class="text-base leading-normal align-middle">Batak Toba</p>
       </div>
       </div>
