@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div data-aos="fade-up" class="flex items-center justify-center px-4">
             <div class="bg-shadow p-6 rounded-lg">
                 <h2 class="text-4xl font-bold text-center text-gradient mb-6 w-full">Masuk</h2>
-                <form id="login-form" action="../php/daftar.php" method="post">
+                <form id="login-form" action="../php/login.php" method="post">
                     <div class="mb-4">
                         <label class="block text-custom2 text-lg font-semibold mb-2" for="login">E-mail atau Username</label>
                         <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                     <div class="text-center mt-4">
-                        <p class="text-black">Belum Punya Akun? <a href="./daftar.php" class="text-custom1 font-bold hover:underline">Daftar</a></p>
+                        <p class="text-black">Belum Punya Akun? <a href="daftar.php" class="text-custom1 font-bold hover:underline">Daftar</a></p>
                     </div>
                 </form>
             </div>
@@ -171,9 +171,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
                 const result = await response.json();
                 if (result.success) {
-                    alert("Berhasil Masuk!");
+                    alert("Login berhasil!");
                     storeUserData(result.user);
-                    window.location.href = "./dashboard-batak.php";
+                    window.location.href = "dashboard-batak.php";
                 } else {
                     alert(result.message);
                 }
@@ -198,15 +198,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     body: JSON.stringify({
                         firebase_uid: user.uid,
                         id_token: idToken,
-                    }),S
+                    }),
                 });
 
                 const resultData = await response.json();
 
                 if (resultData.success) {
                     storeUserData(resultData.user);
-                    alert("Berhasil Masuk!");
-                    window.location.href = "./dashboard-batak.php";
+                    alert("Login berhasil!");
+                    window.location.href = "dashboard-batak.php";
                 } else {
                     alert("Login gagal: " + resultData.message);
                 }
