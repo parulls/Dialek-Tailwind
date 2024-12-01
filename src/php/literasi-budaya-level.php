@@ -247,7 +247,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             console.log("Toggling sidebar...");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
         }
-
         document.addEventListener("DOMContentLoaded", async () => {
         const firebaseUid = localStorage.getItem("firebase_uid");
 

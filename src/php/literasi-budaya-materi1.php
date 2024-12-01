@@ -92,6 +92,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </nav>
 
+    <div id="sidebar" class="fixed bg-white w-60 h-full">
+        <div class="flex items-center justify-between w-full px-12 py-12">
+            <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        </div>
+        <ul class="mt-4 space-y-2">
+            <li>
+                <a href="./dashboard-batak.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">dashboard</span>
+                    <span class="text-black font-medium">Dasbor</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">forum</span>
+                    <span class="text-black font-medium">Forum Diskusi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./materi-pilih-topik.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">book</span>
+                    <span class="text-black font-medium">Materi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./permainan-hasil.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">extension</span>
+                    <span class="text-black font-medium">Permainan</span>
+                </a>
+            </li>
+            <li>
+                <a href="./literasi-budaya-level.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">auto_stories</span>
+                    <span class="text-black font-medium">Literasi Budaya</span>
+                </a>
+            </li>
+            <li>
+                <a href="./kosakata-model1.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">note_stack</span>
+                    <span class="text-black font-medium">Kosakata</span>
+                </a>
+            </li>
+            <li>
+                <a id="logout-button" href="../../index.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">logout</span>
+                    <span class="text-black font-medium">Keluar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
     <!-- Main Content Section -->
     <section class="main flex flex-col mx-auto w-4/5 flex-grow space-y-10">
         <header class="header items-center text-center">
@@ -148,6 +198,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 window.location.href = './literasi-budaya-materi.php?level=<?php echo $nextLevel; ?>';
             }
         });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            console.log("Toggling sidebar...");
+            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+        }
 
         document.addEventListener("DOMContentLoaded", async () => {
         const firebaseUid = localStorage.getItem("firebase_uid");
