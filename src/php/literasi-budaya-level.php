@@ -207,23 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?= $i ?>
                     </div>
                 <?php endif; ?>
-
-                <?php if ($i % 2 == 0): ?>
-                    <?php $taskNumber = $i / 2; ?>
-                    <?php if (isTaskUnlocked($taskNumber)): ?>
-                        <!-- Task terbuka -->
-                        <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <a href="literasi-budaya-materi.php?task=<?= $taskNumber ?>">
-                                <i class="fa-solid fa-comment"></i>
-                            </a>
-                        </div>
-                    <?php else: ?>
-                        <!-- Task terkunci -->
-                        <div class="level-lock w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <i class="fa-solid fa-comment"></i>
-                        </div>
-                    <?php endif; ?>
-                <?php endif; ?>
             <?php endfor; ?>
         </div>
     </section>

@@ -122,7 +122,7 @@ $hint = $word_data['hint'] ?? 'tidak ada petunjuk';
         </div>
     </section>
     <footer class="flex items-center justify-end w-full px-4 py-4">
-        <a href="./dashboard-batak.php" class="button-custom2-red text-sm mx-6">Keluar</a>
+        <a href="./dashboard-batak.php" class="button-custom2-red text-sm mx-6 cursor-pointer transition duration-300">Keluar</a>
     </footer>
     <script>
         const home = document.querySelector('.logo');
