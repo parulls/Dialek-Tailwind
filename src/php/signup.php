@@ -1,31 +1,10 @@
-<?php 
-    include("connect.php");
+<?php
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
-        $name = $conn->quote($_POST['name']);
-        $username = $conn->quote($_POST['username']);
-        $email = $conn->quote($_POST['email']);
-        $password = $conn->quote($_POST['password']);
-        $confirmPassword = $conn->quote($_POST['confirmPassword']);
+include("connect.php");
 
-        if ($password !== $confirmPassword) {
-            echo "<script>alert('Kata sandi tidak cocok!');</script>";
-        } else {
-            // Enkripsi kata sandi
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-            // Masukkan data ke database
-            $sql = "INSERT INTO users (name, username, email, password) VALUES ('$name', '$username', '$email', '$hashedPassword')";
-            if ($conn->exec($sql)) {
-                echo "<script>alert('Pendaftaran berhasil!'); window.location.href='./dashboardBatak.html';</script>";
-            } else {
-                $errorInfo = $conn->errorInfo();
-                echo "<script>alert('Registrasi gagal: " . $errorInfo[2] . "');</script>";
-            }
-        }
-    }
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
+    $data = json_decode(file_get_contents("php://input"), true);
 
     function generateRandomUsername($length = 7) {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -38,58 +17,53 @@
     }
 
     try {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $name = trim($data['name'] ?? '');
+        $username = trim($data['username'] ?? generateRandomUsername()); // Generate username jika kosong
+        $email = trim($data['email'] ?? '');
+        $password = $data['password'] ?? null;
+        $profileImage = $data['profile_image'] ?? 'default_profile_image_url';
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $firebaseUid = $data['firebase_uid'] ?? null;
-            $name = trim($data['name'] ?? '');
-            $email = trim($data['email'] ?? '');
-            $password = $data['password'] ?? null;
-            $username = trim($data['username'] ?? generateRandomUsername());
-            $profileImage = $data['profile_image'] ?? 'default_profile_image_url';
-
-            if (!$name || !$email || !$username) {
-                echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
-                exit;
-            }
-
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo json_encode(["success" => false, "message" => "Email tidak valid!"]);
-                exit;
-            }
-
-            $hashedPassword = $password ? password_hash($password, PASSWORD_BCRYPT) : "GOOGLE_SIGNUP";
-
-            // Cek apakah email atau username sudah ada
-            $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
-            $stmt->execute([':email' => $email, ':username' => $username]);
-
-            if ($stmt->rowCount() > 0) {
-                echo json_encode(["success" => false, "message" => "Email atau username sudah digunakan!"]);
-                exit;
-            }
-
-            // Simpan data pengguna ke database
-            $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, email, password, username, profile_image) VALUES (:firebase_uid, :name, :email, :password, :username, :profileImage)");
-            $stmt->execute([
-                ':firebase_uid' => $firebaseUid,
-                ':name' => $name,
-                ':email' => $email,
-                ':password' => $hashedPassword,
-                ':username' => $username,
-                ':profileImage' => $profileImage,
-            ]);
-
-            // Get the last inserted id
-            $id_user = $conn->lastInsertId();
-
-            echo json_encode(["success" => true, "message" => "Signup berhasil!", "id_user" => $id_user, "username" => $username, "profile_image" => $profileImage]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Invalid request method."]);
+        if (!$firebaseUid || !$name || !$username || !$email) {
+            echo json_encode(["success" => false, "message" => "Data tidak lengkap!"]);
+            exit;
         }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(["success" => false, "message" => "Email tidak valid!"]);
+            exit;
+        }
+
+        // Hash password
+        $hashedPassword = $password ? password_hash($password, PASSWORD_BCRYPT) : "GOOGLE_SIGNUP";
+
+        // Cek apakah email atau username sudah digunakan
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
+        $stmt->execute([':email' => $email, ':username' => $username]);
+
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(["success" => false, "message" => "Email atau username sudah digunakan!"]);
+            exit;
+        }
+
+        // Simpan data pengguna ke database
+        $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, email, password, username, profile_image) VALUES (:firebase_uid, :name, :email, :password, :username, :profileImage)");
+        $stmt->execute([
+            ':firebase_uid' => $firebaseUid,
+            ':name' => $name,
+            ':email' => $email,
+            ':password' => $hashedPassword,
+            ':username' => $username,
+            ':profileImage' => $profileImage,
+        ]);
+
+        echo json_encode(["success" => true, "message" => "Signup berhasil!"]);
     } catch (Exception $e) {
         echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
     }
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -122,14 +96,14 @@
     </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen ">
-    <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+    <nav class="flex items-center justify-between w-full p-12">
+        <div id="landing-page" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
 <section class="main flex flex-col mx-auto w-2/3 flex-grow">
     <div class="flex items-center justify-center px-4">
         <div class="bg-shadow p-6 rounded-lg">
             <h2 class="text-gradient text-4xl font-bold text-center mb-6 w-full">Daftar</h2>
-            <form id="signup-form">
+            <form id="signup-form" >
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="nama">Nama</label>
                     <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
@@ -154,14 +128,14 @@
                 <div class="mb-4">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
                     <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" name="password" id="password" placeholder="*********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
+                        <input type="password" name="password" id="password" placeholder="*" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
                 <div class="mb-6">
                     <label class="block text-custom2 text-lg font-semibold mb-2" for="confirmPassword">Konfirmasi Kata Sandi</label>
                     <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Confirm Password" />
                         <ion-icon name="lock-closed" class="pr-4  items-center"></ion-icon>
                     </div>
                 </div>
@@ -183,78 +157,134 @@
                         <img src="../assets/Facebook.webp" alt="Facebook Logo" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-6 w-6" />
                     </div>
                 </div>
+                <div class="text-center mt-4">
+                    <p class="text-black">Sudah Punya Akun? <a href="./masuk.html" class="text-custom1 font-bold hover:underline">Masuk</a></p>
+                </div>
             </form>
         </div>
     </div>
 </section>
 <script type="module">
+// Import Firebase Modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-    
-    const firebaseConfig = {
-        apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
-        authDomain: "dialek-6a219.firebaseapp.com",
-        projectId: "dialek-6a219",
-        storageBucket: "dialek-6a219.firebasestorage.app",
-        messagingSenderId: "423916223695",
-        appId: "1:423916223695:web:449bd44c54cad998d8cbba",
-        measurementId: "G-4SLBH47WTM"
-    };
-    
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const googleProvider = new GoogleAuthProvider();
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
+    authDomain: "dialek-6a219.firebaseapp.com",
+    projectId: "dialek-6a219",
+    storageBucket: "dialek-6a219.appspot.com",
+    messagingSenderId: "423916223695",
+    appId: "1:423916223695:web:449bd44c54cad998d8cbba",
+    measurementId: "G-4SLBH47WTM"
+};
 
-    // Signup form
-    document.getElementById('signup-form').addEventListener('submit', async (event) => {
-        event.preventDefault();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-        const name = document.getElementById('name').value;
-        const username = document.getElementById('username').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+// Handle Signup Form Submission
+document.getElementById("signup-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        if (password !== confirmPassword) {
-            alert("Kata sandi tidak cocok!");
-            return;
-        }
+    // Get user inputs
+    const name = document.getElementById("name").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
+    // Validate form fields
+    if (!name || !username || !email || !password || !confirmPassword) {
+        alert("Semua field wajib diisi.");
+        return;
+    }
 
-            // Simpan data pengguna ke Firestore
-            await setDoc(doc(db, "users", user.uid), {
+    if (password !== confirmPassword) {
+        alert("Kata sandi dan konfirmasi kata sandi tidak cocok.");
+        return;
+    }
+
+    try {
+        // Create user in Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Send user data to the backend
+        const response = await fetch("signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
                 name: name,
                 username: username,
                 email: email,
-                userId: user.uid
-            });
+                profile_image: "default_profile_image_url", // Default profile image
+                password: password,
+            }),
+        });
 
-            alert("Pendaftaran berhasil!");
-            window.location.href = './dashboardBatak.html';
-        } catch (error) {
-            console.error("Masalah error:", error.message);
-            alert("Registrasi Gagal: " + error.message);
+        const result = await response.json();
+        if (result.success) {
+            // Save user data in localStorage
+            localStorage.setItem("firebase_uid", user.uid);
+            localStorage.setItem("username", result.username);
+            localStorage.setItem("profileImage", result.profile_image);
+            localStorage.setItem("email", email);
+            localStorage.setItem("profileName", result.name);
+
+            alert("Signup berhasil!");
+            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
+        } else {
+            alert(result.message);
         }
-    });
+    } catch (error) {
+        alert("Terjadi kesalahan saat mendaftar: " + error.message);
+    }
+});
 
-    document.getElementById('googleLogin').addEventListener('click', () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                console.log("Pengguna google terdaftar:", user);
-                window.location.href = './dashboardBatak.html';
-            })
-            .catch((error) => {
-                console.error("Error with Google sign-in:", error.message);
-                alert("Login dengan google gagal: " + error.message);
-            });
-    });
+// Handle Google Signup
+document.getElementById("googleLogin").addEventListener("click", async () => {
+    try {
+        // Sign in using Google
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+
+        // Send user data to the backend
+        const response = await fetch("signup.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                firebase_uid: user.uid,
+                name: user.displayName || "User",
+                email: user.email,
+                profile_image: user.photoURL || "default_profile_image_url",
+                username: null, 
+                password: null, 
+            }),
+        });
+
+        const resultData = await response.json();
+        if (resultData.success) {
+            // Save user data in localStorage
+            localStorage.setItem("firebase_uid", user.uid);
+            localStorage.setItem("username", resultData.username);
+            localStorage.setItem("profileImage", resultData.profile_image);
+            localStorage.setItem("email", user.email);
+            localStorage.setItem("profileName", resultData.name);
+
+            alert("Signup berhasil dengan Google!");
+            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
+        } else {
+            alert(resultData.message);
+        }
+    } catch (error) {
+        alert("Google Signup Error: " + error.message);
+    }
+});
+
 </script>
 </body>
-</html
+</html>

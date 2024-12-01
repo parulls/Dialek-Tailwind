@@ -67,7 +67,7 @@
     </div>
     </section>
     <script>
-       <script>
+       
     // Fungsi untuk memuat data profil pengguna
     function loadProfileData() {
     const name = localStorage.getItem("profileName") || "Nama User";
@@ -155,11 +155,6 @@
     document.addEventListener("DOMContentLoaded", async () => {
     const firebaseUid = localStorage.getItem("firebase_uid");
 
-    if (!firebaseUid) {
-        alert("Silakan login terlebih dahulu.");
-        window.location.href = "login.html";
-        return;
-    }
 
     try {
         const response = await fetch(`../php/getUserData.php?firebase_uid=${firebaseUid}`);
