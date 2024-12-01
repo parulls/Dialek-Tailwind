@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </a>
             </li>
             <li>
-                <a id="logout-button" href="/index.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a id="logout-button" href="../../index.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">logout</span>
                     <span class="text-black font-medium">Keluar</span>
                 </a>
