@@ -244,7 +244,7 @@
         window.location.href = "permainan_hasil.php";
     });
     Literasi.addEventListener("click", () => {
-        window.location.href = "./LiterasiBudaya.php";
+        window.location.href = "./literasi_budaya_level.php";
     });
     KosaKata.addEventListener("click", () => {
         window.location.href = "./Kosakata1.php";

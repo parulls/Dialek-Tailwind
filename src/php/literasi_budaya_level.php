@@ -1,27 +1,6 @@
 <?php
 session_start();
 
-// Menentukan level yang sedang diakses
-$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
-
-// Inisialisasi level dan task jika belum ada di session
-if (!isset($_SESSION['unlocked_levels'])) {
-    $_SESSION['unlocked_levels'] = [1]; // Hanya level 1 yang terbuka secara default
-}
-if (!isset($_SESSION['unlocked_tasks'])) {
-    $_SESSION['unlocked_tasks'] = []; // Tidak ada task yang terbuka secara default
-}
-
-// Cek apakah level telah dibuka
-function isLevelUnlocked($level) {
-    return in_array($level, $_SESSION['unlocked_levels']);
-}
-
-// Cek apakah task telah dibuka
-function isTaskUnlocked($taskNumber) {
-    return in_array($taskNumber, $_SESSION['unlocked_tasks']);
-}
-
 // Fungsi untuk membuka level selanjutnya
 function unlockNextLevel($currentLevel) {
     $nextLevel = $currentLevel + 1;
@@ -42,7 +21,25 @@ function unlockTask($taskNumber) {
     }
 }
 
-// Bagian logika untuk menyelesaikan level
+// Periksa apakah level terbuka
+function isLevelUnlocked($level) {
+    return isset($_SESSION['unlocked_levels']) && in_array($level, $_SESSION['unlocked_levels']);
+}
+
+// Periksa apakah task terbuka
+function isTaskUnlocked($taskNumber) {
+    return isset($_SESSION['unlocked_tasks']) && in_array($taskNumber, $_SESSION['unlocked_tasks']);
+}
+
+// Inisialisasi level dan task jika belum ada di session
+if (!isset($_SESSION['unlocked_levels'])) {
+    $_SESSION['unlocked_levels'] = [1]; // Hanya level 1 yang terbuka secara default
+}
+if (!isset($_SESSION['unlocked_tasks'])) {
+    $_SESSION['unlocked_tasks'] = []; // Tidak ada task yang terbuka secara default
+}
+
+// Logika untuk menyelesaikan level
 if (isset($_GET['complete_level'])) {
     $completedLevel = intval($_GET['complete_level']);
     if (isLevelUnlocked($completedLevel)) {
@@ -52,12 +49,50 @@ if (isset($_GET['complete_level'])) {
     // Redirect ke halaman task jika level adalah kelipatan 2
     if ($completedLevel % 2 == 0) {
         $taskNumber = $completedLevel / 2;
-        header("Location: literasi-budaya-latihan.php?task=$taskNumber");
+        header("Location: literasi-budaya-task.php?task=$taskNumber");
+        exit;
+    }
+}
+
+// Periksa apakah ini adalah permintaan POST untuk data pengguna
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header("Content-Type: application/json");
+    include('connect.php');
+
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $firebaseUid = $data['firebase_uid'] ?? null;
+
+        if ($firebaseUid) {
+            $stmt = $conn->prepare("
+                SELECT name, username, email, phone, 
+                       COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+                FROM users 
+                WHERE firebase_uid = :firebase_uid
+            ");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "user" => $user]);
+                exit;
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+                exit;
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
+        exit;
+    } catch (Exception $e) {
+        echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
         exit;
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -199,7 +234,7 @@ if (isset($_GET['complete_level'])) {
     <script>
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.php";
+            window.location.href = "./AkunUser.php";
         });
         const kembaliButton = document.getElementById('kembali-button');
         kembaliButton.addEventListener('click', function() {
@@ -209,6 +244,32 @@ if (isset($_GET['complete_level'])) {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
         }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+    const firebaseUid = localStorage.getItem("firebase_uid");
+
+    try {
+        const response = await fetch(window.location.href, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firebase_uid: firebaseUid }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            const userData = result.user;
+            document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+
+        } else {
+            alert("Gagal memuat data pengguna: " + result.message);
+            window.location.href = "login.php";
+        }
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        alert("Terjadi kesalahan saat memuat data pengguna.");
+    }
+});
+
     </script>
 </body>
 </html>
