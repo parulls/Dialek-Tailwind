@@ -185,7 +185,6 @@ include("connect.php");
             Kembali
         </button>
     </footer>
-
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
     const firebaseUid = localStorage.getItem("firebase_uid");
@@ -233,11 +232,6 @@ include("connect.php");
     document.getElementById("loading-bar").style.width = "0";
 });
 
-    const profile = document.getElementById("profile-button");
-    profile.addEventListener("click", () => {
-        window.location.href = "akun-pengguna.php";
-    });
-    
 document.addEventListener("DOMContentLoaded", () => {
     // Tangkap tombol dengan ID tertentu
     const mulaiButton = document.getElementById("masuk-materi");

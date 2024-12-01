@@ -238,7 +238,7 @@
             window.location.href = "./akun-pengguna.php";
         });
     Materi.addEventListener("click", () => {
-        window.location.href = "../html/materi-pilih-topik.php";
+        window.location.href = "materi-pilih-topik.php";
     });
     Game.addEventListener("click", () => {
         window.location.href = "./permainan-hasil.php";

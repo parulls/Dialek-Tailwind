@@ -51,9 +51,15 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
+<<<<<<< HEAD
         <div  id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">memuat...</p>
+=======
+        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
+            <p id="account-username" class="px-4 text-xl">username</p>
+>>>>>>> 3a699481dc303e7c8a773b9b1851d5d21b4e5b1c
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
@@ -96,8 +102,19 @@
     </main>
 
     <script>
-        const home = document.getElementById('home');
-        const profile = document.getElementById('profile-button');
+        const kembaliButton = document.querySelector('button.bg-green-800');
+        kembaliButton.addEventListener('click', () => {
+            window.location.href = './dashboard-batak.php';
+        });
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
+        });
+        const home = document.querySelector('.logo');
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
+
         const pertanyaanInput = document.getElementById('pertanyaanInput');
         const tanyaButton = document.getElementById('tanyaButton');
         const pertanyaanList = document.getElementById('pertanyaanList');
@@ -196,7 +213,7 @@
 
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);
