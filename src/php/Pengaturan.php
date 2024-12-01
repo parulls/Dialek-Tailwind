@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const firebaseUid = localStorage.getItem("firebase_uid");
             if (!firebaseUid) {
                 alert("Silakan login terlebih dahulu.");
-                window.location.href = "login.php";
+                window.location.href = "./masuk.php";
                 return;
             }
             try {
@@ -233,13 +233,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
                 localStorage.clear();
                 alert("Akun berhasil dihapus!");
-                window.location.href = "signup.php";
+                window.location.href = "./daftar.php";
             }
         }
 
 
         document.getElementById("home").addEventListener("click", () => {
-            window.location.href = "AkunUser.php";
+            window.location.href = "./akun-pengguna.php";
         });
 
         document.addEventListener("DOMContentLoaded", loadProfile);

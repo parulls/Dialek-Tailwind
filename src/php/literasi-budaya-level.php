@@ -110,14 +110,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%;
+            left: -100%; /* Sidebar tersembunyi */
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
             z-index: 1000;
         }
+
         #sidebar.open {
-            left: 0;
+            left: 0; /* Sidebar terbuka */
         }
     </style>
 </head>
@@ -212,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if (isTaskUnlocked($taskNumber)): ?>
                         <!-- Task terbuka -->
                         <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <a href="literasi-budaya-task.php?task=<?= $taskNumber ?>">
+                            <a href="literasi-budaya-materi.php?task=<?= $taskNumber ?>">
                                 <i class="fa-solid fa-comment"></i>
                             </a>
                         </div>
@@ -230,38 +231,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
-            window.location.href = "./AkunUser.php";
+            window.location.href = "./akun-pengguna.php";
         });
 
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
+            console.log("Toggling sidebar...");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
         }
-
         document.addEventListener("DOMContentLoaded", async () => {
         const firebaseUid = localStorage.getItem("firebase_uid");
 
-    try {
-        const response = await fetch(window.location.href, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firebase_uid: firebaseUid }),
-        });
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
 
-        const result = await response.json();
-        if (result.success) {
-            const userData = result.user;
-            document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
 
-        } else {
-            alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "./masuk.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            alert("Terjadi kesalahan saat memuat data pengguna.");
         }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Terjadi kesalahan saat memuat data pengguna.");
-    }
-});
+    });
 
     </script>
 </body>

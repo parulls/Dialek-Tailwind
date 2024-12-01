@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <p class="text-black">Sudah Punya Akun? <a href="login.php" class="text-custom1 font-bold hover:underline">Masuk</a></p>
+                    <p class="text-black">Sudah Punya Akun? <a href="masuk.php" class="text-custom1 font-bold hover:underline">Masuk</a></p>
                 </div>
             </form>
         </div>
@@ -213,7 +213,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
         const user = userCredential.user;
 
         // Send user data to the backend
-        const response = await fetch("signup.php", {
+        const response = await fetch("./daftar.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -236,7 +236,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
             localStorage.setItem("profileName", result.name);
 
             alert("Signup berhasil!");
-            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
+            window.location.href = "./dashboard-batak.php"; // Redirect to dashboard
         } else {
             alert(result.message);
         }
@@ -253,7 +253,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
         const user = result.user;
 
         // Send user data to the backend
-        const response = await fetch("signup.php", {
+        const response = await fetch("./daftar.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -276,7 +276,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
             localStorage.setItem("profileName", resultData.name);
 
             alert("Signup berhasil dengan Google!");
-            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
+            window.location.href = "./dashboard-batak.php"; // Redirect to dashboard
         } else {
             alert(resultData.message);
         }

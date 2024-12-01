@@ -235,19 +235,19 @@
     const Literasi = document.getElementById("goto-literasi");
     const KosaKata = document.getElementById("goto-kosaKata");
     profile.addEventListener("click", () => {
-            window.location.href = "./AkunUser.php";
+            window.location.href = "./akun-pengguna.php";
         });
     Materi.addEventListener("click", () => {
-        window.location.href = "../html/materi-pilih-topik.html";
+        window.location.href = "../html/materi-pilih-topik.php";
     });
     Game.addEventListener("click", () => {
-        window.location.href = "permainan-hasil.php";
+        window.location.href = "./permainan-hasil.php";
     });
     Literasi.addEventListener("click", () => {
         window.location.href = "./literasi-budaya-level.php";
     });
     KosaKata.addEventListener("click", () => {
-        window.location.href = "./Kosakata-model1.php";
+        window.location.href = "./kosakata-model1.php";
     });
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -267,7 +267,7 @@
 
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);

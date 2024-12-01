@@ -34,6 +34,45 @@ $stmt_next_task->bindParam(':nextTask', $nextTask, PDO::PARAM_INT);
 $stmt_next_task->execute();
 $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
+// Periksa apakah ini adalah permintaan POST untuk data pengguna
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header("Content-Type: application/json");
+    include('connect.php');
+
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $firebaseUid = $data['firebase_uid'] ?? null;
+
+        if ($firebaseUid) {
+            $stmt = $conn->prepare("
+                SELECT name, username, email, phone, 
+                       COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+                FROM users 
+                WHERE firebase_uid = :firebase_uid
+            ");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "user" => $user]);
+                exit;
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+                exit;
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
+        exit;
+    } catch (Exception $e) {
+        echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
+        exit;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +91,55 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
             <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
-
+    <div id="sidebar" class="fixed bg-white w-60 h-full">
+        <div class="flex items-center justify-between w-full px-12 py-12">
+            <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        </div>
+        <ul class="mt-4 space-y-2">
+            <li>
+                <a href="./dashboard-batak.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">dashboard</span>
+                    <span class="text-black font-medium">Dasbor</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">forum</span>
+                    <span class="text-black font-medium">Forum Diskusi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./materi-pilih-topik.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">book</span>
+                    <span class="text-black font-medium">Materi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./permainan-hasil.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">extension</span>
+                    <span class="text-black font-medium">Permainan</span>
+                </a>
+            </li>
+            <li>
+                <a href="./literasi-budaya-level.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">auto_stories</span>
+                    <span class="text-black font-medium">Literasi Budaya</span>
+                </a>
+            </li>
+            <li>
+                <a href="./kosakata-model1.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">note_stack</span>
+                    <span class="text-black font-medium">Kosakata</span>
+                </a>
+            </li>
+            <li>
+                <a id="logout-button" href="../../index.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">logout</span>
+                    <span class="text-black font-medium">Keluar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     <section class="main flex flex-col mx-auto w-4/5 flex-grow space-y-10">
     <header class="header items-center text-center">
         <h2 class="h2 font-bold text-gradient">
@@ -82,7 +169,7 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
 <footer class="flex items-center justify-between w-full px-4 py-4">
     <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-    <button id="selesai-button" class="button-custom2-red text-sm mx-6" disabled>Selesai</button>
+    <button id="selesai-button" class="button-custom2-red text-sm mx-6 cursor-pointer transition duration-300" disabled>Selesai</button>
 </footer>
 
 <script>
@@ -93,7 +180,7 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
     const profile = document.getElementById("profile-button");
     profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
+        window.location.href = "./akun-pengguna.php";
     });
 
     // Fungsi validasi jawaban
@@ -122,6 +209,37 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
     selesaiButton.addEventListener('click', function () {
         window.location.href = './literasi-budaya-level.php';
     });
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const firebaseUid = localStorage.getItem("firebase_uid");
+
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "./daftar.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            alert("Terjadi kesalahan saat memuat data pengguna.");
+        }
+    });
+
+    function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    console.log("Toggling sidebar...");
+    sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+    }
 </script>
 </body>
 </html>
