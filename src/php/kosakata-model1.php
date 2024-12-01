@@ -186,7 +186,18 @@ $hint = $word_data['hint'] ?? 'tidak ada petunjuk';
             alert("Pengguna belum login, silakan login terlebih dahulu.");
             window.location.href = "./masuk.php"; // Arahkan ke halaman login jika belum login
         }
+
+        const home = document.getElementById("home");
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
+
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
+        });
     });
+
     </script>
 </body>
 </html>
