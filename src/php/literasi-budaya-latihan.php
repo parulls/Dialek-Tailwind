@@ -82,7 +82,7 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
 <footer class="flex items-center justify-between w-full px-4 py-4">
     <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-    <button id="selesai-button" class="button-custom2-red text-sm mx-6" disabled>Selesai</button>
+    <button id="selesai-button" class="button-custom2-red text-sm mx-6 cursor-pointer transition duration-300" disabled>Selesai</button>
 </footer>
 
 <script>
