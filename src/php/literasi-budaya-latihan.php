@@ -1,33 +1,27 @@
 <?php
 include 'connect.php';
 
-// Mendapatkan ID task dari parameter URL
 $task_id = isset($_GET['task_id']) ? intval($_GET['task_id']) : 1; // Default task 1
 
-// Query untuk mengambil data task berdasarkan level 2 dan task_id
 $query = "SELECT question, option_a, option_b, correct_option FROM literasi_tasks WHERE level_id = 2 AND id = :task_id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
 $stmt->execute();
 $task_data = $stmt->fetch();
 
-// Jika data task tidak ditemukan, arahkan ke halaman level 2
 if (!$task_data) {
     header("Location: literasi-budaya-level.php");
     exit;
 }
 
-// Menentukan task selanjutnya
 $nextTask = $task_id + 1;
 
-// Periksa apakah task berikutnya ada di database
 $query_next_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = 2 AND id = :nextTask";
 $stmt_next_task = $conn->prepare($query_next_task);
 $stmt_next_task->bindParam(':nextTask', $nextTask, PDO::PARAM_INT);
 $stmt_next_task->execute();
 $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
-// Periksa apakah ini adalah permintaan POST untuk data pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     include('connect.php');
@@ -79,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%; /* Sidebar tersembunyi */
+            left: -100%;
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
@@ -87,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         #sidebar.open {
-            left: 0; /* Sidebar terbuka */
+            left: 0;
         }
     </style>
 </head>
@@ -204,12 +198,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Tombol kembali ke halaman materi
     kembaliButton.addEventListener('click', function () {
         window.location.href = './literasi-budaya-materi.php?level=2';
     });
-
-    // Tombol selesai menuju halaman level
     selesaiButton.addEventListener('click', function () {
         window.location.href = './literasi-budaya-level.php';
     });
@@ -242,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     console.log("Toggling sidebar...");
-    sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+    sidebar.classList.toggle("open");
     }
 </script>
 </body>

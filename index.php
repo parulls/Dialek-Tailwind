@@ -198,7 +198,6 @@
         });
       });
   
-      // Redirect ke logIn.html saat elemen dengan ID 'jawa' atau 'batak' diklik
       document.getElementById("jawa").addEventListener("click", function() {
         window.location.href = "./src/html/halaman-segera-hadir.html";
       });

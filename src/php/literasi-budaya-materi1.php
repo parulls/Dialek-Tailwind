@@ -1,19 +1,15 @@
 <?php
 include 'connect.php';
 
-// Mendapatkan ID level dari parameter URL
-$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
+$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 kalo gada parameter
 
-// Query untuk mengambil data dari database berdasarkan level
 $query = "SELECT title, content FROM kosakata_levels WHERE id = :level";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':level', $level, PDO::PARAM_INT);
 $stmt->execute();
 
-// Fetch data level
 $level_data = $stmt->fetch();
 
-// Jika data level tidak ditemukan, arahkan kembali ke halaman level
 if (!$level_data) {
     header("Location: literasi-budaya-level.php");
     exit;
@@ -22,18 +18,15 @@ if (!$level_data) {
 $title = $level_data['title'];
 $content = $level_data['content'];
 
-// Menentukan level selanjutnya dan sebelumnya
 $nextLevel = $level + 1;
 $prevLevel = $level - 1;
 
-// Periksa apakah level berikutnya ada di database
 $query_check_next_level = "SELECT COUNT(*) FROM kosakata_levels WHERE id = :nextLevel"; 
 $stmt_check_next_level = $conn->prepare($query_check_next_level);
 $stmt_check_next_level->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
 $stmt_check_next_level->execute();
 $nextLevelExists = $stmt_check_next_level->fetchColumn() > 0;
 
-// Periksa apakah ini adalah permintaan POST untuk data pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     include('connect.php');
@@ -86,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%; /* Sidebar tersembunyi */
+            left: -100%;
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
@@ -94,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         #sidebar.open {
-            left: 0; /* Sidebar terbuka */
+            left: 0;
         }
     </style>
 </head>
@@ -191,21 +184,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
 
         kembaliButton.addEventListener('click', function () {
-            // Jika level > 1, pergi ke level sebelumnya
             if (<?php echo $level; ?> > 1) {
                 window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
             } else {
-                // Jika level = 1, kembali ke halaman level
                 window.location.href = './literasi-budaya-level.php';
             }
         });
 
         selanjutnyaButton.addEventListener('click', function () {
             if (<?php echo $level; ?> > 2) {
-                // Jika level 2, langsung masuk ke latihan level 2
                 window.location.href = './literasi-budaya-latihan.php';
             } else if (<?php echo $nextLevelExists ? 'true' : 'false'; ?>) {
-                // Untuk level lainnya, jika level berikutnya ada
                 window.location.href = './literasi-budaya-materi.php?level=<?php echo $nextLevel; ?>';
             }
         });
@@ -213,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             console.log("Toggling sidebar...");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+            sidebar.classList.toggle("open");
         }
 
         document.addEventListener("DOMContentLoaded", async () => {
@@ -229,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const result = await response.json();
             if (result.success) {
                 const userData = result.user;
-                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);

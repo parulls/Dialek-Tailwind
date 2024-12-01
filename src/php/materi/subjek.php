@@ -1,22 +1,18 @@
 <?php
-// Pastikan untuk menyertakan koneksi ke database
 include("../connect.php");
 
-// Cek apakah koneksi berhasil
 if (!$conn) {
     echo "<p>Koneksi database gagal</p>";
     exit;
 }
 
-// Query untuk mengambil data dengan id_materi = 1
-$id_material = 1; // ID yang ingin diambil
+$id_material = 1;
 $query = "SELECT id_material, material_title, material_content FROM materials WHERE id_material = :id_material";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id_material', $id_material, PDO::PARAM_INT);
 $stmt->execute();
 $materials = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Periksa apakah ini adalah permintaan POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     try {
@@ -73,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <section class="main flex flex-col mx-auto w-11/12 sm:w-4/5 items-center flex-grow space-y-8 sm:space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
-        <!-- Menampilkan materi yang diambil dari database -->
         <?php if (!empty($materials)): ?>
             <div class="materi-item max-w-6xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
                 <h2 class="flex justify-center font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></h2>
@@ -90,13 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
     
     <script>
-        // Mendapatkan elemen tombol
         const kembaliButton = document.getElementById("kembali-button");
         const selanjutnyaButton = document.getElementById("selanjutnya-button");
 
-        // Event listener untuk tombol "Kembali"
         kembaliButton.addEventListener("click", function() {
-            window.location.href = "../rating_materi/rating_subjek.php";  // Mengarahkan ke halaman Materi.html
+            window.location.href = "../rating_materi/rating_subjek.php";
         });
         selanjutnyaButton.addEventListener("click", () => {
             window.location.href = "../latihan/subjek/nomor1.php";

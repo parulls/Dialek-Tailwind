@@ -1,7 +1,6 @@
 <?php 
     include("../../connect.php");
 
-    // Periksa apakah ini adalah permintaan POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Content-Type: application/json");
         try {
@@ -64,17 +63,14 @@
                 <p>Pilih sambungan kata yang tepat</p>
             </div>
             <div class="bg-custom7 w-full sm:w-4/5 lg:w-[70%] flex justify-start items-center mb-8 sm:mb-12 mt-16 sm:mt-28 px-4 py-3 rounded-lg">
-                <!-- Bagian PHP untuk menampilkan soal -->
                 <?php
-                // Query untuk mengambil soal dengan id = 1
-                $question_id = 2; // ID soal yang ingin diambil
+                $question_id = 2;
                 $sql = "SELECT id, question_text FROM questions WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':id', $question_id, PDO::PARAM_INT);
                 $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-                    // Menampilkan soal
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     echo "<p class='text-base sm:text-lg font-semibold p-2'>" . $row['question_text'] . "</p>";
                 } else {
@@ -84,9 +80,7 @@
             </div>
 
             <div class="flex flex-col sm:flex-row sm:justify-between items-center w-full sm:w-4/5 lg:w-[70%] space-y-4 sm:space-y-0 sm:space-x-4 mb-20 sm:mb-40">
-                <!-- Bagian PHP untuk menampilkan pilihan jawaban -->
                 <?php
-                // Query untuk mengambil jawaban berdasarkan question_id
                 $sql_answers = "SELECT id, answer_text FROM answers WHERE question_id = :question_id";
                 $stmt_answers = $conn->prepare($sql_answers);
                 $stmt_answers->bindParam(':question_id', $question_id, PDO::PARAM_INT);
@@ -94,9 +88,8 @@
 
                 if ($stmt_answers->rowCount() > 0) {
                     while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
-                        // Membuat formulir untuk setiap jawaban
                         echo "<form method='POST' action='' class='inline-block'>";
-                        echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
+                        echo "<input type='hidden' name='user_id' value='1'>";
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
                         echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
                         echo "<button type='submit' class='option button-option w-28 sm:w-32 h-10 sm:h-11 text-sm sm:text-lg'>" . $answer['answer_text'] . "</button>";

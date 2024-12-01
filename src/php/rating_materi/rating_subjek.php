@@ -2,11 +2,9 @@
 include("../connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Sanitasi input materi_id
     $materi_id = isset($_GET['materi_id']) ? intval($_GET['materi_id']) : 1;
 
     if ($materi_id > 0) {
-        // Query untuk menghitung rata-rata rating dan distribusi rating
         $query = "
             SELECT 
                 AVG(rating) AS average_rating, 
@@ -26,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if ($stmt->execute()) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // Pastikan data yang diterima valid
                 $response = [
                     "status" => "success",
                     "average_rating" => round($result['average_rating'], 2),
@@ -41,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 ];
                 // echo json_encode($response);
             } else {
-                // Penanganan error jika query gagal
+                // query gagal
                 echo json_encode(["status" => "error", "message" => "Gagal mendapatkan data rating."]);
             }
             $stmt = null;
         } else {
-            // Penanganan error koneksi database
+            // error koneksi database
             echo json_encode(["status" => "error", "message" => "Koneksi ke database gagal."]);
         }
     } else {
@@ -57,7 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode(["status" => "error", "message" => "Invalid request method."]);
 }
 
-// Periksa apakah ini adalah permintaan POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     try {
@@ -201,9 +197,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const ratingValue = document.getElementById("rating-value");
         const progressBars = document.querySelectorAll(".progress .fill");
 
-        const materiId = 1; // Ganti sesuai kebutuhan
+        const materiId = 1;
 
-        // Fungsi untuk memvalidasi data sebelum ditampilkan
         function validateData(data) {
             if (
                 typeof data.average_rating === "number" &&
@@ -216,7 +211,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return false;
         }
 
-        // Fungsi untuk memperbarui UI
         function updateUI(data) {
             ratingValue.textContent = `${data.average_rating}/5`;
 
@@ -240,9 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         }
 
-        // Fungsi untuk memuat data rating dengan penanganan loading
         function loadRating() {
-            // Menampilkan loading state
             const loadingElement = document.createElement('div');
             loadingElement.classList.add('loading');
             loadingElement.textContent = 'Loading...';
@@ -251,7 +243,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             fetch(`get_rating.php?materi_id=${materiId}`)
                 .then(response => response.json())
                 .then(data => {
-                    // Menyembunyikan loading state
                     loadingElement.style.display = 'none';
 
                     if (data.status === "success" && validateData(data)) {

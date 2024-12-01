@@ -1,12 +1,10 @@
 <?php
 require 'connect.php';
 
-// Header untuk memastikan respons adalah JSON jika diakses melalui backend
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     header('Content-Type: application/json');
 
     try {
-        // Query untuk mendapatkan data
         $stmt = $conn->prepare("
             SELECT 
                 username, 
@@ -21,9 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
 
         $rankings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        
-
-        // Jika ada hasil, kirim JSON yang valid
         if ($rankings) {
             error_log("Peringkat harian berhasil dimuat.");
             echo json_encode([
@@ -63,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%; /* Sidebar tersembunyi */
+            left: -100%;
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
@@ -71,13 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
         }
 
         #sidebar.open {
-            left: 0; /* Sidebar terbuka */
+            left: 0;
         }
     </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
-    <!-- Navbar -->
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
@@ -137,16 +131,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     </div>
 
     <main class="flex flex-col items-center flex-grow">
-    <!-- Judul -->
     <h1 class="text-4xl font-bold text-gradient text-center py-6 ">Sambung Kata</h1>
 
-    
-     
-            <!-- Kosakata yang Digunakan -->
             <div class="col-span-2 p-4 rounded-lg shadow-lg w-7/12 " style="background-color: rgba(243, 245, 243, 0.4)">
                 <div id="used-vocabulary" class="mt-4 overflow-y-auto h-72"></div>         
             </div>
-             <!--button mulai-->
              <div class="flex justify-end mt-4 w-7/12">
                 <button id="startbutton" class="bg-green-800 text-white py-2 px-6 rounded-full shadow-md hover:bg-green-700">
                    Mulai</button>
@@ -157,7 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
 
           
             <div class="grid grid-cols-2 gap-8 w-7/12 py-6">
-            <!-- Peringkat Harian -->
             <div class="rounded-lg shadow-lg p-4" style="background-color: rgba(243, 245, 243, 0.4)">
                 <h2 class="text-2xl font-extrabold text-center" 
                 style="background-image: linear-gradient(180deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%);
@@ -170,7 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
                 </ul>
             </div>
 
-            <!-- Skor -->
             <div class="rounded-lg shadow-lg p-4" style="background-color: rgba(243, 245, 243, 0.4)">
                 <div class="flex">
                 <h2 class="text-2xl font-extrabold" style="background-image: linear-gradient(180deg, #14856D 0%, #067A32 50%, #16572B 87%, #1B4B29 100%);
@@ -186,7 +173,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
             
             </div>
 
-            <!-- Statistik Permainan -->
             <div class="rounded-lg shadow-lg p-4 col-span-2" style="background-color: rgba(243, 245, 243, 0.4)">
 
                 <div class="flex justify-between mt-4">
@@ -240,17 +226,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const accuracyDisplay = document.getElementById("accuracy");
     const usedVocabularyContainer = document.getElementById("used-vocabulary");
 
-    // Ambil data permainan dari local storage
     const successfulWordsCount = parseInt(localStorage.getItem("successfulWordsCount") || "0", 10);
     const failedWordsCount = parseInt(localStorage.getItem("failedWordsCount") || "0", 10);
     const totalScore = parseInt(localStorage.getItem("totalScore") || "0", 10);
     const usedVocabulary = JSON.parse(localStorage.getItem("usedVocabulary") || "[]");
 
-    // Ambil username dari localStorage
     const username = localStorage.getItem("username");
     const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
 
-    // Validasi login
     if (username) {
         document.getElementById("account-username").textContent = username;
     } else {
@@ -265,7 +248,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = "./akun-pengguna.php";
     });
 
-    // Tampilkan statistik permainan
     totalScoreDisplay.textContent = totalScore;
     successfulWordsDisplay.textContent = successfulWordsCount;
     failedWordsDisplay.textContent = failedWordsCount;
@@ -275,7 +257,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         : 0;
     accuracyDisplay.textContent = `${accuracy}%`;
 
-    // Render grafik akurasi
     const ctx = document.getElementById("accuracyChart").getContext("2d");
     new Chart(ctx, {
         type: "pie",
@@ -297,7 +278,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    // Tampilkan kosakata di UI
     if (usedVocabulary.length > 0) {
         usedVocabulary.forEach((word) => {
             const wordElement = document.createElement("p");
@@ -309,7 +289,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         usedVocabularyContainer.innerHTML = `<p class="text-lg text-red-500"></p>`;
     }
 
-    // Tampilkan peringkat harian
     try {
         const response = await fetch("?json=true");
         const data = await response.json();
@@ -335,12 +314,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         dailyRankingsContainer.innerHTML = `<li class="text-center text-red-500 font-semibold">Kesalahan saat memuat data.</li>`;
     }
 
-    // Tombol untuk mulai permainan
     document.getElementById("startbutton").addEventListener("click", () => {
         window.location.href = "./permainan-model.php";
     });
-
-    // Tombol info
     document.getElementById("infoButton").addEventListener("click", () => {
         document.getElementById("info-popup").style.display = "flex";
     });
@@ -349,7 +325,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("info-popup").style.display = "none";
     };
 
-    // Bersihkan localStorage setelah ditampilkan
     localStorage.removeItem("successfulWordsCount");
     localStorage.removeItem("failedWordsCount");
     localStorage.removeItem("totalScore");
@@ -359,7 +334,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         console.log("Toggling sidebar...");
-        sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+        sidebar.classList.toggle("open");
     }
 
     </script>

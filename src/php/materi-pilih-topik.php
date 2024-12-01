@@ -1,7 +1,6 @@
 <?php
 include("connect.php");
 
-// Periksa apakah ini adalah permintaan POST
        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Content-Type: application/json");
         try {
@@ -165,7 +164,7 @@ include("connect.php");
                     <button class="button-lock w-1/4">Mulai</button>
                 </div>
             
-                <!-- Card 4: Angka, Bilangan, dan Satuan -->
+                <!-- Bilangan -->
                 <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
                     <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
                         <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
@@ -189,32 +188,27 @@ include("connect.php");
         document.addEventListener("DOMContentLoaded", async () => {
     const firebaseUid = localStorage.getItem("firebase_uid");
 
-    // Cek apakah firebase_uid ada
     if (!firebaseUid) {
         alert("UID Firebase tidak ditemukan. Harap login kembali.");
         window.location.href = "login.php";
         return; // Stop eksekusi lebih lanjut
     }
 
-    // Log untuk memastikan firebaseUid benar
     console.log("firebase_uid:", firebaseUid);
 
     try {
-        // Menjalankan fetch request ke server
         const response = await fetch(window.location.href, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ firebase_uid: firebaseUid }),
         });
 
-        // Cek status response
         if (!response.ok) {
             throw new Error("Server gagal merespons dengan status " + response.status);
         }
 
         const result = await response.json();
 
-        // Log untuk melihat isi result dari server
         console.log("Result from server:", result);
 
         if (result.success) {
@@ -222,7 +216,7 @@ include("connect.php");
             document.getElementById("account-username").textContent = `${userData.username || "username"}`;
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php"; // Arahkan ke login jika gagal
+            window.location.href = "login.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -233,12 +227,9 @@ include("connect.php");
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Tangkap tombol dengan ID tertentu
     const mulaiButton = document.getElementById("masuk-materi");
 
-    // Tambahkan event listener untuk klik tombol
     mulaiButton.addEventListener("click", () => {
-        // Arahkan ke halaman tujuan
         window.location.href = "rating_materi/rating_subjek.php";
     });
 });

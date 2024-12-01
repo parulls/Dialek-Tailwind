@@ -237,7 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             console.log("Toggling sidebar...");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+            sidebar.classList.toggle("open");
         }
         document.addEventListener("DOMContentLoaded", async () => {
         const firebaseUid = localStorage.getItem("firebase_uid");
@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const result = await response.json();
             if (result.success) {
                 const userData = result.user;
-                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);

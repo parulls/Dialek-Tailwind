@@ -279,8 +279,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      }
     }
 
-
-
         document.getElementById("home").addEventListener("click", () => {
             window.location.href = "./dashboard-batak.php";
         });

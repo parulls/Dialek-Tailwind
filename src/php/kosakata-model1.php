@@ -2,12 +2,10 @@
 session_start();
 include('connect.php');
 
-// Mengambil waktu mulai jika belum ada
 if (!isset($_SESSION['start_time'])) {
     $_SESSION['start_time'] = time();
 }
 
-// Waktu batas 1 menit
 $time_limit = 60;
 
 // Menghitung waktu yang sudah berlalu
@@ -17,17 +15,15 @@ $elapsed_time = time() - $_SESSION['start_time'];
 if ($elapsed_time > $time_limit) {
     $message = "Waktu habis! Silakan coba lagi.";
     $message_class = 'text-red-600';
-    session_destroy(); // Menghancurkan sesi setelah waktu habis
+    session_destroy();
 } else {
     $message = "Tantangan masih aktif!";
     $message_class = 'text-green-600';
 }
 
-// Cek apakah ada permintaan POST untuk memeriksa jawaban
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_word'])) {
     $userWord = filter_input(INPUT_POST, 'user_word', FILTER_SANITIZE_STRING);
 
-    // Cek apakah user memberikan jawaban yang benar
     $query = $conn->prepare("SELECT * FROM words_kosakata WHERE word = :user_word LIMIT 1");
     $query->bindParam(':user_word', $userWord);
     $query->execute();
@@ -49,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_word'])) {
     exit;
 }
 
-// Cek apakah ada permintaan untuk mengganti kata
 if (isset($_GET['refresh'])) {
     try {
         $query = $conn->query("SELECT word, hint FROM words_kosakata ORDER BY RANDOM() LIMIT 1");
@@ -67,7 +62,6 @@ if (isset($_GET['refresh'])) {
     exit;
 }
 
-// Ambil username dari session jika tersedia
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tidak Dikenal';
 
 ?>
@@ -132,8 +126,8 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
         const countdown = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(countdown);
-                document.querySelector('input[name="user_word"]').disabled = true; // Disable input
-                alert("Waktu habis!"); // Alert user
+                document.querySelector('input[name="user_word"]').disabled = true;
+                alert("Waktu habis!");
             } else {
                 timerElement.textContent = timeLeft;
                 timeLeft--;
@@ -141,16 +135,12 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
         }, 1000);
 
         refreshBtn.addEventListener("click", () => {
-            // AJAX request to fetch a new word
             fetch('get_word.php')
                 .then(response => response.json())
                 .then(data => {
-                    // Update the displayed word and hint
                     document.querySelector('.word-custom').textContent = data.word.split('').sort(() => Math.random() - 0.5).join('');
                     document.querySelector('.hint span').textContent = data.hint;
-                    // Update the hidden input with the new correct word
                     document.querySelector('input[name="correct_word"]').value = data.word;
-                    // Reset the timer
                     timeLeft = <?php echo $time_limit; ?>;
                     timerElement.textContent = timeLeft;
                 })
