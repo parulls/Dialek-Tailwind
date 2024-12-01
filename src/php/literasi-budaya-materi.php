@@ -27,12 +27,18 @@ $nextLevel = $level + 1;
 $prevLevel = $level - 1;
 
 // Periksa apakah level berikutnya ada di database
-$query_next = "SELECT COUNT(*) FROM kosakata_levels WHERE id = :nextLevel";
-$stmt_next = $conn->prepare($query_next);
-$stmt_next->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
-$stmt_next->execute();
-$nextLevelExists = $stmt_next->fetchColumn() > 0;
+$query_check_next_level = "SELECT COUNT(*) FROM kosakata_levels WHERE id = :nextLevel"; 
+$stmt_check_next_level = $conn->prepare($query_check_next_level);
+$stmt_check_next_level->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
+$stmt_check_next_level->execute();
+$nextLevelExists = $stmt_check_next_level->fetchColumn() > 0;
 
+// Periksa apakah task pertama untuk level berikutnya ada
+$query_check_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = :nextLevel AND id = 1"; 
+$stmt_check_task = $conn->prepare($query_check_task);
+$stmt_check_task->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
+$stmt_check_task->execute();
+$taskExists = $stmt_check_task->fetchColumn() > 0;
 ?>
 
 <!DOCTYPE html>
@@ -73,8 +79,22 @@ $nextLevelExists = $stmt_next->fetchColumn() > 0;
     <!-- Footer with Navigation Buttons -->
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+        
         <?php if ($nextLevelExists): ?>
-            <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
+            <!-- If task exists for the next level -->
+            <?php if ($taskExists): ?>
+                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selesaikan Level</button>
+            <?php else: ?>
+                <!-- Level 1 without task but next level exists -->
+                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Level Berikutnya</button>
+            <?php endif; ?>
+        <?php else: ?>
+            <!-- If it's the last level (e.g., level 2) and no next level exists -->
+            <?php if ($level == 2): ?>
+                <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selesaikan Level</button>
+            <?php else: ?>
+                <!-- No button if it's the last level -->
+            <?php endif; ?>
         <?php endif; ?>
     </footer>
 
@@ -92,21 +112,28 @@ $nextLevelExists = $stmt_next->fetchColumn() > 0;
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
 
+        const taskExists = <?php echo $taskExists ? 'true' : 'false'; ?>; // Pass PHP value to JavaScript
+
         kembaliButton.addEventListener('click', function() {
-            // Jika level > 1, kembali ke level sebelumnya
+            // If level > 1, go to previous level
             if (<?php echo $level; ?> > 1) {
                 window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
             } else {
-                // Jika level = 1, kembali ke halaman level
+                // If level = 1, go back to level page
                 window.location.href = './literasi-budaya-level.php';
             }
         });
 
-        <?php if ($nextLevelExists): ?>
         selanjutnyaButton.addEventListener('click', function() {
-            window.location.href = './literasi-budaya-materi.php?level=' + <?php echo $nextLevel; ?>;
+            // Check if task exists
+            if (taskExists) {
+                // Redirect to task page for the next level
+                window.location.href = './literasi-budaya-latihan.php?level=<?php echo $nextLevel; ?>&task_id=1';
+            } else {
+                // Redirect to next level's material page if no task exists
+                window.location.href = './literasi-budaya-materi.php?level=<?php echo $nextLevel; ?>';
+            }
         });
-        <?php endif; ?>
     </script>
 </body>
 </html>

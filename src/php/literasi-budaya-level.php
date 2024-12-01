@@ -42,16 +42,22 @@ function unlockTask($taskNumber) {
     }
 }
 
-// Logika: Misalnya, jika pengguna selesai membaca level tertentu
+// Bagian logika untuk menyelesaikan level
 if (isset($_GET['complete_level'])) {
     $completedLevel = intval($_GET['complete_level']);
     if (isLevelUnlocked($completedLevel)) {
         unlockNextLevel($completedLevel); // Buka level berikutnya
     }
+
+    // Redirect ke halaman task jika level adalah kelipatan 2
+    if ($completedLevel % 2 == 0) {
+        $taskNumber = $completedLevel / 2;
+        header("Location: literasi-budaya-latihan.php?task=$taskNumber");
+        exit;
+    }
 }
 ?>
 
-<!-- Bagian HTML untuk menampilkan level dan tugas -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -185,6 +191,9 @@ if (isset($_GET['complete_level'])) {
 
     <footer class="flex items-center justify-start w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+        <div class="level-button-container">
+</div>
+
     </footer>
 
     <script>
