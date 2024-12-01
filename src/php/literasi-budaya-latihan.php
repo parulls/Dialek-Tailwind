@@ -82,13 +82,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Dialek.Id - Pertanyaan</title>
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Sidebar tersembunyi */
+            background-color: white;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.4s ease;
+            z-index: 1000;
+        }
+
+        #sidebar.open {
+            left: 0; /* Sidebar terbuka */
+        }
+    </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i>
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
     <div id="sidebar" class="fixed bg-white w-60 h-full">
