@@ -156,7 +156,7 @@ if (isset($_GET['complete_level'])) {
 
         <!-- Wrapper container for level boxes -->
         <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-            <?php for ($i = 1; $i <= 6; $i++): ?>
+            <?php for ($i = 1; $i <= 2; $i++): ?>
                 <?php if (isLevelUnlocked($i)): ?>
                     <!-- Level terbuka -->
                     <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
