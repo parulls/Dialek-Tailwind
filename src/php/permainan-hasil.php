@@ -59,12 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
 
     <!-- Navbar -->
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
+
+  
+
 
     <main class="flex flex-col items-center flex-grow">
     <!-- Judul -->
@@ -221,17 +224,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
-    // Tampilkan kosakata di UI
-    if (usedVocabulary.length > 0) {
-        usedVocabulary.forEach((word) => {
-            const wordElement = document.createElement("p");
-            wordElement.textContent = word;
-            wordElement.classList.add("text-lg", "text-green-900");
-            usedVocabularyContainer.appendChild(wordElement);
-        });
-    } else {
-        usedVocabularyContainer.innerHTML = `<p class="text-lg text-red-500"></p>`;
-    }
+    // Tampilkan kosakata yang digunakan
+    usedVocabulary.forEach(word => {
+        const wordElement = document.createElement("p");
+        wordElement.textContent = word;
+        wordElement.className = "text-lg text-green-900";
+        usedVocabularyContainer.appendChild(wordElement);
+    });
 
     // Tampilkan peringkat harian
     try {
@@ -261,7 +260,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Tombol untuk mulai permainan
     document.getElementById("startbutton").addEventListener("click", () => {
-        window.location.href = "permainan-model.php";
+        window.location.href = "permainan_model.php";
     });
 
     // Tombol info
@@ -278,19 +277,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("failedWordsCount");
     localStorage.removeItem("totalScore");
     localStorage.removeItem("usedVocabulary");
-    localStorage.removeItem("usedVocabulary");
 });
-
-    const home = document.getElementById("home");
-    const profile = document.getElementById("profile-button");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.php";
-    });
-
-    profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
-    });
 
     </script>
 </body>
