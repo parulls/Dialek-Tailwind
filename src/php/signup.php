@@ -236,7 +236,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
             localStorage.setItem("profileName", result.name);
 
             alert("Signup berhasil!");
-            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
+            window.location.href = "dashboard-batak.php"; // Redirect to dashboard
         } else {
             alert(result.message);
         }
@@ -276,7 +276,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
             localStorage.setItem("profileName", resultData.name);
 
             alert("Signup berhasil dengan Google!");
-            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
+            window.location.href = "dashboard-batak.php"; // Redirect to dashboard
         } else {
             alert(resultData.message);
         }

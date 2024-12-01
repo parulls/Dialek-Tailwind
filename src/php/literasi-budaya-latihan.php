@@ -34,6 +34,45 @@ $stmt_next_task->bindParam(':nextTask', $nextTask, PDO::PARAM_INT);
 $stmt_next_task->execute();
 $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
 
+// Periksa apakah ini adalah permintaan POST untuk data pengguna
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header("Content-Type: application/json");
+    include('connect.php');
+
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $firebaseUid = $data['firebase_uid'] ?? null;
+
+        if ($firebaseUid) {
+            $stmt = $conn->prepare("
+                SELECT name, username, email, phone, 
+                       COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+                FROM users 
+                WHERE firebase_uid = :firebase_uid
+            ");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "user" => $user]);
+                exit;
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+                exit;
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
+        exit;
+    } catch (Exception $e) {
+        echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
+        exit;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
