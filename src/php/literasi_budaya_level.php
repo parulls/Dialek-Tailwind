@@ -1,6 +1,27 @@
 <?php
 session_start();
 
+// Menentukan level yang sedang diakses
+$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
+
+// Inisialisasi level dan task jika belum ada di session
+if (!isset($_SESSION['unlocked_levels'])) {
+    $_SESSION['unlocked_levels'] = [1]; // Hanya level 1 yang terbuka secara default
+}
+if (!isset($_SESSION['unlocked_tasks'])) {
+    $_SESSION['unlocked_tasks'] = []; // Tidak ada task yang terbuka secara default
+}
+
+// Cek apakah level telah dibuka
+function isLevelUnlocked($level) {
+    return in_array($level, $_SESSION['unlocked_levels']);
+}
+
+// Cek apakah task telah dibuka
+function isTaskUnlocked($taskNumber) {
+    return in_array($taskNumber, $_SESSION['unlocked_tasks']);
+}
+
 // Fungsi untuk membuka level selanjutnya
 function unlockNextLevel($currentLevel) {
     $nextLevel = $currentLevel + 1;
@@ -21,25 +42,7 @@ function unlockTask($taskNumber) {
     }
 }
 
-// Periksa apakah level terbuka
-function isLevelUnlocked($level) {
-    return isset($_SESSION['unlocked_levels']) && in_array($level, $_SESSION['unlocked_levels']);
-}
-
-// Periksa apakah task terbuka
-function isTaskUnlocked($taskNumber) {
-    return isset($_SESSION['unlocked_tasks']) && in_array($taskNumber, $_SESSION['unlocked_tasks']);
-}
-
-// Inisialisasi level dan task jika belum ada di session
-if (!isset($_SESSION['unlocked_levels'])) {
-    $_SESSION['unlocked_levels'] = [1]; // Hanya level 1 yang terbuka secara default
-}
-if (!isset($_SESSION['unlocked_tasks'])) {
-    $_SESSION['unlocked_tasks'] = []; // Tidak ada task yang terbuka secara default
-}
-
-// Logika untuk menyelesaikan level
+// Bagian logika untuk menyelesaikan level
 if (isset($_GET['complete_level'])) {
     $completedLevel = intval($_GET['complete_level']);
     if (isLevelUnlocked($completedLevel)) {
@@ -49,7 +52,7 @@ if (isset($_GET['complete_level'])) {
     // Redirect ke halaman task jika level adalah kelipatan 2
     if ($completedLevel % 2 == 0) {
         $taskNumber = $completedLevel / 2;
-        header("Location: literasi-budaya-task.php?task=$taskNumber");
+        header("Location: literasi-budaya-latihan.php?task=$taskNumber");
         exit;
     }
 }
@@ -122,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">loading...</p>
             <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
