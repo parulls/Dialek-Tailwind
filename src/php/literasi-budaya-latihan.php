@@ -1,35 +1,28 @@
 <?php
 include 'connect.php';
 
-// Mendapatkan level dan ID task dari parameter URL
-$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
+// Mendapatkan ID task dari parameter URL
 $task_id = isset($_GET['task_id']) ? intval($_GET['task_id']) : 1; // Default task 1
 
-// Query untuk mengambil data task berdasarkan level dan task_id
-$query = "SELECT question, option_a, option_b, correct_option FROM literasi_tasks WHERE level_id = :level AND id = :task_id";
+// Query untuk mengambil data task berdasarkan level 2 dan task_id
+$query = "SELECT question, option_a, option_b, correct_option FROM literasi_tasks WHERE level_id = 2 AND id = :task_id";
 $stmt = $conn->prepare($query);
-$stmt->bindParam(':level', $level, PDO::PARAM_INT);
 $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
 $stmt->execute();
 $task_data = $stmt->fetch();
 
-// Jika data task tidak ditemukan, arahkan ke halaman level
+// Jika data task tidak ditemukan, arahkan ke halaman level 2
 if (!$task_data) {
     header("Location: literasi-budaya-level.php");
     exit;
 }
 
-// Menentukan task dan level sebelumnya
-$prevTask = $task_id > 1 ? $task_id - 1 : 1; // Jika task_id <= 1 tetap di task pertama
-$prevLevel = $level > 1 ? $level - 1 : 1; // Level minimal adalah 1
-
 // Menentukan task selanjutnya
 $nextTask = $task_id + 1;
 
 // Periksa apakah task berikutnya ada di database
-$query_next_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = :level AND id = :nextTask";
+$query_next_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = 2 AND id = :nextTask";
 $stmt_next_task = $conn->prepare($query_next_task);
-$stmt_next_task->bindParam(':level', $level, PDO::PARAM_INT);
 $stmt_next_task->bindParam(':nextTask', $nextTask, PDO::PARAM_INT);
 $stmt_next_task->execute();
 $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
@@ -72,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -214,11 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Tombol kembali ke halaman materi
     kembaliButton.addEventListener('click', function () {
-        if (<?php echo $level; ?> === 2) {
-            window.location.href = './literasi-budaya-materi.php?level=2';
-        } else {
-            window.location.href = './literasi-budaya-materi.php?level=<?php echo $prevLevel; ?>';
-        }
+        window.location.href = './literasi-budaya-materi.php?level=2';
     });
 
     // Tombol selesai menuju halaman level

@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
                 const result = await response.json();
                 if (result.success) {
-                    alert("Login berhasil!");
+                    alert("Berhasil Masuk!");
                     storeUserData(result.user);
                     window.location.href = "./dashboard-batak.php";
                 } else {
@@ -198,14 +198,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     body: JSON.stringify({
                         firebase_uid: user.uid,
                         id_token: idToken,
-                    }),
+                    }),S
                 });
 
                 const resultData = await response.json();
 
                 if (resultData.success) {
                     storeUserData(resultData.user);
-                    alert("Login berhasil!");
+                    alert("Berhasil Masuk!");
                     window.location.href = "./dashboard-batak.php";
                 } else {
                     alert("Login gagal: " + resultData.message);
