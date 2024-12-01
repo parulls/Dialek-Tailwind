@@ -110,14 +110,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%;
+            left: -100%; /* Sidebar tersembunyi */
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
             z-index: 1000;
         }
+
         #sidebar.open {
-            left: 0;
+            left: 0; /* Sidebar terbuka */
         }
     </style>
 </head>
@@ -243,6 +244,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
+            console.log("Toggling sidebar...");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
         }
 
