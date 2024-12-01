@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Menampilkan materi yang diambil dari database -->
         <?php if (!empty($materials)): ?>
             <div class="materi-item max-w-6xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
-                <h2 class="flex justify-center font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></h2>
+                <p class="flex justify-center text-xl sm:text-2xl md:text-3xl font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></p>
                 <p class="text-base p-4"><?= nl2br(htmlspecialchars($materials['material_content'])); ?></p>
             </div>
         <?php else: ?>
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);

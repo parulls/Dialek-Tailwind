@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
         kembaliButton.addEventListener("click", () => {
-            window.location.href = "../../html/materi-pilih-topik.html";
+            window.location.href = "../../materi-pilih-topik.php";
         });
 
         home.addEventListener("click", () => {
