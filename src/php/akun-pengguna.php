@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const firebaseUid = localStorage.getItem("firebase_uid");
     if (!firebaseUid) {
         alert("Silakan login terlebih dahulu.");
-        window.location.href = "login.php";
+        window.location.href = "./masuk.php";
         return;
     }
 
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("profile-image").src = userData.profile_image || "../assets/pp.webp";
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     // Arahkan ke halaman Pengaturan
     document.getElementById("SettingButton").addEventListener("click", () => {
-        window.location.href = "Pengaturan.php";
+        window.location.href = "./pengaturan.php";
     });
 </script>
 </body>

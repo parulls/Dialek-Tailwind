@@ -5,6 +5,7 @@ require 'connect.php'; // Menghubungkan dengan database
 $word = '';
 $hint = '';
 $message = '';
+$message_class = ''; // Kelas CSS untuk warna pesan
 $time_limit = 60; // Set the time limit in seconds
 
 // Check if the form has been submitted to check the answer
@@ -15,10 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check the user's input against the correct word
     if (empty($userWord)) {
         $message = "Masukkan kata yang akan diperiksa.";
+        $message_class = 'text-yellow-600'; // Kuning untuk peringatan
     } elseif (strcasecmp($userWord, $correctWord) === 0) {
-        $message = "Selamat! Jawaban anda benar.";
+        $message = "Selamat! Jawaban Anda benar.";
+        $message_class = 'text-green-600'; // Hijau untuk benar
     } else {
         $message = "Oops! Kata yang kamu masukkan salah.";
+        $message_class = 'text-red-600'; // Merah untuk salah
     }
 }
 
@@ -61,7 +65,7 @@ try {
             <div class="content-custom">
                 <!-- Tampilkan pesan jika ada -->
                 <?php if (!empty($message)): ?>
-                    <p class="text-lg text-red-600 mb-4"><?php echo $message; ?></p>
+                    <p class="text-lg <?php echo $message_class; ?> mb-4"><?php echo htmlspecialchars($message); ?></p>
                 <?php endif; ?>
                 <!-- Tampilkan kata acak -->
                 <p class="word-custom text-3xl font-bold"><?php echo str_shuffle($word); ?></p>
@@ -100,7 +104,7 @@ try {
         });
 
         profile.addEventListener("click", () => {
-            window.location.href = "./AkunUser.php";
+            window.location.href = "./akun-penggun.php";
         });
 
         const countdown = setInterval(() => {

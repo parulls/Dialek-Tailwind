@@ -117,10 +117,10 @@ module.exports = {
           "@apply bg-custom1 text-white py-2 px-4 rounded-full font-bold shadow-xl hover:opacity-80 w-full":{},
         },
         ".button-custom2" : {
-          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 transition duration-300 border-custom11":{},
+          "@apply bg-custom-gradient2-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 transition duration-300":{},
         },
         ".button-custom2-red" : {
-          "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 transition duration-300 border-custom12":{},
+          "@apply bg-custom-gradient3-button w-40 text-white py-2 px-4 rounded-full font-bold shadow-xl text-center items-center justify-center flex text-sm border-b-4 hover:scale-90 transition duration-300":{},
         },
         ".button-option" : {
           "@apply bg-custom6 w-max py-2 px-4 rounded-lg font-bold text-center items-center justify-center flex hover:opacity-80":{},
