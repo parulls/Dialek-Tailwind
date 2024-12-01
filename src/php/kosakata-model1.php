@@ -19,34 +19,24 @@ if ($elapsed_time > $time_limit) {
     $message_class = 'text-red-600';
     session_destroy(); // Menghancurkan sesi setelah waktu habis
 } else {
-    $message = "Tantangan masih aktif!";
     $message_class = 'text-green-600';
 }
 
-// Cek apakah ada permintaan POST untuk memeriksa jawaban
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_word'])) {
-    $userWord = filter_input(INPUT_POST, 'user_word', FILTER_SANITIZE_STRING);
+// Variabel untuk pesan hasil jawaban
+$answer_message = '';
+$answer_message_class = '';
 
-    // Cek apakah user memberikan jawaban yang benar
-    $query = $conn->prepare("SELECT * FROM words_kosakata WHERE word = :user_word LIMIT 1");
-    $query->bindParam(':user_word', $userWord);
-    $query->execute();
-    $wordData = $query->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $user_word = $_POST['user_word'] ?? '';
+    $correct_word = $_POST['correct_word'] ?? '';
 
-    if ($wordData) {
-        $response = [
-            'success' => true,
-            'message' => 'Jawaban Anda benar!'
-        ];
+    if (strtolower(trim($user_word)) === strtolower(trim($correct_word))) {
+        $answer_message = "Keren! Jawaban Benar!";
+        $answer_message_class = 'text-green-600';
     } else {
-        $response = [
-            'success' => false,
-            'message' => 'Jawaban Anda salah, coba lagi!'
-        ];
+        $answer_message = "Maaf! Jawaban Salah! Coba lagi.";
+        $answer_message_class = 'text-red-600';
     }
-
-    echo json_encode($response);
-    exit;
 }
 
 // Cek apakah ada permintaan untuk mengganti kata
@@ -70,6 +60,11 @@ if (isset($_GET['refresh'])) {
 // Ambil username dari session jika tersedia
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tidak Dikenal';
 
+// Ambil kata acak dari database
+$query = $conn->query("SELECT word, hint FROM words_kosakata ORDER BY RANDOM() LIMIT 1");
+$word_data = $query->fetch(PDO::FETCH_ASSOC);
+$word = $word_data['word'] ?? 'kosakata';
+$hint = $word_data['hint'] ?? 'tidak ada petunjuk';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,9 +91,15 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
             </div>
             <div class="content-custom">
                 <!-- Tampilkan pesan jika ada -->
-                <?php if (!empty($message)): ?>
+                <?php if (!empty($message) && isset($_POST['user_word'])): ?>
                     <p class="text-lg <?php echo $message_class; ?> mb-4"><?php echo htmlspecialchars($message); ?></p>
                 <?php endif; ?>
+                
+                <!-- Tampilkan pesan hasil jawaban hanya jika ada jawaban -->
+                <?php if ($answer_message): ?>
+                    <p class="text-lg <?php echo $answer_message_class; ?> mb-4"><?php echo htmlspecialchars($answer_message); ?></p>
+                <?php endif; ?>
+
                 <!-- Tampilkan kata acak -->
                 <p class="word-custom text-3xl font-bold"><?php echo str_shuffle($word); ?></p>
                 <div class="detail-custom my-5">
@@ -120,11 +121,14 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
             </div>
         </div>
     </section>
-    <footer class="flex items-center justify-between w-full px-4 py-4">
-        <a href="./dashboardBatak.html" class="button-custom2 text-sm mx-6">Kembali</a>
-        <a href="./Kosakata2.html" class="button-custom2 text-sm mx-6">Selanjutnya</a>
+    <footer class="flex items-center justify-end w-full px-4 py-4">
+        <a href="./dashboard-batak.php" class="button-custom2-red text-sm mx-6">Keluar</a>
     </footer>
     <script>
+        const home = document.querySelector('.logo');
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
         const refreshBtn = document.getElementById("refresh-word");
         const timerElement = document.getElementById("timer");
         let timeLeft = <?php echo $time_limit; ?>;
@@ -158,35 +162,31 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
-            const firebaseUid = localStorage.getItem("firebase_uid");
+        const firebaseUid = localStorage.getItem("firebase_uid");
+        if (firebaseUid) {
             try {
                 const response = await fetch(window.location.href, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ firebase_uid: firebaseUid }),
+                    body: JSON.stringify({ firebase_uid: firebaseUid })
                 });
 
                 const result = await response.json();
                 if (result.success) {
-                    document.getElementById("account-username").textContent = `${result.user.username}`;
+                    document.getElementById("account-username").textContent = result.user.username || 'Pengguna Tidak Dikenal';
                 } else {
                     alert("Gagal memuat data pengguna.");
-                    window.location.href = "./masuk.php";
+                    window.location.href = "./masuk.php"; // Arahkan ke halaman login jika gagal
                 }
             } catch (error) {
                 console.error("Error:", error);
                 alert("Kesalahan memuat data.");
             }
-        });
-
-        const firebaseUid = localStorage.getItem("firebase_uid") || null;
-
-        if (firebaseUid) {
-            // Fetch data pengguna
         } else {
             alert("Pengguna belum login, silakan login terlebih dahulu.");
-            window.location.href = "./masuk.php";
+            window.location.href = "./masuk.php"; // Arahkan ke halaman login jika belum login
         }
+    });
     </script>
 </body>
 </html>
