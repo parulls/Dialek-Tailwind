@@ -51,8 +51,8 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
+        <div  id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -68,15 +68,9 @@
         </div>
 
         <div class="flex items-start w-full px-12 relative"> 
-            <button class="bg-green-800 hover:bg-green-700 text-white font-bold w-12 h-12 rounded-full flex items-center justify-center" id="backButton">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-            </button>
-
             <div class="mx-auto p-4 rounded-lg box-custom1 w-10/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);"> 
                 <div class="flex space-x-2 mb-4">
-                    <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm  py-2 px-4 rounded-full"style="max-width: 200px;">Bahasa Batak Toba</div>
+                    <div id="bahasaBatak" class="button-custom flex items-center justify-center hover:opacity-100 text-sm py-2 px-4 rounded-full max-w-44 bg-blue-500 text-white">Bahasa Batak Toba </div>
                 </div>
 
                 <label for="pertanyaanInput" class="text-lg font-semibold text-green-800">Tulis pertanyaanmu:</label>
@@ -102,11 +96,8 @@
     </main>
 
     <script>
-        const kembaliButton = document.querySelector('button.bg-green-800');
-        kembaliButton.addEventListener('click', () => {
-            window.location.href = './dashboardBatak.html';
-        });
-
+        const home = document.getElementById('home');
+        const profile = document.getElementById('profile-button');
         const pertanyaanInput = document.getElementById('pertanyaanInput');
         const tanyaButton = document.getElementById('tanyaButton');
         const pertanyaanList = document.getElementById('pertanyaanList');
@@ -178,6 +169,14 @@
 
         terbaruButton.addEventListener('click', () => {
             renderPertanyaan(pertanyaanArray.slice().sort((a, b) => b.timestamp - a.timestamp));
+        });
+
+        home.addEventListener('click', () => {
+            window.location.href = './dashboard-batak.php';
+        });
+
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
