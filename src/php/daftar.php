@@ -1,4 +1,5 @@
 <?php
+
 include("connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -33,8 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        // Hash password
         $hashedPassword = $password ? password_hash($password, PASSWORD_BCRYPT) : "GOOGLE_SIGNUP";
 
+        // Cek apakah email atau username sudah digunakan
         $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email OR username = :username");
         $stmt->execute([':email' => $email, ':username' => $username]);
 
@@ -43,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
+        // Simpan data pengguna ke database
         $stmt = $conn->prepare("INSERT INTO users (firebase_uid, name, email, password, username, profile_image) VALUES (:firebase_uid, :name, :email, :password, :username, :profileImage)");
         $stmt->execute([
             ':firebase_uid' => $firebaseUid,
@@ -161,10 +165,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </section>
 <script type="module">
-
+// Import Firebase Modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
     authDomain: "dialek-6a219.firebaseapp.com",
@@ -175,19 +180,23 @@ const firebaseConfig = {
     measurementId: "G-4SLBH47WTM"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
+// Handle Signup Form Submission
 document.getElementById("signup-form").addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    // Get user inputs
     const name = document.getElementById("name").value.trim();
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
+    // Validate form fields
     if (!name || !username || !email || !password || !confirmPassword) {
         alert("Semua field wajib diisi.");
         return;
@@ -199,9 +208,11 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
     }
 
     try {
+        // Create user in Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
+        // Send user data to the backend
         const response = await fetch("./daftar.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -217,6 +228,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
 
         const result = await response.json();
         if (result.success) {
+            // Save user data in localStorage
             localStorage.setItem("firebase_uid", user.uid);
             localStorage.setItem("username", result.username);
             localStorage.setItem("profileImage", result.profile_image);
@@ -233,11 +245,14 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
     }
 });
 
+// Handle Google Signup
 document.getElementById("googleLogin").addEventListener("click", async () => {
-    try { 
+    try {
+        // Sign in using Google
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
 
+        // Send user data to the backend
         const response = await fetch("./daftar.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -253,6 +268,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
 
         const resultData = await response.json();
         if (resultData.success) {
+            // Save user data in localStorage
             localStorage.setItem("firebase_uid", user.uid);
             localStorage.setItem("username", resultData.username);
             localStorage.setItem("profileImage", resultData.profile_image);
