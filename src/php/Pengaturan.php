@@ -80,13 +80,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(["success" => false, "message" => "Tidak ada perubahan yang disimpan."]);
             }
             exit;
+        }  elseif ($action === "deleteAccount") {
+            $firebaseUid = $data['firebase_uid'] ?? null;
+
+            if (!$firebaseUid) {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+                exit;
+            }
+
+        // Hapus akun dari database
+        $stmt = $conn->prepare("DELETE FROM users WHERE firebase_uid = :firebase_uid");
+        $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(["success" => true, "message" => "Akun berhasil dihapus."]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Gagal menghapus akun atau akun tidak ditemukan."]);
         }
+        exit;
+    }
     } catch (Exception $e) {
         echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
         exit;
     }
     exit;
-}
+}  
 ?>
 
 <!DOCTYPE html>
@@ -229,13 +247,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        function deleteAccount() {
-            if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
-                localStorage.clear();
-                alert("Akun berhasil dihapus!");
-                window.location.href = "./daftar.php";
-            }
+        async function deleteAccount() {
+        if (confirm("Apakah Anda yakin ingin menghapus akun ini?")) {
+        const firebaseUid = localStorage.getItem("firebase_uid");
+
+        if (!firebaseUid) {
+            alert("Anda belum login. Silakan login terlebih dahulu.");
+            window.location.href = "./masuk.php";
+            return;
         }
+
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "deleteAccount", firebase_uid: firebaseUid }),
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                // Hapus data dari localStorage
+                localStorage.clear();
+                window.location.href = "./daftar.php"; // Redirect ke halaman daftar
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            alert("Terjadi kesalahan saat menghapus akun: " + error.message);
+        }
+     }
+    }
+
 
 
         document.getElementById("home").addEventListener("click", () => {
