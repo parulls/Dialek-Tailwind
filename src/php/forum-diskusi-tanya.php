@@ -95,10 +95,10 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
+            <p id="account-username" class="px-2 text-xl">username</p>
+            <i class="fa-solid fa-user text-xl"></i> 
         </div>
     </nav>
     <main class="flex flex-col items-center">
@@ -109,13 +109,17 @@
                 </h1>
             </header>
         </div>
-        <div class="mx-auto p-4 rounded-lg box-custom1 w-10/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);"> 
-            <div class="flex space-x-2 mb-4">
-                <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm">Bahasa Batak Toba</div>
-            </div>
 
-            <label for="pertanyaanInput" class="text-lg font-semibold text-green-800">Tulis pertanyaanmu:</label>
-            <textarea id="pertanyaanInput" class="w-full p-3 rounded-lg border-none focus:outline-none text-white" rows="5" style="background-color: #4C968B;"></textarea> 
+        
+
+            <div class="mx-auto p-4 rounded-lg box-custom1 w-10/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);"> 
+                <div class="flex space-x-2 mb-4">
+                    <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm">Bahasa Batak Toba</div>
+                </div>
+
+                <label for="pertanyaanInput" class="text-lg font-semibold text-green-800">Tulis pertanyaanmu:</label>
+                <textarea id="pertanyaanInput" class="w-full p-3 rounded-lg border-none focus:outline-none text-white" rows="5" style="background-color: #4C968B;"></textarea> 
+
                 <div class="flex justify-end mt-2"> 
                     <button id="tanyaButton" class="bg-green-800 text-white py-2 px-4 rounded-full shadow-md hover:bg-green-700">Tanya</button> 
                 </div>
@@ -123,27 +127,20 @@
         </div>
 
        <div class="mt-6 w-full sm:w-10/12 md:w-8/12 lg:w-6/12 ">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2"> 
-                <h2 class="text-base sm:text-lg font-semibold text-green-800 mb-2 sm:mb-0 ml-4">Pertanyaan Lain:</h2> 
-                <div class="flex space-x-1">
-                    <button id="popularButton" class="button-custom2 text-white py-1 px-3 sm:py-2 sm:px-4 text-sm sm:text-base ml-3">Popular</button> 
-                    <button id="terbaruButton" class="button-custom2 text-white py-1 px-3 sm:py-2 sm:px-4 text-sm sm:text-base">Terbaru</button> 
-                </div>
-            </div>
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2"> 
+        <h2 class="text-base sm:text-lg font-semibold text-green-800 mb-2 sm:mb-0 ml-4">Pertanyaan Lain:</h2> 
+        <div class="flex space-x-1">
+            <button id="popularButton" class="button-custom2 text-white py-1 px-3 sm:py-2 sm:px-4 text-sm sm:text-base ml-3">Popular</button> 
+            <button id="terbaruButton" class="button-custom2 text-white py-1 px-3 sm:py-2 sm:px-4 text-sm sm:text-base">Terbaru</button> 
+        </div>
+    </div>
+</div>
+
             <div id="pertanyaanList" class="space-y-2 w-11/12"></div> 
         </div>
     </main>
 
     <script>
-    const home = document.getElementById("home");
-    const profile = document.getElementById("profile-button");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.php";
-    });
-    profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
-    });
     // Konfigurasi Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCrmVDlBwRkkzP_rYY3mXBKw_ihrkV3tVM",
@@ -164,10 +161,6 @@
     const pertanyaanList = document.getElementById('pertanyaanList');
     const popularButton = document.getElementById('popularButton');
     const terbaruButton = document.getElementById('terbaruButton');
-
-    document.getElementById("home").addEventListener("click", () => {
-            window.location.href = "dashboardBatak.php";
-        });
 
     async function loadPertanyaan(orderByField = "timestamp") {
         const querySnapshot = await db.collection("pertanyaan").orderBy(orderByField, "desc").get();
@@ -221,7 +214,6 @@
     terbaruButton.addEventListener('click', () => loadPertanyaan("timestamp"));
 
     document.addEventListener('DOMContentLoaded', () => loadPertanyaan());
-
     </script>
 </body>
 </html>

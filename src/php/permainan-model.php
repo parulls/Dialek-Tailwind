@@ -37,60 +37,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     exit;
 }
 
-// Jika permintaan adalah GET dan JSON diminta
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
-    header("Content-Type: application/json");
-    $words = getBatakWords($conn);
-    if ($words) {
-        echo json_encode(['success' => true, 'words' => $words]);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Kesalahan mengambil kata Batak.']);
-    }
-    exit;
-}
-
-// Jika permintaan adalah POST untuk memperbarui skor atau mendapatkan data pengguna
+// Jika permintaan adalah POST untuk memperbarui skor
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['score'])) {
-        $firebaseUid = $data['firebase_uid'] ?? null;
-        $score = (int) $data['score'];
-
-        if (!$firebaseUid || !$score) {
-            echo json_encode(['success' => false, 'message' => 'Data tidak valid']);
-            exit;
-        }
-
-        if (updateScore($conn, $firebaseUid, $score)) {
-            echo json_encode(['success' => true, 'message' => 'Skor berhasil diperbarui']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Gagal memperbarui skor']);
-        }
-        exit;
-    } elseif (isset($data['firebase_uid'])) {
-        $firebaseUid = $data['firebase_uid'];
-        $stmt = $conn->prepare("
-            SELECT name, username, email, phone, 
-                   COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
-            FROM users 
-            WHERE firebase_uid = :firebase_uid
-        ");
-        $stmt->execute([':firebase_uid' => $firebaseUid]);
-
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            echo json_encode(["success" => true, "user" => $user]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
-        }
+    if (!isset($data['firebase_uid']) || !isset($data['score'])) {
+        echo json_encode(['success' => false, 'message' => 'Data tidak valid']);
         exit;
     }
+
+    $firebaseUid = $data['firebase_uid'];
+    $score = (int) $data['score'];
+
+    if (updateScore($conn, $firebaseUid, $score)) {
+        echo json_encode(['success' => true, 'message' => 'Skor berhasil diperbarui']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui skor']);
+    }
+    exit;
 }
 
+// Jika tidak meminta JSON atau POST, tampilkan halaman permainan
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -115,15 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
     <nav class="flex items-center justify-between w-full px-12 py-12">
-<<<<<<< Updated upstream:src/php/permainan-model.php
-        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">username</p>
-=======
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">loading...</p>
->>>>>>> Stashed changes:src/php/permainan_model.php
+            <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
@@ -173,8 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const playerScoreDisplay = document.getElementById("player-score");
             const aiScoreDisplay = document.getElementById("ai-score");
             const timerDisplay = document.getElementById("timer");
-            const firebaseUid = localStorage.getItem("firebase_uid");
-            const accountUsername = document.getElementById("account-username");
 
             let playerScore = 0;
             let aiScore = 0;
@@ -185,30 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             let playerTurn = true;
             let failedWords = 0;
             let batakTobaWords = [];
-
-
-            if (firebaseUid) {
-            try {
-                const response = await fetch(window.location.href, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ firebase_uid: firebaseUid }),
-                });
-
-                const result = await response.json();
-                if (result.success && result.user.username) {
-                    accountUsername.textContent = `@${result.user.username}`;
-                } else {
-                    accountUsername.textContent = "Gagal memuat username.";
-                }
-            } catch (error) {
-                console.error("Kesalahan memuat pengguna:", error);
-                accountUsername.textContent = "Kesalahan memuat.";
-            }
-        } else {
-            alert("Silakan login terlebih dahulu.");
-            window.location.href = "login.php";
-        }
 
             // Fetch kata Batak dari backend
             try {
@@ -280,62 +217,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             document.getElementById("popup-close").addEventListener("click", () => {
                 document.getElementById("popup").style.display = "none";
-                window.location.href = "permainan_hasil.php";
+                window.location.href = "permainan-hasil.php";
             });
 
             function isValidWord(word) {
-            const lowercaseWord = word.toLowerCase();
-            if (!batakTobaWords.includes(lowercaseWord)) return false; 
-            if (usedWords.has(lowercaseWord)) return "reused"; 
-            if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false; 
-            return "new"; // Kata valid dan baru
-        }
+                const lowercaseWord = word.toLowerCase();
+                if (!batakTobaWords.includes(lowercaseWord)) return false;
+                if (usedWords.has(lowercaseWord)) return "reused";
+                if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false;
+                return "new";
+            }
 
-            
+            function handlePlayerTurn() {
+            const word = wordInput.value.trim().toLowerCase();
+            wordInput.value = ""; // Reset input field
+            errorMessage.classList.add("hidden"); // Sembunyikan pesan error
 
-          
-
-            
-
-                function handlePlayerTurn() {
-                const word = wordInput.value.trim().toLowerCase();
-                wordInput.value = ""; 
-                errorMessage.classList.add("hidden"); 
-
-                // Validasi kata
-                const validity = isValidWord(word);
-                if (!validity) {
-                    errorMessage.textContent="Masukkan kata yang valid!";
-                    errorMessage.classList.remove("hidden");
-                    failedWords++; 
-                    return;
-                }
-
-                // Tambahkan kata ke UI
-                const wordElement = document.createElement("div");
-                wordElement.textContent = word;
-                wordElement.classList.add("used-word");
-                playerWords.appendChild(wordElement);
-
-                // Simpan kata ke LocalStorage
-                savePlayerWordToLocalStorage(word);
-
-                // Perbarui skor pemain
-                playerScore += validity === "new" ? 10 : 5;
-                usedWords.add(word); 
-                lastWord = word; 
-
-                // Ganti giliran ke AI
-                playerTurn = false; 
-                setTimeout(handleAITurn, 1000); 
-                updateScores(); 
+            // Validasi kata
+            const validity = isValidWord(word);
+            if (!validity ) {
+                errorMessage.textContent ="Masukkan kata yang valid!";
+                errorMessage.classList.remove("hidden");
+                failedWords++; 
+                return;
             }
 
             function savePlayerWordToLocalStorage(word) {
-                const usedVocabulary = JSON.parse(localStorage.getItem("usedVocabulary")) || [];
-                usedVocabulary.push(word);
-                localStorage.setItem("usedVocabulary", JSON.stringify(usedVocabulary));
-            }
+            const usedVocabulary = JSON.parse(localStorage.getItem("usedVocabulary")) || [];
+            usedVocabulary.push(word);
+            localStorage.setItem("usedVocabulary", JSON.stringify(usedVocabulary));
+        }
+
+            // Tambahkan kata ke UI
+            const wordElement = document.createElement("div");
+            wordElement.textContent = word;
+            wordElement.classList.add("used-word");
+            playerWords.appendChild(wordElement);
+
+            // Simpan kata ke LocalStorage
+            savePlayerWordToLocalStorage(word);
+
+            // Perbarui skor pemain
+            playerScore += validity === "new" ? 10 : 5;
+            usedWords.add(word); 
+            lastWord = word; 
+
+            // Ganti giliran ke AI
+            playerTurn = false; 
+            setTimeout(handleAITurn, 1000); 
+            updateScores(); 
+        }
 
             function handleAITurn() {
                 const aiWord = generateAIWord();
@@ -354,8 +285,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     return;
                 }
 
-          
-
                 playerTurn = true;
                 updateScores();
             }
@@ -371,17 +300,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             startTimer();
         });
-    
-    const home = document.getElementById("home");
-    const profile = document.getElementById("profile-button");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.php";
-    });
-
-    profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
-    });
     </script>
 </body>
 

@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (result.success) {
                     alert("Login berhasil!");
                     storeUserData(result.user);
-                    window.location.href = "dashboardBatak.php";
+                    window.location.href = "dashboard-batak.php";
                 } else {
                     alert(result.message);
                 }
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (resultData.success) {
                     storeUserData(resultData.user);
                     alert("Login berhasil!");
-                    window.location.href = "dashboardBatak.php";
+                    window.location.href = "dashboard-batak.php";
                 } else {
                     alert("Login gagal: " + resultData.message);
                 }

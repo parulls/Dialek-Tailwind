@@ -38,8 +38,8 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
+        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -48,24 +48,24 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
         <!-- Menampilkan materi yang diambil dari database -->
         <?php if (!empty($materials)): ?>
-            <div class="materi-item">
-                <h2><?= htmlspecialchars($materials['material_title']); ?></h2>
-                <p><?= nl2br(htmlspecialchars($materials['material_content'])); ?></p>
+            <div class="materi-item max-w-6xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
+                <h2 class="flex justify-center font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></h2>
+                <p class="text-base p-4"><?= nl2br(htmlspecialchars($materials['material_content'])); ?></p>
             </div>
         <?php else: ?>
             <p>Materi tidak ditemukan.</p>
         <?php endif; ?>
     </section>
 
-    <footer class="flex items-center justify-between w-full px-4 py-4">
+    <footer class="flex items-center justify-end w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">
-            Kembali
+            Selanjutnya
         </button>
         <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">
             Selanjutnya
         </button>
     </footer>
-
+    
     <script>
         // Mendapatkan elemen tombol
         const kembaliButton = document.getElementById("kembali-button");
@@ -79,6 +79,5 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
             window.location.href = "../latihan/subjek/nomor1.php";
         });
     </script>
-
 </body>
 </html>

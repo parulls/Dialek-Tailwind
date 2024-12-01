@@ -66,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
         </div>
     </nav>
 
+  
+
+
     <main class="flex flex-col items-center flex-grow">
     <!-- Judul -->
     <h1 class="text-4xl font-bold text-gradient text-center py-6 ">Sambung Kata</h1>
@@ -189,6 +192,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    const profile = document.getElementById("profile-button");
+    const home = document.getElementById("home");
+
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
+
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
+
     // Tampilkan statistik permainan
     totalScoreDisplay.textContent = totalScore;
     successfulWordsDisplay.textContent = successfulWordsCount;
@@ -278,19 +292,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("failedWordsCount");
     localStorage.removeItem("totalScore");
     localStorage.removeItem("usedVocabulary");
-    localStorage.removeItem("usedVocabulary");
+    
 });
-
-    const home = document.getElementById("home");
-    const profile = document.getElementById("profile-button");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.php";
-    });
-
-    profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
-    });
 
     </script>
 </body>

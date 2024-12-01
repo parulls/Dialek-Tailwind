@@ -227,23 +227,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
-<footer class="flex items-center justify-start w-full px-4 py-4">
-    <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-    <div class="level-button-container"></div>
-</footer>
-
 <script>
-    const profile = document.getElementById("profile-button");
-
-    <script>
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
             window.location.href = "./AkunUser.php";
         });
-        const kembaliButton = document.getElementById('kembali-button');
-        kembaliButton.addEventListener('click', function() {
-            window.location.href = './dashboard-batak.php';
-        });
+
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
