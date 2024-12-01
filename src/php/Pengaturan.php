@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         document.getElementById("home").addEventListener("click", () => {
-            window.location.href = "./akun-pengguna.php";
+            window.location.href = "./dashboard-batak.php";
         });
 
         document.addEventListener("DOMContentLoaded", loadProfile);

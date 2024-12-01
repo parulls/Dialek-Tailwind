@@ -1,83 +1,76 @@
 <?php
-require 'connect.php'; // Menghubungkan dengan database
+session_start();
+include('connect.php');
 
-// Initialize variables
-$word = '';
-$hint = '';
-$message = '';
-$message_class = ''; // Kelas CSS untuk warna pesan
-$time_limit = 60; // Set the time limit in seconds
+// Mengambil waktu mulai jika belum ada
+if (!isset($_SESSION['start_time'])) {
+    $_SESSION['start_time'] = time();
+}
 
-// Check if the form has been submitted to check the answer
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userWord = trim($_POST['user_word']);
-    $correctWord = trim($_POST['correct_word']);
+// Waktu batas 1 menit
+$time_limit = 60;
 
-    // Check the user's input against the correct word
-    if (empty($userWord)) {
-        $message = "Masukkan kata yang akan diperiksa.";
-        $message_class = 'text-yellow-600'; // Kuning untuk peringatan
-    } elseif (strcasecmp($userWord, $correctWord) === 0) {
-        $message = "Selamat! Jawaban Anda benar.";
-        $message_class = 'text-green-600'; // Hijau untuk benar
+// Menghitung waktu yang sudah berlalu
+$elapsed_time = time() - $_SESSION['start_time'];
+
+// Mengecek apakah waktu habis
+if ($elapsed_time > $time_limit) {
+    $message = "Waktu habis! Silakan coba lagi.";
+    $message_class = 'text-red-600';
+    session_destroy(); // Menghancurkan sesi setelah waktu habis
+} else {
+    $message = "Tantangan masih aktif!";
+    $message_class = 'text-green-600';
+}
+
+// Cek apakah ada permintaan POST untuk memeriksa jawaban
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_word'])) {
+    $userWord = filter_input(INPUT_POST, 'user_word', FILTER_SANITIZE_STRING);
+
+    // Cek apakah user memberikan jawaban yang benar
+    $query = $conn->prepare("SELECT * FROM words_kosakata WHERE word = :user_word LIMIT 1");
+    $query->bindParam(':user_word', $userWord);
+    $query->execute();
+    $wordData = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($wordData) {
+        $response = [
+            'success' => true,
+            'message' => 'Jawaban Anda benar!'
+        ];
     } else {
-        $message = "Oops! Kata yang kamu masukkan salah.";
-        $message_class = 'text-red-600'; // Merah untuk salah
+        $response = [
+            'success' => false,
+            'message' => 'Jawaban Anda salah, coba lagi!'
+        ];
     }
+
+    echo json_encode($response);
+    exit;
 }
 
-// Fetch a random word and hint from the database
-try {
-    $query = $conn->query("SELECT word, hint FROM words_kosakata ORDER BY RANDOM() LIMIT 1");
-    $result = $query->fetch(PDO::FETCH_ASSOC);
-    if ($result) {
-        $word = $result['word'];
-        $hint = $result['hint'];
-    }
-} catch (PDOException $e) {
-    die("Error fetching data: " . $e->getMessage());
-}
-
-// Periksa apakah ini adalah permintaan POST untuk data pengguna
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header("Content-Type: application/json");
-    include('connect.php');
-
+// Cek apakah ada permintaan untuk mengganti kata
+if (isset($_GET['refresh'])) {
     try {
-        $data = json_decode(file_get_contents("php://input"), true);
-        $firebaseUid = $data['firebase_uid'] ?? null;
+        $query = $conn->query("SELECT word, hint FROM words_kosakata ORDER BY RANDOM() LIMIT 1");
+        $result = $query->fetch(PDO::FETCH_ASSOC);
 
-        if ($firebaseUid) {
-            $stmt = $conn->prepare("
-                SELECT name, username, email, phone, 
-                       COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
-                FROM users 
-                WHERE firebase_uid = :firebase_uid
-            ");
-            $stmt->execute([':firebase_uid' => $firebaseUid]);
-
-            if ($stmt->rowCount() > 0) {
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
-                echo json_encode(["success" => true, "user" => $user]);
-                exit;
-            } else {
-                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
-                exit;
-            }
+        if ($result) {
+            $shuffledWord = str_shuffle($result['word']);
+            echo json_encode(['success' => true, 'word' => $shuffledWord, 'hint' => $result['hint']]);
         } else {
-            echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
-            exit;
+            echo json_encode(['success' => false, 'message' => 'Kata tidak ditemukan.']);
         }
     } catch (PDOException $e) {
-        echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
-        exit;
-    } catch (Exception $e) {
-        echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
-        exit;
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
+    exit;
 }
-?>
 
+// Ambil username dari session jika tersedia
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tidak Dikenal';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,17 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const refreshBtn = document.getElementById("refresh-word");
         const timerElement = document.getElementById("timer");
-        const profile = document.getElementById("profile-button");
-        const home = document.getElementById("home");
         let timeLeft = <?php echo $time_limit; ?>;
-
-        home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.php";
-        });
-
-        profile.addEventListener("click", () => {
-            window.location.href = "./akun-pengguna.php";
-        });
 
         const countdown = setInterval(() => {
             if (timeLeft <= 0) {
@@ -174,30 +157,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 .catch(error => console.error('Error fetching new word:', error));
         });
 
-        document.addEventListener("DOMContentLoaded", async () => {
-        const firebaseUid = localStorage.getItem("firebase_uid");
-
-        try {
-            const response = await fetch(window.location.href, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ firebase_uid: firebaseUid }),
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                const userData = result.user;
-                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
-
-            } else {
-                alert("Gagal memuat data pengguna: " + result.message);
-                window.location.href = "./daftar.php";
-            }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            alert("Terjadi kesalahan saat memuat data pengguna.");
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
         }
-    });
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const firebaseUid = localStorage.getItem("firebase_uid");
+            try {
+                const response = await fetch(window.location.href, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ firebase_uid: firebaseUid }),
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById("account-username").textContent = `${result.user.username}`;
+                } else {
+                    alert("Gagal memuat data pengguna.");
+                    window.location.href = "./masuk.php";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Kesalahan memuat data.");
+            }
+        });
+
+        const firebaseUid = localStorage.getItem("firebase_uid") || null;
+
+        if (firebaseUid) {
+            // Fetch data pengguna
+        } else {
+            alert("Pengguna belum login, silakan login terlebih dahulu.");
+            window.location.href = "./masuk.php";
+        }
     </script>
 </body>
 </html>
