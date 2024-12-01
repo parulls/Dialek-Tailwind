@@ -54,20 +54,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%; /* Sidebar tersembunyi */
+            background-color: white;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+            transition: left 0.4s ease;
+            z-index: 1000;
+        }
+
+        #sidebar.open {
+            left: 0; /* Sidebar terbuka */
+        }
+    </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
     <!-- Navbar -->
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
+        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
 
-  
-
+    <div id="sidebar" class="fixed bg-white w-60 h-full">
+        <div class="flex items-center justify-between w-full px-12 py-12">
+            <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        </div>
+        <ul class="mt-4 space-y-2">
+            <li>
+                <a href="./dashboard-batak.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">dashboard</span>
+                    <span class="text-black font-medium">Dasbor</span>
+                </a>
+            </li>
+            <li>
+                <a href="./forum-diskusi-tanya.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">forum</span>
+                    <span class="text-black font-medium">Forum Diskusi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./materi-pilih-topik.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">book</span>
+                    <span class="text-black font-medium">Materi</span>
+                </a>
+            </li>
+            <li>
+                <a href="./permainan-hasil.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">extension</span>
+                    <span class="text-black font-medium">Permainan</span>
+                </a>
+            </li>
+            <li>
+                <a href="./literasi-budaya-level.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">auto_stories</span>
+                    <span class="text-black font-medium">Literasi Budaya</span>
+                </a>
+            </li>
+            <li>
+                <a href="./kosakata-model1.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">note_stack</span>
+                    <span class="text-black font-medium">Kosakata</span>
+                </a>
+            </li>
+            <li>
+                <a id="logout-button" href="../../index.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                    <span class="material-symbols-outlined text-custom1">logout</span>
+                    <span class="text-black font-medium">Keluar</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <main class="flex flex-col items-center flex-grow">
     <!-- Judul -->
@@ -193,11 +256,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const profile = document.getElementById("profile-button");
-    const home = document.getElementById("home");
-
-    home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.php";
-    });
 
     profile.addEventListener("click", () => {
         window.location.href = "./AkunUser.php";
@@ -294,6 +352,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("usedVocabulary");
     
 });
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        console.log("Toggling sidebar...");
+        sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+    }
 
     </script>
 </body>

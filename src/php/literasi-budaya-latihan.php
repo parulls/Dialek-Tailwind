@@ -236,10 +236,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 
     function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            console.log("Toggling sidebar...");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
-        }
+    const sidebar = document.getElementById("sidebar");
+    console.log("Toggling sidebar...");
+    sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+    }
 </script>
 </body>
 </html>
