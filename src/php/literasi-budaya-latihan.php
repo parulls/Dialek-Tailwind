@@ -161,6 +161,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     selesaiButton.addEventListener('click', function () {
         window.location.href = './literasi-budaya-level.php';
     });
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        const firebaseUid = localStorage.getItem("firebase_uid");
+
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "login.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            alert("Terjadi kesalahan saat memuat data pengguna.");
+        }
+    });
 </script>
 </body>
 </html>
