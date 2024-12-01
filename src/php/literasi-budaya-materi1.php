@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     });
 
     profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
+        window.location.href = "./akun-pengguna.php";
     });
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
@@ -222,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);
-                window.location.href = "login.php";
+                window.location.href = "./masuk.php";
             }
         } catch (error) {
             console.error("Fetch Error:", error);

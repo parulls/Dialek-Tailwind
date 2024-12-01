@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     const profile = document.getElementById("profile-button");
     profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
+        window.location.href = "./akun-pengguna.php";
     });
 
     // Fungsi validasi jawaban
@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);
-                window.location.href = "login.php";
+                window.location.href = "./daftar.php";
             }
         } catch (error) {
             console.error("Fetch Error:", error);

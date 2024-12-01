@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const profile = document.getElementById("profile-button");
 
     profile.addEventListener("click", () => {
-        window.location.href = "./AkunUser.php";
+        window.location.href = "./akun-pengguna.php";
     });
 
     // Tampilkan statistik permainan
@@ -333,7 +333,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Tombol untuk mulai permainan
     document.getElementById("startbutton").addEventListener("click", () => {
-        window.location.href = "permainan-model.php";
+        window.location.href = "./permainan-model.php";
     });
 
     // Tombol info

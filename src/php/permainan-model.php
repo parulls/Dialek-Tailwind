@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             document.getElementById("popup-close").addEventListener("click", () => {
                 document.getElementById("popup").style.display = "none";
-                window.location.href = "permainan-hasil.php";
+                window.location.href = "./permainan-hasil.php";
             });
 
             function isValidWord(word) {

@@ -213,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if (isTaskUnlocked($taskNumber)): ?>
                         <!-- Task terbuka -->
                         <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <a href="literasi-budaya-task.php?task=<?= $taskNumber ?>">
+                            <a href="literasi-budaya-materi.php?task=<?= $taskNumber ?>">
                                 <i class="fa-solid fa-comment"></i>
                             </a>
                         </div>
@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
-            window.location.href = "./AkunUser.php";
+            window.location.href = "./akun-pengguna.php";
         });
 
         function toggleSidebar() {
@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);
-                window.location.href = "login.php";
+                window.location.href = "./masuk.php";
             }
         } catch (error) {
             console.error("Fetch Error:", error);
