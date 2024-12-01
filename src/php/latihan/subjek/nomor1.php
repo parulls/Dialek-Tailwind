@@ -118,8 +118,6 @@
     </footer>
 
     <script>
-        const home = document.getElementById("home");
-        const profile = document.getElementById("profile-button");
         const kembaliButton = document.getElementById("kembali-button");
         const selanjutnyaButton = document.getElementById("selanjutnya-button");
 

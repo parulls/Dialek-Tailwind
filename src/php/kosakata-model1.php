@@ -196,7 +196,7 @@ $hint = $word_data['hint'] ?? 'tidak ada petunjuk';
         profile.addEventListener("click", () => {
             window.location.href = "./akun-pengguna.php";
         });
-
+    });
 
     </script>
 </body>
