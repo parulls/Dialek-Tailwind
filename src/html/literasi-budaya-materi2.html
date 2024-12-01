@@ -1,40 +1,3 @@
-<?php
-include 'connect.php';
-
-// Mendapatkan ID level dari parameter URL
-$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
-
-// Query untuk mengambil data dari database berdasarkan level
-$query = "SELECT title, content FROM kosakata_levels WHERE id = :level";
-$stmt = $conn->prepare($query);
-$stmt->bindParam(':level', $level, PDO::PARAM_INT);
-$stmt->execute();
-
-// Fetch data level
-$level_data = $stmt->fetch();
-
-// Jika data level tidak ditemukan, arahkan kembali ke halaman level
-if (!$level_data) {
-    header("Location: literasi-budaya-level.php");
-    exit;
-}
-
-$title = $level_data['title'];
-$content = $level_data['content'];
-
-// Menentukan level selanjutnya dan sebelumnya
-$nextLevel = $level + 1;
-$prevLevel = $level - 1;
-
-// Periksa apakah level berikutnya ada di database
-$query_next = "SELECT COUNT(*) FROM kosakata_levels WHERE id = :nextLevel";
-$stmt_next = $conn->prepare($query_next);
-$stmt_next->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
-$stmt_next->execute();
-$nextLevelExists = $stmt_next->fetchColumn() > 0;
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,13 +21,32 @@ $nextLevelExists = $stmt_next->fetchColumn() > 0;
     <section class="main flex flex-col mx-auto w-4/5 flex-grow space-y-10">
         <header class="header items-center text-center">
             <h2 class="h2 font-bold text-gradient">
-                <?php echo htmlspecialchars($title); ?>
+                Level 2: Kosakata Dasar dan Ekspresi Budaya
             </h2>
         </header>
         <div class="flex flex-col justify-center items-center space-y-6 font-medium text-black">
+            <!-- Box 1 -->
+            <div class="p-6 bg-custom9 rounded-lg shadow-md">
+                <p class="text-lg ">
+                    Orang batak menganut sistem kekerabatan yang menghitung garis keturunan secara patrilineal, yaitu memperhitungkan anggota keluarga menganut garis keturunan ayah. Berikut adalah beberapa istilah keluarga dan sistem kekerabatan dalam suku Batak Toba:
+                </p>
+                <ul class="list-disc list-inside mt-3 text-black">
+                    <li>Partuturan: Sistem kekerabatan suku Batak Toba</li>
+                    <li>Boru: Marga yang menerima gadis</li>
+                    <li>Hula-hula: Marga pemberi gadis</li>
+                    <li>Parboru: Kerabat dari pihak perempuan</li>
+                    <li>Peranak: Kerabat dari pihak laki-laki</li>
+                    <li>Ripe: Istilah untuk keluarga luas virilokal yang tinggal di rumah keluarga pihak laki-laki</li>
+                    <li>Jabu: Istilah untuk keluarga inti yang terdiri dari ayah, ibu, dan anak-anak</li>
+                    <li>Saompu: Istilah lokal untuk sistem kekerabatan berdasarkan satu kakek atau nenek moyang</li>
+                    <li>Pariban: Kerabat yang memiliki hubungan darah dengan seseorang</li>
+                </ul>
+            </div>
+    
+            <!-- Box 2 -->
             <div class="p-6 bg-custom9 rounded-lg shadow-md">
                 <p class="text-lg">
-                    <?php echo nl2br(htmlspecialchars($content)); ?>
+                    Dalam sistem kekerabatan Batak Toba, anak laki-laki dianggap sebagai penerus marga keluarga. Perkawinan semarga dilarang keras, sehingga perkawinan dalam suku Batak Toba adalah perkawinan eksogami marga. 
                 </p>
             </div>
         </div>
@@ -73,9 +55,7 @@ $nextLevelExists = $stmt_next->fetchColumn() > 0;
     <!-- Footer with Navigation Buttons -->
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        <?php if ($nextLevelExists): ?>
-            <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
-        <?php endif; ?>
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
 
     <script>
@@ -83,30 +63,21 @@ $nextLevelExists = $stmt_next->fetchColumn() > 0;
         const profile = document.getElementById("profile-button");
 
         home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.php";
+            window.location.href = "./dashboard-batak.html";
         });
         profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.php";
+            window.location.href = "./profil-pengguna.html";
         });
 
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
-
         kembaliButton.addEventListener('click', function() {
-            // Jika level > 1, kembali ke level sebelumnya
-            if (<?php echo $level; ?> > 1) {
-                window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
-            } else {
-                // Jika level = 1, kembali ke halaman level
-                window.location.href = './literasi-budaya-level.php';
-            }
+            window.location.href = './literasi-budaya-level.html';
         });
 
-        <?php if ($nextLevelExists): ?>
         selanjutnyaButton.addEventListener('click', function() {
-            window.location.href = './literasi-budaya-materi.php?level=' + <?php echo $nextLevel; ?>;
+            window.location.href = './literasi-budaya-latihan.html';
         });
-        <?php endif; ?>
     </script>
 </body>
 </html>

@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <p class="text-black">Sudah Punya Akun? <a href="./masuk.html" class="text-custom1 font-bold hover:underline">Masuk</a></p>
+                    <p class="text-black">Sudah Punya Akun? <a href="login.php" class="text-custom1 font-bold hover:underline">Masuk</a></p>
                 </div>
             </form>
         </div>
@@ -236,7 +236,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
             localStorage.setItem("profileName", result.name);
 
             alert("Signup berhasil!");
-            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
+            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
         } else {
             alert(result.message);
         }
@@ -276,7 +276,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
             localStorage.setItem("profileName", resultData.name);
 
             alert("Signup berhasil dengan Google!");
-            window.location.href = "dashboardBatak.html"; // Redirect to dashboard
+            window.location.href = "dashboardBatak.php"; // Redirect to dashboard
         } else {
             alert(resultData.message);
         }

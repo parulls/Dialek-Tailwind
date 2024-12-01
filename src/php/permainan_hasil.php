@@ -1,6 +1,48 @@
-<!-- <?php
-    require '.functions.php';
-?> -->
+<?php
+require 'connect.php';
+
+// Header untuk memastikan respons adalah JSON jika diakses melalui backend
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
+    header('Content-Type: application/json');
+
+    try {
+        // Query untuk mendapatkan data
+        $stmt = $conn->prepare("
+            SELECT 
+                username, 
+                COALESCE(profile_image, '../assets/pp.webp') AS profile_image, 
+                score 
+            FROM users 
+            WHERE score IS NOT NULL 
+            ORDER BY score DESC 
+            LIMIT 10
+        ");
+        $stmt->execute();
+
+        $rankings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Jika ada hasil, kirim JSON yang valid
+        if ($rankings) {
+            echo json_encode([
+                'success' => true,
+                'rankings' => $rankings
+            ]);
+        } else {
+            // Jika tidak ada data, tetap kirim JSON yang valid
+            echo json_encode([
+                'success' => true,
+                'rankings' => [] // Berikan array kosong
+            ]);
+        }
+    } catch (PDOException $e) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Kesalahan saat mengambil data peringkat: ' . $e->getMessage()
+        ]);
+    }
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="id">
@@ -11,90 +53,27 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        #sidebar {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            background-color: white;
-            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
-            transition: left 0.4s ease;
-            z-index: 1000;
-        }
-        #sidebar.open {
-            left: 0;
-        }
-    </style>
 </head>
-
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
+
     <!-- Navbar -->
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
+        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
 
-    <!-- sidebar -->
-    <div id="sidebar" class="fixed bg-white w-60 h-full">
-        <div class="flex items-center justify-between w-full px-12 py-12">
-            <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
-        </div>
-        <ul class="mt-4 space-y-2">
-            <li>
-                <a href="./dashboard-batak.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">dashboard</span>
-                    <span class="text-black font-medium">Dasbor</span>
-                </a>
-            </li>
-            <li>
-                <a href="./forum-diskusi-tanya.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">forum</span>
-                    <span class="text-black font-medium">Forum Diskusi</span>
-                </a>
-            </li>
-            <li>
-                <a href="./materi-pilih-topik.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">book</span>
-                    <span class="text-black font-medium">Materi</span>
-                </a>
-            </li>
-            <li>
-                <a href="./permainan-hasil.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">extension</span>
-                    <span class="text-black font-medium">Permainan</span>
-                </a>
-            </li>
-            <li>
-                <a href="./literasi-budaya-level.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">auto_stories</span>
-                    <span class="text-black font-medium">Literasi Budaya</span>
-                </a>
-            </li>
-            <li>
-                <a href="./kosakata-model1.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">note_stack</span>
-                    <span class="text-black font-medium">Kosakata</span>
-                </a>
-            </li>
-            <li>
-                <a id="logout-button" href="/index.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
-                    <span class="material-symbols-outlined text-custom1">logout</span>
-                    <span class="text-black font-medium">Keluar</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- sidear selesai -->
+  
+
 
     <main class="flex flex-col items-center flex-grow">
     <!-- Judul -->
     <h1 class="text-4xl font-bold text-gradient text-center py-6 ">Sambung Kata</h1>
+
+    
      
             <!-- Kosakata yang Digunakan -->
             <div class="col-span-2 p-4 rounded-lg shadow-lg w-7/12 " style="background-color: rgba(243, 245, 243, 0.4)">
@@ -185,49 +164,53 @@
 
     </main>
 
-    <script src="game.js"></script>
     <script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const dailyRankingsContainer = document.getElementById("daily-rankings");
+    const totalScoreDisplay = document.getElementById("total-score");
+    const successfulWordsDisplay = document.getElementById("successful-words");
+    const failedWordsDisplay = document.getElementById("failed-words");
+    const accuracyDisplay = document.getElementById("accuracy");
+    const usedVocabularyContainer = document.getElementById("used-vocabulary");
+
     // Ambil data permainan dari local storage
-    const successfulWordsCount = parseInt(localStorage.getItem('successfulWordsCount') || '0', 10);
-    const failedWordsCount = parseInt(localStorage.getItem('failedWordsCount') || '0', 10);
-    const totalScore = parseInt(localStorage.getItem('totalScore') || '0', 10);
-    const usedVocabulary = JSON.parse(localStorage.getItem('usedVocabulary') || '[]');
+    const successfulWordsCount = parseInt(localStorage.getItem("successfulWordsCount") || "0", 10);
+    const failedWordsCount = parseInt(localStorage.getItem("failedWordsCount") || "0", 10);
+    const totalScore = parseInt(localStorage.getItem("totalScore") || "0", 10);
+    const usedVocabulary = JSON.parse(localStorage.getItem("usedVocabulary") || "[]");
 
-    // Sidebar toggle function
-    function toggleSidebar() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
-        }
-
-    document.addEventListener("DOMContentLoaded", async () => {
     // Ambil username dari localStorage
-<<<<<<< HEAD
     const username = localStorage.getItem("username");
     const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
-=======
-        const username = localStorage.getItem("username");
-        const profileImage = localStorage.getItem("profileImage") || "../assets/pp.webp";
->>>>>>> 8eee45392a9040150a96e3fad3d47c0c799b9f1c
+
+    // Validasi login
+    if (username) {
+        document.getElementById("account-username").textContent = username;
+    } else {
+        alert("Silakan login terlebih dahulu.");
+        window.location.href = "login.html";
+        return;
+    }
 
     // Tampilkan statistik permainan
-    document.getElementById("total-score").textContent = totalScore;
-    document.getElementById("successful-words").textContent = successfulWordsCount;
-    document.getElementById("failed-words").textContent = failedWordsCount;
+    totalScoreDisplay.textContent = totalScore;
+    successfulWordsDisplay.textContent = successfulWordsCount;
+    failedWordsDisplay.textContent = failedWordsCount;
 
     const accuracy = successfulWordsCount + failedWordsCount > 0
         ? Math.round((successfulWordsCount / (successfulWordsCount + failedWordsCount)) * 100)
         : 0;
-    document.getElementById("accuracy").textContent = accuracy + "%";
+    accuracyDisplay.textContent = `${accuracy}%`;
 
     // Render grafik akurasi
-    const ctx = document.getElementById('accuracyChart').getContext('2d');
+    const ctx = document.getElementById("accuracyChart").getContext("2d");
     new Chart(ctx, {
-        type: 'pie',
+        type: "pie",
         data: {
-            labels: ['Kata Berhasil', 'Kata Gagal'],
+            labels: ["Kata Berhasil", "Kata Gagal"],
             datasets: [{
                 data: [successfulWordsCount, failedWordsCount],
-                backgroundColor: ['#ADDFB3', '#62AA6D'],
+                backgroundColor: ["#ADDFB3", "#62AA6D"],
             }]
         },
         options: {
@@ -235,14 +218,13 @@
             plugins: {
                 legend: {
                     display: true,
-                    position: 'bottom'
+                    position: "bottom"
                 }
             }
         }
     });
 
     // Tampilkan kosakata yang digunakan
-    const usedVocabularyContainer = document.getElementById("used-vocabulary");
     usedVocabulary.forEach(word => {
         const wordElement = document.createElement("p");
         wordElement.textContent = word;
@@ -252,42 +234,33 @@
 
     // Tampilkan peringkat harian
     try {
-    const response = await fetch('../php/get_daily_rankings.php');
-    const data = await response.json();
+        const response = await fetch("?json=true");
+        const data = await response.json();
 
-    if (!data || typeof data !== 'object' || !data.success) {
-        console.error("JSON tidak sesuai format yang diharapkan:", data);
-        document.getElementById("daily-rankings").innerHTML = '<li>Peringkat tidak tersedia.</li>';
-        return;
+        if (data.success && Array.isArray(data.rankings) && data.rankings.length > 0) {
+            dailyRankingsContainer.innerHTML = "";
+            data.rankings.forEach((rank, index) => {
+                const rankElement = document.createElement("li");
+                rankElement.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <p class="font-semibold text-green-900 text-md">${index + 1}.</p>
+                        <img src="${rank.profile_image}" alt="user" class="w-8 h-8 rounded-full" />
+                        <p class="font-semibold text-green-900 text-md flex-1">${rank.username}</p>
+                        <p class="font-semibold text-green-900 text-md">${rank.score}</p>
+                    </div>`;
+                dailyRankingsContainer.appendChild(rankElement);
+            });
+        } else {
+            dailyRankingsContainer.innerHTML = `<li class="text-center text-green-900 font-semibold">Belum ada data peringkat. Jadilah yang pertama bermain!</li>`;
+        }
+    } catch (error) {
+        console.error("Kesalahan saat memuat data peringkat:", error.message);
+        dailyRankingsContainer.innerHTML = `<li class="text-center text-red-500 font-semibold">Kesalahan saat memuat data.</li>`;
     }
-
-    // Proses JSON jika valid
-    if (data.rankings && data.rankings.length > 0) {
-        const rankingsContainer = document.getElementById("daily-rankings");
-        data.rankings.forEach((rank, index) => {
-            const rankElement = document.createElement("li");
-            rankElement.innerHTML = `
-                <div class="flex items-center space-x-2">
-                    <p class="font-semibold text-green-900 text-md">${index + 1}.</p>
-                    <img src="${rank.profile_image}" alt="user" class="w-8 h-8 rounded-full" />
-                    <p class="font-semibold text-green-900 text-md flex-1">${rank.username}</p>
-                    <p class="font-semibold text-green-900 text-md">${rank.score}</p>
-                </div>
-            `;
-            rankingsContainer.appendChild(rankElement);
-        });
-    } else {
-        console.error("Peringkat kosong:", data);
-        document.getElementById("daily-rankings").innerHTML = '<li>Peringkat tidak tersedia.</li>';
-    }
-} catch (error) {
-    console.error("Gagal memproses JSON:", error);
-    document.getElementById("daily-rankings").innerHTML = '<li>Kesalahan saat memuat data.</li>';
-}
 
     // Tombol untuk mulai permainan
     document.getElementById("startbutton").addEventListener("click", () => {
-        window.location.href = "permainan-model.html";
+        window.location.href = "permainan_model.php";
     });
 
     // Tombol info
@@ -299,14 +272,13 @@
         document.getElementById("info-popup").style.display = "none";
     };
 
-    // Hapus data dari localStorage setelah ditampilkan
-    localStorage.removeItem('successfulWordsCount');
-    localStorage.removeItem('failedWordsCount');
-    localStorage.removeItem('totalScore');
-    localStorage.removeItem('usedVocabulary');
+    // Bersihkan localStorage setelah ditampilkan
+    localStorage.removeItem("successfulWordsCount");
+    localStorage.removeItem("failedWordsCount");
+    localStorage.removeItem("totalScore");
+    localStorage.removeItem("usedVocabulary");
 });
 
     </script>
-
 </body>
 </html>

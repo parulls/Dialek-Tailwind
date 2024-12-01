@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Menentukan level yang sedang diakses
+$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
+
 // Inisialisasi level dan task jika belum ada di session
 if (!isset($_SESSION['unlocked_levels'])) {
     $_SESSION['unlocked_levels'] = [1]; // Hanya level 1 yang terbuka secara default
@@ -46,9 +49,9 @@ if (isset($_GET['complete_level'])) {
         unlockNextLevel($completedLevel); // Buka level berikutnya
     }
 }
-
-
 ?>
+
+<!-- Bagian HTML untuk menampilkan level dan tugas -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,10 +82,11 @@ if (isset($_GET['complete_level'])) {
         <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
+            <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
 
+    <!-- Sidebar -->
     <div id="sidebar" class="fixed bg-white w-60 h-full">
         <div class="flex items-center justify-between w-full px-12 py-12">
             <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
@@ -137,9 +141,7 @@ if (isset($_GET['complete_level'])) {
     <section class="main flex flex-col mx-auto w-4/5 flex-grow space-y-16">
         <div class="flex flex-col items-center justify-center">
             <header class="header items-center text-center mb-10">
-                <h1 class="h1 font-bold text-gradient">
-                  Literasi Budaya
-                </h1>
+                <h1 class="h1 font-bold text-gradient">Literasi Budaya</h1>
             </header>
             <div class="box-custom1 font-medium p-4 text-xl">
                 <p>Lakukan literasi budaya Batak Toba dan telusuri sejarahnya, lalu lakukan kuis tiap 2 level yang kamu lewati.</p>
