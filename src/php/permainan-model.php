@@ -19,10 +19,28 @@ function updateScore($conn, $firebaseUid, $score)
     try {
         $stmt = $conn->prepare("UPDATE users SET total_score = total_score + :score WHERE firebase_uid = :firebase_uid");
         $stmt->execute(['score' => $score, 'firebase_uid' => $firebaseUid]);
-        return true;
+        
+        // Tambahkan log
+        error_log("Update Score - UID: $firebaseUid, Skor: $score, Rows Affected: " . $stmt->rowCount());
+        return $stmt->rowCount() > 0;
     } catch (PDOException $e) {
+        error_log("Error Update Score: " . $e->getMessage());
         return false;
     }
+}
+
+
+
+// Jika permintaan adalah GET dan JSON diminta
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
+    header("Content-Type: application/json");
+    $words = getBatakWords($conn);
+    if ($words) {
+        echo json_encode(['success' => true, 'words' => $words]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Kesalahan mengambil kata Batak.']);
+    }
+    exit;
 }
 
 // Jika permintaan adalah GET dan JSON diminta
@@ -37,29 +55,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     exit;
 }
 
-// Jika permintaan adalah POST untuk memperbarui skor
+// Jika permintaan adalah POST untuk memperbarui skor atau mendapatkan data pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data['firebase_uid']) || !isset($data['score'])) {
-        echo json_encode(['success' => false, 'message' => 'Data tidak valid']);
+    if (isset($data['score'])) {
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $score = (int) $data['score'];
+
+        if (!$firebaseUid || !$score) {
+            echo json_encode(['success' => false, 'message' => 'Data tidak valid']);
+            exit;
+        }
+
+        if (updateScore($conn, $firebaseUid, $score)) {
+            echo json_encode(['success' => true, 'message' => 'Skor berhasil diperbarui']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Gagal memperbarui skor']);
+        }
+        exit;
+    } elseif (isset($data['firebase_uid'])) {
+        $firebaseUid = $data['firebase_uid'];
+        $stmt = $conn->prepare("
+            SELECT name, username, email, phone, 
+                   COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+            FROM users 
+            WHERE firebase_uid = :firebase_uid
+        ");
+        $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode(["success" => true, "user" => $user]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+        }
         exit;
     }
-
-    $firebaseUid = $data['firebase_uid'];
-    $score = (int) $data['score'];
-
-    if (updateScore($conn, $firebaseUid, $score)) {
-        echo json_encode(['success' => true, 'message' => 'Skor berhasil diperbarui']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui skor']);
-    }
-    exit;
 }
 
-// Jika tidak meminta JSON atau POST, tampilkan halaman permainan
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
@@ -86,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">loading...</p>
             <i class="fa-solid fa-user text-2xl"></i>
         </div>
     </nav>
@@ -136,6 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const playerScoreDisplay = document.getElementById("player-score");
             const aiScoreDisplay = document.getElementById("ai-score");
             const timerDisplay = document.getElementById("timer");
+            const firebaseUid = localStorage.getItem("firebase_uid");
+            const accountUsername = document.getElementById("account-username");
 
             let playerScore = 0;
             let aiScore = 0;
@@ -146,6 +185,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             let playerTurn = true;
             let failedWords = 0;
             let batakTobaWords = [];
+
+
+            if (firebaseUid) {
+            try {
+                const response = await fetch(window.location.href, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ firebase_uid: firebaseUid }),
+                });
+
+                const result = await response.json();
+                if (result.success && result.user.username) {
+                    accountUsername.textContent = `@${result.user.username}`;
+                } else {
+                    accountUsername.textContent = "Gagal memuat username.";
+                }
+            } catch (error) {
+                console.error("Kesalahan memuat pengguna:", error);
+                accountUsername.textContent = "Kesalahan memuat.";
+            }
+        } else {
+            alert("Silakan login terlebih dahulu.");
+            window.location.href = "login.php";
+        }
 
             // Fetch kata Batak dari backend
             try {
@@ -196,19 +259,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             async function updateScore(score) {
-                const firebaseUid = localStorage.getItem("firebase_uid");
-                if (!firebaseUid) return;
-
-                try {
-                    await fetch("", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ firebase_uid: firebaseUid, score }),
-                    });
-                } catch (error) {
-                    console.error("Kesalahan saat memperbarui skor:", error.message);
-                }
+            const firebaseUid = localStorage.getItem("firebase_uid");
+            if (!firebaseUid) {
+                console.error("Firebase UID tidak ditemukan.");
+                return;
             }
+
+            try {
+                const response = await fetch("", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ firebase_uid: firebaseUid, score }),
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    console.log("Skor berhasil diperbarui.");
+                } else {
+                    console.error("Gagal memperbarui skor:", result.message);
+                }
+            } catch (error) {
+                console.error("Kesalahan saat memperbarui skor:", error.message);
+            }
+        }
+
 
             function showResultPopup(message) {
                 document.getElementById("popup-message").textContent = message;
@@ -221,17 +295,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
 
             function isValidWord(word) {
-                const lowercaseWord = word.toLowerCase();
-                if (!batakTobaWords.includes(lowercaseWord)) return false;
-                if (usedWords.has(lowercaseWord)) return "reused";
-                if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false;
-                return "new";
-            }
+            const lowercaseWord = word.toLowerCase();
+            if (!batakTobaWords.includes(lowercaseWord)) return false; 
+            if (usedWords.has(lowercaseWord)) return "reused"; 
+            if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false; 
+            return "new"; // Kata valid dan baru
+        }
 
             function handlePlayerTurn() {
             const word = wordInput.value.trim().toLowerCase();
-            wordInput.value = ""; // Reset input field
-            errorMessage.classList.add("hidden"); // Sembunyikan pesan error
+            wordInput.value = "";
+            errorMessage.classList.add("hidden"); 
 
             // Validasi kata
             const validity = isValidWord(word);
@@ -284,6 +358,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     endGame("Dia tidak bisa menemukan kata yang valid! Kamu menang!");
                     return;
                 }
+
+          
 
                 playerTurn = true;
                 updateScores();

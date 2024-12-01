@@ -21,20 +21,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
 
         $rankings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        
+
         // Jika ada hasil, kirim JSON yang valid
         if ($rankings) {
+            error_log("Peringkat harian berhasil dimuat.");
             echo json_encode([
                 'success' => true,
                 'rankings' => $rankings
             ]);
         } else {
-            // Jika tidak ada data, tetap kirim JSON yang valid
+            error_log("Peringkat harian kosong.");
             echo json_encode([
                 'success' => true,
-                'rankings' => [] // Berikan array kosong
+                'rankings' => []
             ]);
         }
     } catch (PDOException $e) {
+        error_log("Kesalahan PDO saat mengambil peringkat harian: " . $e->getMessage());
         echo json_encode([
             'success' => false,
             'message' => 'Kesalahan saat mengambil data peringkat: ' . $e->getMessage()
@@ -292,7 +296,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("failedWordsCount");
     localStorage.removeItem("totalScore");
     localStorage.removeItem("usedVocabulary");
-    
 });
 
     </script>
