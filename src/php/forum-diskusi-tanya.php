@@ -76,7 +76,7 @@
 
             <div class="mx-auto p-4 rounded-lg box-custom1 w-10/12 md:w-8/12 lg:w-6/12" style="background-color: rgba(212, 229, 221, 40);"> 
                 <div class="flex space-x-2 mb-4">
-                    <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm">Bahasa Batak Toba</div>
+                    <div id="bahasaBatak" class="button-custom hover:opacity-100 text-sm  py-2 px-4 rounded-full"style="max-width: 200px;">Bahasa Batak Toba</div>
                 </div>
 
                 <label for="pertanyaanInput" class="text-lg font-semibold text-green-800">Tulis pertanyaanmu:</label>
