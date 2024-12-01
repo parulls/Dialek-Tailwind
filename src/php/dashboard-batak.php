@@ -66,7 +66,7 @@
                 <div class="flex w-full md:w-1/3 justify-center mt-14">
                     <div class="flex flex-col">
                         <h1 class="text-4xl font-bold text-gradient font-poppins text-center">Bahasa Batak Toba</h1>
-                        <a href="./forum-diskusi-tanya.html">
+                        <a href="./forum-diskusi-tanya.php">
                             <img src="../assets/ForumDiskusi.webp" alt="ForumDiskusi" class="max-w-sm hover:scale-90 cursor-pointer transition duration-300 transform" />
                         </a>
                     </div>
@@ -238,16 +238,16 @@
             window.location.href = "./AkunUser.php";
         });
     Materi.addEventListener("click", () => {
-        window.location.href = "./PilihMateri.php";
+        window.location.href = "../html/materi-pilih-topik.html";
     });
     Game.addEventListener("click", () => {
-        window.location.href = "permainan_hasil.php";
+        window.location.href = "permainan-hasil.php";
     });
     Literasi.addEventListener("click", () => {
-        window.location.href = "./LiterasiBudaya.php";
+        window.location.href = "./literasi-budaya-level.php";
     });
     KosaKata.addEventListener("click", () => {
-        window.location.href = "./Kosakata1.php";
+        window.location.href = "./Kosakata-model1.php";
     });
 
     document.addEventListener("DOMContentLoaded", async () => {

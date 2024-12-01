@@ -84,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
 
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
+        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i>
         </div>
@@ -287,6 +287,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             startTimer();
         });
+    
+    const home = document.getElementById("home");
+    const profile = document.getElementById("profile-button");
+
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
+
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
     </script>
 </body>
 

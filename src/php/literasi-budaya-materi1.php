@@ -99,16 +99,16 @@ $taskExists = $stmt_check_task->fetchColumn() > 0;
     </footer>
 
     <script>
-        const home = document.getElementById("home");
-        const profile = document.getElementById("profile-button");
+    const home = document.getElementById("home");
+    const profile = document.getElementById("profile-button");
 
-        home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.php";
-        });
-        profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.php";
-        });
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
 
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
 

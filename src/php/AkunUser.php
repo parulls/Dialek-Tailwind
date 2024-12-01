@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
 
     <section class="main flex flex-col mx-auto max-w-2xl items-center flex-grow space-y-4 -mt-20">
@@ -139,8 +139,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Terjadi kesalahan saat memuat data pengguna.");
     }
 });
-
-
+    const home = document.getElementById("home");
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
     // Arahkan ke halaman Pengaturan
     document.getElementById("SettingButton").addEventListener("click", () => {
         window.location.href = "Pengaturan.php";

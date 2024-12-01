@@ -91,6 +91,11 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
     const feedbackMessage = document.getElementById('feedback-message');
     const kembaliButton = document.getElementById('kembali-button');
 
+    const profile = document.getElementById("profile-button");
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
+
     function validateAnswer(selectedOption) {
         if (selectedOption === correctOption) {
             feedbackMessage.textContent = "Keren! Jawaban Anda Benar";
@@ -104,7 +109,7 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
     }
 
     kembaliButton.addEventListener('click', function() {
-            window.location.href = './literasi-budaya-materi.php?level=<?php echo $prevLevel; ?>&task_id=<?php echo $prevTask; ?>';
+        window.location.href = './literasi-budaya-materi1.php?level=<?php echo $prevLevel; ?>&task_id=<?php echo $prevTask; ?>';
         });
 
         selesaiButton.addEventListener('click', function() {

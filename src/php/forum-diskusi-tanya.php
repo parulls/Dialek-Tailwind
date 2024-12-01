@@ -139,10 +139,10 @@
     const profile = document.getElementById("profile-button");
 
     home.addEventListener("click", () => {
-        window.location.href = "./dashboard-batak.html";
+        window.location.href = "./dashboard-batak.php";
     });
     profile.addEventListener("click", () => {
-        window.location.href = "./profil-pengguna.html";
+        window.location.href = "./AkunUser.php";
     });
     // Konfigurasi Firebase
     const firebaseConfig = {
@@ -164,6 +164,10 @@
     const pertanyaanList = document.getElementById('pertanyaanList');
     const popularButton = document.getElementById('popularButton');
     const terbaruButton = document.getElementById('terbaruButton');
+
+    document.getElementById("home").addEventListener("click", () => {
+            window.location.href = "dashboardBatak.php";
+        });
 
     async function loadPertanyaan(orderByField = "timestamp") {
         const querySnapshot = await db.collection("pertanyaan").orderBy(orderByField, "desc").get();

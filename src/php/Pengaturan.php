@@ -145,6 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <script>
+
         async function loadProfile() {
             const firebaseUid = localStorage.getItem("firebase_uid");
             if (!firebaseUid) {
@@ -238,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         document.getElementById("home").addEventListener("click", () => {
-            window.location.href = "dashboard.php";
+            window.location.href = "AkunUser.php";
         });
 
         document.addEventListener("DOMContentLoaded", loadProfile);

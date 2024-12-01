@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="mb-4">
                         <label class="block text-custom2 text-lg font-semibold mb-2" for="password">Kata Sandi</label>
                         <div class="input-container flex items-center bg-bg-form border border-gray-300 rounded-lg">
-                            <input type="password" name="password" id="password" placeholder="*********" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
+                            <input type="password" name="password" id="password" placeholder="*" class="w-full text-sm bg-bg-form px-3 py-2 border-none rounded-lg text-form focus:outline-none" aria-label="Password" />
                             <ion-icon name="lock-closed" class="pr-4 items-center"></ion-icon>
                         </div>
                     </div>
@@ -129,10 +129,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <script type="module">
-        document.getElementById("signup-button").addEventListener("click", () => {
-        window.location.href = "signup.php"; // Arahkan ke signup.php
-        });
-
         AOS.init();
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
