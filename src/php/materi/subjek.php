@@ -8,7 +8,7 @@ if (!$conn) {
     exit;
 }
 
-// Query untuk mengambil data dengan id_materi = 2
+// Query untuk mengambil data dengan id_materi = 1
 $id_material = 1; // ID yang ingin diambil
 $query = "SELECT id_material, material_title, material_content FROM materials WHERE id_material = :id_material";
 $stmt = $conn->prepare($query);
@@ -61,18 +61,22 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
         <button id="kembali-button" class="button-custom2 text-sm mx-6">
             Selanjutnya
         </button>
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">
+            Selanjutnya
+        </button>
     </footer>
     
     <script>
-        const profile = document.getElementById("profile-button");
-        const home = document.getElementById("home");
+        // Mendapatkan elemen tombol
+        const kembaliButton = document.getElementById("kembali-button");
+        const selanjutnyaButton = document.getElementById("selanjutnya-button");
 
-        home.addEventListener("click", () => {
-            window.location.href = "../dashboard-batak.php";
+        // Event listener untuk tombol "Kembali"
+        kembaliButton.addEventListener("click", function() {
+            window.location.href = "../rating_materi/rating_subjek.php";  // Mengarahkan ke halaman Materi.html
         });
-
-        profile.addEventListener("click", () => {
-            window.location.href = "../AkunUser.php";
+        selanjutnyaButton.addEventListener("click", () => {
+            window.location.href = "../latihan/subjek/nomor1.php";
         });
     </script>
 </body>
