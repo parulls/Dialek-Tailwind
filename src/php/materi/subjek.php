@@ -25,16 +25,6 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
     <title>Dialek.Id - Detail Materi</title>
     <link rel="stylesheet" href="../../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #b4b4b464;
-        }
-    </style>
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
@@ -45,7 +35,7 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
         </div>
     </nav>
 
-    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
+    <section class="main flex flex-col mx-auto w-11/12 sm:w-4/5 items-center flex-grow space-y-8 sm:space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
         <!-- Menampilkan materi yang diambil dari database -->
         <?php if (!empty($materials)): ?>
             <div class="materi-item max-w-6xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
@@ -57,13 +47,9 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </section>
 
-    <footer class="flex items-center justify-end w-full px-4 py-4">
-        <button id="kembali-button" class="button-custom2 text-sm mx-6">
-            Selanjutnya
-        </button>
-        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">
-            Selanjutnya
-        </button>
+    <footer class="flex items-center justify-between w-full px-4 py-4">
+        <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
     </footer>
     
     <script>
