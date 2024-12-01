@@ -192,6 +192,18 @@ $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Pengguna Tid
             alert("Pengguna belum login, silakan login terlebih dahulu.");
             window.location.href = "./masuk.php";
         }
+
+        const home = document.getElementById("home");
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
+
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
+        });
+
+
     </script>
 </body>
 </html>

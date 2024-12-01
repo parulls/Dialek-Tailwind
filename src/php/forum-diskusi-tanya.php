@@ -51,15 +51,9 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-<<<<<<< HEAD
-        <div  id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
-            <p id="account-username" class="px-4 text-xl">memuat...</p>
-=======
         <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
->>>>>>> 3a699481dc303e7c8a773b9b1851d5d21b4e5b1c
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>

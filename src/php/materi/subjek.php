@@ -128,6 +128,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     document.getElementById("loading-bar").style.width = "0";
 
+    const home = document.getElementById("home");
+    home.addEventListener("click", () => {
+        window.location.href = "../dashboard-batak.php";
+    });
+
+    const profile = document.getElementById("profile-button");
+    profile.addEventListener("click", () => {
+        window.location.href = "../akun-pengguna.php";
+    });
 });
     </script>
 </body>

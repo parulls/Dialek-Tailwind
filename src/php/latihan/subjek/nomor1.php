@@ -50,7 +50,7 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
@@ -118,6 +118,8 @@
     </footer>
 
     <script>
+        const home = document.getElementById("home");
+        const profile = document.getElementById("profile-button");
         const kembaliButton = document.getElementById("kembali-button");
         const selanjutnyaButton = document.getElementById("selanjutnya-button");
 
@@ -127,6 +129,14 @@
 
         selanjutnyaButton.addEventListener("click", () => {
             window.location.href = "nomor2.php";
+        });
+
+        home.addEventListener("click", () => {
+            window.location.href = "../../dashboard-batak.php";
+        });
+
+        profile.addEventListener("click", () => {
+            window.location.href = "../../akun-pengguna.php";
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
