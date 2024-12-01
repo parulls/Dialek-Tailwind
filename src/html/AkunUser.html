@@ -76,12 +76,12 @@
     document.getElementById("profile-username").textContent = profileUsername;
     document.getElementById("profile-image").src = profileImage;
 
-    // Redirect ke login jika username kosong
-    if (!profileUsername || profileUsername === "@username") {
-        alert("Silakan login terlebih dahulu.");
-        window.location.href = "login.html";  // Redirect to login if not logged in
-    }
-});
+//     // Redirect ke login jika username kosong
+//     if (!profileUsername || profileUsername === "@username") {
+//         alert("Silakan login terlebih dahulu.");
+//         window.location.href = "login.html";  // Redirect to login if not logged in
+//     }
+// });
 
 // Arahkan ke halaman Pengaturan
 document.getElementById("SettingButton").addEventListener("click", () => {
@@ -110,6 +110,7 @@ document.getElementById("SettingButton").addEventListener("click", () => {
         home.addEventListener("click", () => {
             window.location.href = "./dashboard-batak.html";
         });
+     });
 </script>
 </body> 
 </html>

@@ -91,6 +91,11 @@ $nextTaskExists = $stmt_next_task->fetchColumn() > 0;
     const feedbackMessage = document.getElementById('feedback-message');
     const kembaliButton = document.getElementById('kembali-button');
 
+    const profile = document.getElementById("profile-button");
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
+
     // Fungsi validasi jawaban
     function validateAnswer(selectedOption) {
         if (selectedOption === correctOption) {

@@ -77,16 +77,16 @@ $nextLevelExists = $stmt_check_next_level->fetchColumn() > 0;
 
 
     <script>
-        const home = document.getElementById("home");
-        const profile = document.getElementById("profile-button");
+    const home = document.getElementById("home");
+    const profile = document.getElementById("profile-button");
 
-        home.addEventListener("click", () => {
-            window.location.href = "./dashboard-batak.php";
-        });
-        profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.php";
-        });
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
 
+    profile.addEventListener("click", () => {
+        window.location.href = "./AkunUser.php";
+    });
         const kembaliButton = document.getElementById('kembali-button');
         const selanjutnyaButton = document.getElementById('selanjutnya-button');
 

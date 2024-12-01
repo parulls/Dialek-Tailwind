@@ -86,11 +86,11 @@
       </div>
 
       <!-- Section: "Pilih Bahasa Yang Ingin Dipelajari" -->
-      <div class="section-title text-lg text-custom2" data-aos="fade-up" id="bahasa">Pilih Bahasa Yang Ingin Dipelajari</div>
+      <div class="section-title text-lg text-custom2 flex justify-center" data-aos="fade-up" id="bahasa">Pilih Bahasa Yang Ingin Dipelajari</div>
       <div class="language-selection-container text-white font-semibold" data-aos="fade-up">
-      <div class="language-option w-full flex items-center justify-center space-x-4" data-aos="fade-right" data-aos-delay="200">
-        <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa" class="w-full">
-        <p class="text-base leading-normal align-middle">(Segera Hadir)</p>
+      <div class="language-option w-full flex items-start justify-start space-x-4" data-aos="fade-right" data-aos-delay="200">
+        <img src="./src/assets/jawa.webp" alt="Jawa" id="jawa" class="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 object-contain">
+        <p class="text-base leading-normal align-middle">Jawa</p>
       </div>
       <div class="language-option w-full flex items-center justify-center space-x-4" data-aos="fade-left" data-aos-delay="200">
         <img src="./src/assets/batak.webp" alt="Batak" id="batak" class="w-full">
@@ -165,9 +165,9 @@
         <a href="#" class="text-white hover:text-custom6">Hubungi Kami</a>
       </div>
       <div class="flex justify-center space-x-6">
-        <a href="#" class="text-white hover:text-custom6 text-lg"><i class="fab fa-facebook"></i></a>
-        <a href="#" class="text-white hover:text-custom6 text-lg"><i class="fab fa-twitter"></i></a>
-        <a href="#" class="text-white hover:text-custom6 text-lg"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/" class="text-white hover:text-custom6 text-lg"><i class="fab fa-facebook"></i></a>
+        <a href="https://x.com/" class="text-white hover:text-custom6 text-lg"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/" class="text-white hover:text-custom6 text-lg"><i class="fab fa-instagram"></i></a>
       </div>
       <p class="flex items-center justify-center">&copy; 2024 Dialek.id. Semua hak dilindungi.</p>
     </div>

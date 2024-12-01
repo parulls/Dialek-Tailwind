@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
     </nav>
 
     <section class="main flex flex-col mx-auto max-w-2xl items-center flex-grow space-y-4 -mt-20">
@@ -68,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Name and Setting Button -->
                 <div class="flex items-center justify-between w-full">
                     <div class="text-center md:text-left">
-                        <p id="profile-name" class="text-xl font-semibold text-custom2">Sabrina Carpenter</p>
-                        <p id="profile-username" class="text-gray-500">@sab2112</p>
+                        <p id="profile-name" class="text-xl font-semibold text-custom2">Loading...</p>
+                        <p id="profile-username" class="text-gray-500">loading...</p>
                     </div>
                     <button id="SettingButton" class="text-custom2">
                         <i class="fa-solid fa-gear text-3xl"></i>
@@ -139,8 +139,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Terjadi kesalahan saat memuat data pengguna.");
     }
 });
-
-
+    const home = document.getElementById("home");
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
     // Arahkan ke halaman Pengaturan
     document.getElementById("SettingButton").addEventListener("click", () => {
         window.location.href = "Pengaturan.php";

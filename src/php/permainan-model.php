@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             document.getElementById("popup-close").addEventListener("click", () => {
                 document.getElementById("popup").style.display = "none";
-                window.location.href = "permainan_hasil.php";
+                window.location.href = "permainan-hasil.php";
             });
 
             function isValidWord(word) {
@@ -229,31 +229,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             function handlePlayerTurn() {
-                const word = wordInput.value.trim().toLowerCase();
-                wordInput.value = "";
-                errorMessage.classList.add("hidden");
+            const word = wordInput.value.trim().toLowerCase();
+            wordInput.value = ""; // Reset input field
+            errorMessage.classList.add("hidden"); // Sembunyikan pesan error
 
-                const validity = isValidWord(word);
-                if (!validity) {
-                    errorMessage.textContent = "Masukkan kata yang valid!";
-                    errorMessage.classList.remove("hidden");
-                    failedWords++;
-                    return;
-                }
-
-                const wordElement = document.createElement("div");
-                wordElement.textContent = word;
-                wordElement.classList.add("used-word");
-                playerWords.appendChild(wordElement);
-
-                playerScore += validity === "new" ? 10 : 5;
-                usedWords.add(word);
-                lastWord = word;
-
-                playerTurn = false;
-                setTimeout(handleAITurn, 1000);
-                updateScores();
+            // Validasi kata
+            const validity = isValidWord(word);
+            if (!validity ) {
+                errorMessage.textContent ="Masukkan kata yang valid!";
+                errorMessage.classList.remove("hidden");
+                failedWords++; 
+                return;
             }
+
+            function savePlayerWordToLocalStorage(word) {
+            const usedVocabulary = JSON.parse(localStorage.getItem("usedVocabulary")) || [];
+            usedVocabulary.push(word);
+            localStorage.setItem("usedVocabulary", JSON.stringify(usedVocabulary));
+        }
+
+            // Tambahkan kata ke UI
+            const wordElement = document.createElement("div");
+            wordElement.textContent = word;
+            wordElement.classList.add("used-word");
+            playerWords.appendChild(wordElement);
+
+            // Simpan kata ke LocalStorage
+            savePlayerWordToLocalStorage(word);
+
+            // Perbarui skor pemain
+            playerScore += validity === "new" ? 10 : 5;
+            usedWords.add(word); 
+            lastWord = word; 
+
+            // Ganti giliran ke AI
+            playerTurn = false; 
+            setTimeout(handleAITurn, 1000); 
+            updateScores(); 
+        }
 
             function handleAITurn() {
                 const aiWord = generateAIWord();
@@ -277,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             function generateAIWord() {
-                const validWords = batakTobaWords.filter(word => word.startsWith(lastWord.slice(-1)) && !usedWords.has(word));
+                const validWords = batakTobaWords.filter(word => word.startsWith(lastWord.slice(-1)));
                 return validWords.length ? validWords[Math.floor(Math.random() * validWords.length)] : null;
             }
 

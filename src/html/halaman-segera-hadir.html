@@ -10,10 +10,6 @@
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i> 
-        </div>
     </nav>
     <section class="main flex flex-col mx-auto w-4/5 items-center justify-center ">
         <div class="w-full flex flex-row items-center justify-center gap-x-8">
@@ -31,6 +27,11 @@
 
 <script>
     const profile = document.getElementById("account-username");
+    const home = document.getElementById("home");
+    
+    home.addEventListener("click", () => {
+        window.location.href = "../../index.php";
+    });
 
     profile.addEventListener("click", () => {
         window.location.href = "./profil-pengguna.html";

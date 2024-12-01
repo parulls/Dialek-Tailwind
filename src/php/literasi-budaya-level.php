@@ -56,8 +56,46 @@ if (isset($_GET['complete_level'])) {
         exit;
     }
 }
-?>
 
+// Periksa apakah ini adalah permintaan POST untuk data pengguna
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header("Content-Type: application/json");
+    include('connect.php');
+
+    try {
+        $data = json_decode(file_get_contents("php://input"), true);
+        $firebaseUid = $data['firebase_uid'] ?? null;
+
+        if ($firebaseUid) {
+            $stmt = $conn->prepare("
+                SELECT name, username, email, phone, 
+                       COALESCE(profile_image, '../assets/pp.webp') AS profile_image 
+                FROM users 
+                WHERE firebase_uid = :firebase_uid
+            ");
+            $stmt->execute([':firebase_uid' => $firebaseUid]);
+
+            if ($stmt->rowCount() > 0) {
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo json_encode(["success" => true, "user" => $user]);
+                exit;
+            } else {
+                echo json_encode(["success" => false, "message" => "Firebase UID tidak ditemukan."]);
+                exit;
+            }
+        } else {
+            echo json_encode(["success" => false, "message" => "Firebase UID tidak valid."]);
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo json_encode(["success" => false, "message" => "Kesalahan pada database: " . $e->getMessage()]);
+        exit;
+    } catch (Exception $e) {
+        echo json_encode(["success" => false, "message" => "Terjadi kesalahan: " . $e->getMessage()]);
+        exit;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,10 +123,10 @@ if (isset($_GET['complete_level'])) {
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
+        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">username</p>
-            <i class="fa-solid fa-user text-2xl"></i>
+            <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
 
@@ -99,43 +137,43 @@ if (isset($_GET['complete_level'])) {
         </div>
         <ul class="mt-4 space-y-2">
             <li>
-                <a href="./dashboard-batak.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./dashboard-batak.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">dashboard</span>
                     <span class="text-black font-medium">Dasbor</span>
                 </a>
             </li>
             <li>
-                <a href="./forum-diskusi-tanya.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./forum-diskusi-tanya.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">forum</span>
                     <span class="text-black font-medium">Forum Diskusi</span>
                 </a>
             </li>
             <li>
-                <a href="./materi-pilih-topik.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./materi-pilih-topik.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">book</span>
                     <span class="text-black font-medium">Materi</span>
                 </a>
             </li>
             <li>
-                <a href="./permainan-hasil.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./permainan-hasil.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">extension</span>
                     <span class="text-black font-medium">Permainan</span>
                 </a>
             </li>
             <li>
-                <a href="./literasi-budaya-level.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./literasi-budaya-level.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">auto_stories</span>
                     <span class="text-black font-medium">Literasi Budaya</span>
                 </a>
             </li>
             <li>
-                <a href="./kosakata-model1.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a href="./kosakata-model1.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">note_stack</span>
                     <span class="text-black font-medium">Kosakata</span>
                 </a>
             </li>
             <li>
-                <a id="logout-button" href="/index.html" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
+                <a id="logout-button" href="../../index.php" class="flex items-center space-x-3 px-6 py-3 hover:bg-gray-100">
                     <span class="material-symbols-outlined text-custom1">logout</span>
                     <span class="text-black font-medium">Keluar</span>
                 </a>
@@ -160,7 +198,7 @@ if (isset($_GET['complete_level'])) {
                 <?php if (isLevelUnlocked($i)): ?>
                     <!-- Level terbuka -->
                     <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                        <a href="literasi-budaya-materi.php?level=<?= $i ?>"> <?= $i ?> </a>
+                        <a href="literasi-budaya-materi1.php?level=<?= $i ?>"> <?= $i ?> </a>
                     </div>
                 <?php else: ?>
                     <!-- Level terkunci -->
@@ -189,17 +227,18 @@ if (isset($_GET['complete_level'])) {
         </div>
     </section>
 
-    <footer class="flex items-center justify-start w-full px-4 py-4">
-        <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        <div class="level-button-container">
-</div>
+<footer class="flex items-center justify-start w-full px-4 py-4">
+    <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
+    <div class="level-button-container"></div>
+</footer>
 
-    </footer>
+<script>
+    const profile = document.getElementById("profile-button");
 
     <script>
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
-            window.location.href = "./profil-pengguna.php";
+            window.location.href = "./AkunUser.php";
         });
         const kembaliButton = document.getElementById('kembali-button');
         kembaliButton.addEventListener('click', function() {
@@ -209,6 +248,32 @@ if (isset($_GET['complete_level'])) {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
         }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+        const firebaseUid = localStorage.getItem("firebase_uid");
+
+    try {
+        const response = await fetch(window.location.href, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ firebase_uid: firebaseUid }),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            const userData = result.user;
+            document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+
+        } else {
+            alert("Gagal memuat data pengguna: " + result.message);
+            window.location.href = "login.php";
+        }
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        alert("Terjadi kesalahan saat memuat data pengguna.");
+    }
+});
+
     </script>
 </body>
 </html>

@@ -47,15 +47,15 @@ try {
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full p-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div class="flex items-center m-0 font-semibold text-custom2">
+        <div id="home" class="logo font-irish m-0 text-2xl">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
             <p id="account-username" class="px-4 text-xl">username</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
-    <section class="main flex flex-col mx-auto w-full items-center flex-grow space-y-16">
+    <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
         <div id="soal" class="flex flex-col items-center p-4 min-h-[500px] h-full w-full">
-            <div class="flex justify-center items-center font-bold my-8">
+            <div class="flex justify-center items-center font-bold">
                 <p class="text-4xl text-custom2">Belajar Kosakata</p>
             </div>
             <div class="content-custom">
@@ -70,15 +70,15 @@ try {
                     <p class="hint text-lg mb-2">Petunjuk : <span><?php echo htmlspecialchars($hint); ?></span></p>
                     <p class="time text-lg">Sisa Waktu : <span><b class="font-bold" id="timer"><?php echo $time_limit; ?></b>s</span></p>
                 </div>
-                <form method="post" action="">
+                <form method="post" action="" class="flex flex-col items-center w-11/12">
                     <!-- Input jawaban -->
                     <input type="text" name="user_word" placeholder="Masukkan kata yang sesuai" 
-                        class="w-full h-14 py-4 px-4 rounded-lg border border-black outline-none" required>
+                        class="w-11/12 h-14 py-4 px-4 rounded-lg border-solid border-black outline-none" required>
                     <!-- Simpan kata yang benar -->
                     <input type="hidden" name="correct_word" value="<?php echo htmlspecialchars($word); ?>">
-                    <div class="button flex flex-row text-sm space-x-4 w-full mt-4">
-                        <button type="button" id="refresh-word" class="refresh-word button-kosakata w-1/2 py-3 font-medium rounded-xl bg-blue-500 text-white">Ganti Kata</button>
-                        <button type="submit" class="check-word button-kosakata w-1/2 py- 3 font-medium rounded-xl bg-green-500 text-white">Periksa</button>
+                    <div class="button flex flex-row text-sm space-x-4 w-11/12">
+                        <button type="button" id="refresh-word" class="refresh-word button-kosakata w-1/2 py-3 font-medium rounded-xl">Ganti Kata</button>
+                        <button type="submit" class="check-word button-kosakata w-1/2 py-3 font-medium rounded-xl">Periksa</button>
                     </div>
                 </form>
             </div>
@@ -91,7 +91,17 @@ try {
     <script>
         const refreshBtn = document.getElementById("refresh-word");
         const timerElement = document.getElementById("timer");
+        const profile = document.getElementById("profile-button");
+        const home = document.getElementById("home");
         let timeLeft = <?php echo $time_limit; ?>;
+
+        home.addEventListener("click", () => {
+            window.location.href = "./dashboard-batak.php";
+        });
+
+        profile.addEventListener("click", () => {
+            window.location.href = "./AkunUser.php";
+        });
 
         const countdown = setInterval(() => {
             if (timeLeft <= 0) {

@@ -55,7 +55,7 @@
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div id="home" class="logo font-irish m-0 text-2xl cursor-pointer">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">loading...</p>
+            <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
@@ -66,7 +66,7 @@
                 <div class="flex w-full md:w-1/3 justify-center mt-14">
                     <div class="flex flex-col">
                         <h1 class="text-4xl font-bold text-gradient font-poppins text-center">Bahasa Batak Toba</h1>
-                        <a href="./forum-diskusi-tanya.html">
+                        <a href="./forum-diskusi-tanya.php">
                             <img src="../assets/ForumDiskusi.webp" alt="ForumDiskusi" class="max-w-sm hover:scale-90 cursor-pointer transition duration-300 transform" />
                         </a>
                     </div>
@@ -80,7 +80,7 @@
                         <div class="flex flex-col items-center">
                             <p class="text-lg font-bold text-custom6 text-center flex items-center justify-center">Kosa Kata<br>Mingguan</p>
                             <div class="flex items-center justify-center w-24 h-24 rounded-full border-4 border-gray-700 mt-3">
-                                <p class="text-2xl font-bold text-custom4">22%</p>
+                                <p class="text-2xl font-bold text-custom4">0%</p>
                             </div>
                         </div>
                     
@@ -88,7 +88,7 @@
                         <div class="flex flex-col items-center">
                             <p class="text-lg font-bold text-custom6 text-center flex items-center justify-center min-h-16">Level Budaya</p>
                             <div class="flex items-center justify-center w-24 h-24 rounded-full border-4 border-gray-700 mt-3">
-                                <p class="text-2xl font-bold text-custom2">40</p>
+                                <p class="text-2xl font-bold text-custom2">0</p>
                             </div>
                         </div>
                     
@@ -96,7 +96,7 @@
                         <div class="flex flex-col items-center">
                             <p class="text-lg font-bold text-custom6 text-center flex items-center justify-center min-h-16">Peringkat Game<br>Sambung Kata</p>
                             <div class="flex items-center justify-center w-24 h-24 rounded-full border-4 border-gray-700 mt-3">
-                                <p class="text-2xl font-bold text-custom2">2</p>
+                                <p class="text-2xl font-bold text-custom2">0</p>
                             </div>
                         </div>
                     
@@ -104,11 +104,11 @@
                         <div class="flex flex-col items-center">
                             <p class="text-lg font-bold text-custom6 text-center flex items-center justify-center min-h-16">Latihan Soal</p>
                             <div class="flex items-center justify-center w-24 h-24 rounded-full border-4 border-gray-700 mt-3">
-                                <p class="text-2xl font-bold text-custom2">75%</p>
+                                <p class="text-2xl font-bold text-custom2">0%</p>
                             </div>
                         </div>
                     </div>
-                    <p class="text-xs text-custom2 font-light mt-5 "><span class="text-custom4">*</span>persentase berdasarkan target mingguan</p>
+                    <p class="text-xs text-custom2 font-light mt-5 "><span class="text-custom4">*</span>persentase berdasarkan target mingguan, masih dalam pengerjaan</p>
                 </div>
                 <!-- progress bar selesai -->
             </div>
@@ -116,8 +116,8 @@
 
 <!-- EXP BAR -->
 <div >
-    <div class="w-full max-w-lg ml-[265px]">
-        <span class="text-green-800 font-bold">EXP 45</span>
+    <div class="w-full max-w-lg ml-3">
+        <span class="text-green-800 font-bold">EXP 0</span>
     </div>
 
     <div class="flex justify-center mt-3">
@@ -238,16 +238,16 @@
             window.location.href = "./AkunUser.php";
         });
     Materi.addEventListener("click", () => {
-        window.location.href = "./PilihMateri.php";
+        window.location.href = "../html/materi-pilih-topik.html";
     });
     Game.addEventListener("click", () => {
-        window.location.href = "permainan_hasil.php";
+        window.location.href = "permainan-hasil.php";
     });
     Literasi.addEventListener("click", () => {
-        window.location.href = "./LiterasiBudaya.php";
+        window.location.href = "./literasi-budaya-level.php";
     });
     KosaKata.addEventListener("click", () => {
-        window.location.href = "./Kosakata1.php";
+        window.location.href = "./Kosakata-model1.php";
     });
 
     document.addEventListener("DOMContentLoaded", async () => {
@@ -273,6 +273,9 @@
         console.error("Fetch Error:", error);
         alert("Terjadi kesalahan saat memuat data pengguna.");
     }
+
+    document.getElementById("loading-bar").style.width = "0";
+
 });
 
     
