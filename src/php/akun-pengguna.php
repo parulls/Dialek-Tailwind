@@ -75,23 +75,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 <!-- Stats Section -->
                 <ul class="flex flex-wrap justify-center md:justify-start space-x-4 mt-4 text-xs">
-                    <li id="total-exp" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Total Exp</li>
-                    <li id="level" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Level</li>
-                    <li id="study-duration" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1">Durasi Belajar</li>
+                    <li id="total-exp" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1"><span class="font-semibold">Total Exp</span><br>0</li>
+                    <li id="level" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1"><span class="font-semibold">Level</span><br>0</li>
+                    <li id="study-duration" class="text-white bg-custom1 rounded-xl w-32 h-12 text-left pl-2 pt-1"><span class="font-semibold">Durasi Belajar</span><br>3 Menit</li>
                 </ul>
             </div>
         </div>
         <!-- Profile Section Selesai -->
 
         <!-- PENCAPAIAN -->
-        <div class="w-full max-w-2xl p-6 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
+        <!-- <div class="w-full max-w-2xl p-6 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
             <div class="mb-6">
                 <p class="text-lg font-semibold mb-2 text-custom2">Pencapaian</p>
             </div>
             <div class="footer text-center">
                 <p class="text-custom2"></p>
             </div>
-        </div>
+        </div> -->
         <!-- PENCAPAIAN SELESAI -->
 
         <!-- BAHASA YG DIPELAJARI -->

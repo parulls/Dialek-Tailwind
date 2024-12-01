@@ -104,7 +104,7 @@
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>

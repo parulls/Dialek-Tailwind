@@ -184,13 +184,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const mulaiButton = document.getElementById("mulai-button");
         const kembaliButton = document.getElementById("kembali-button");
+        const home = document.getElementById("home");
+        const profile = document.getElementById("profile-button");
 
         mulaiButton.addEventListener("click", () => {
             window.location.href = "../materi/subjek.php";
         });
 
         kembaliButton.addEventListener("click", () => {
-            window.location.href = "../../html/materi-pilih-topik.html";
+            window.location.href = "../../materi-pilih-topik.php";
+        });
+
+        home.addEventListener("click", () => {
+            window.location.href = "../dashboard-batak.php";
+        });
+
+        profile.addEventListener("click", () => {
+            window.location.href = "../akun-pengguna.php";
         });
 
         const stars = document.querySelectorAll(".stars i");

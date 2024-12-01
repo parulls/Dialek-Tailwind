@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="main flex flex-col mx-auto w-11/12 sm:w-4/5 items-center flex-grow space-y-8 sm:space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
         <?php if (!empty($materials)): ?>
             <div class="materi-item max-w-6xl bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
-                <h2 class="flex justify-center font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></h2>
+                <p class="flex justify-center text-xl sm:text-2xl md:text-3xl font-semibold pt-4 pb-3"><?= htmlspecialchars($materials['material_title']); ?></p>
                 <p class="text-base p-4"><?= nl2br(htmlspecialchars($materials['material_content'])); ?></p>
             </div>
         <?php else: ?>
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -121,6 +121,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     document.getElementById("loading-bar").style.width = "0";
 
+    const home = document.getElementById("home");
+    home.addEventListener("click", () => {
+        window.location.href = "../dashboard-batak.php";
+    });
+
+    const profile = document.getElementById("profile-button");
+    profile.addEventListener("click", () => {
+        window.location.href = "../akun-pengguna.php";
+    });
 });
     </script>
 </body>

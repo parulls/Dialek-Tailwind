@@ -8,13 +8,30 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':level', $level, PDO::PARAM_INT);
 $stmt->execute();
 
-$level_data = $stmt->fetch();
+// Mengambil data level pengguna berdasarkan firebase_uid (pastikan $data sudah didefinisikan)
+$firebaseUid = isset($data['firebase_uid']) ? $data['firebase_uid'] : null;
+$user_level = 1; // Default level 1 jika tidak ada data level pengguna
 
-if (!$level_data) {
+if ($firebaseUid) {
+    // Periksa level terakhir yang diakses oleh pengguna
+    $stmt_level = $conn->prepare("SELECT level FROM user_levels WHERE firebase_uid = :firebase_uid");
+    $stmt_level->execute([':firebase_uid' => $firebaseUid]);
+    $user_level = $stmt_level->fetchColumn(); // Ambil level pengguna dari database
+}
+
+// Jika level yang diminta lebih tinggi dari level pengguna, arahkan ke level yang sesuai
+if ($level > $user_level + 1) {
+    header("Location: literasi-budaya-materi.php?level=" . ($user_level + 1));
+    exit;
+}
+
+// Jika data level tidak ditemukan, arahkan kembali ke halaman level
+if ($stmt->rowCount() == 0) {
     header("Location: literasi-budaya-level.php");
     exit;
 }
 
+$level_data = $stmt->fetch(PDO::FETCH_ASSOC);
 $title = $level_data['title'];
 $content = $level_data['content'];
 
@@ -26,7 +43,7 @@ $stmt_check_next_level = $conn->prepare($query_check_next_level);
 $stmt_check_next_level->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
 $stmt_check_next_level->execute();
 $nextLevelExists = $stmt_check_next_level->fetchColumn() > 0;
-
+// Periksa apakah ini adalah permintaan POST untuk data pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     include('connect.php');
@@ -96,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
@@ -170,33 +187,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Footer with Navigation Buttons -->
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">Kembali</button>
-        <button id="selanjutnya-button" class="button-custom2 text-sm mx-6">Selanjutnya</button>
+        <button id="selanjutnya-button" class="button-custom2-red text-sm mx-6 cursor-pointer transition duration-300">Keluar</button>
     </footer>
 
 
     <script>
-    const profile = document.getElementById("profile-button");
+        const profile = document.getElementById("profile-button");
 
-    profile.addEventListener("click", () => {
-        window.location.href = "./akun-pengguna.php";
-    });
-        const kembaliButton = document.getElementById('kembali-button');
-        const selanjutnyaButton = document.getElementById('selanjutnya-button');
-
-        kembaliButton.addEventListener('click', function () {
-            if (<?php echo $level; ?> > 1) {
-                window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
-            } else {
-                window.location.href = './literasi-budaya-level.php';
-            }
-        });
-
-        selanjutnyaButton.addEventListener('click', function () {
-            if (<?php echo $level; ?> > 2) {
-                window.location.href = './literasi-budaya-latihan.php';
-            } else if (<?php echo $nextLevelExists ? 'true' : 'false'; ?>) {
-                window.location.href = './literasi-budaya-materi.php?level=<?php echo $nextLevel; ?>';
-            }
+        profile.addEventListener("click", () => {
+            window.location.href = "./akun-pengguna.php";
         });
 
         function toggleSidebar() {
@@ -228,6 +227,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             console.error("Fetch Error:", error);
             alert("Terjadi kesalahan saat memuat data pengguna.");
         }
+    });
+
+    const kembaliButton = document.getElementById('kembali-button');
+    const selanjutnyaButton = document.getElementById('selanjutnya-button');
+
+    kembaliButton.addEventListener('click', function () {
+        // Jika level > 1, pergi ke level sebelumnya
+        if (<?php echo $level; ?> > 1) {
+            window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
+        } else {
+            // Jika level = 1, kembali ke halaman level
+            window.location.href = './literasi-budaya-level.php';
+        }
+    });
+
+    selanjutnyaButton.addEventListener('click', function () {
+        window.location.href = './literasi-budaya-level.php';
     });
     </script>
 </body>

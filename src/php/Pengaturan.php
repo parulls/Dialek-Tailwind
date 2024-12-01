@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16">
-        <h1 class="text-3xl font-bold text-custom2 mb-6">Pengaturan</h1>
+        <h1 class="text-3xl font-bold text-custom2 ">Pengaturan</h1>
         <div class="flex flex-col items-center p-8 mt-10 w-11/12 md:w-8/12 lg:w-6/12 bg-white bg-opacity-30 rounded-3xl shadow-lg font-inter border-[1.5px] border-bar">
             <div class="relative">
                 <label for="profile-picture" class="relative cursor-pointer">

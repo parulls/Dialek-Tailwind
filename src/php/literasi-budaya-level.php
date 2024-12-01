@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="flex items-center justify-between w-full px-12 py-12">
         <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
         <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
-            <p id="account-username" class="px-4 text-xl">username</p>
+            <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
     </nav>
@@ -206,23 +206,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="level-lock w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
                         <?= $i ?>
                     </div>
-                <?php endif; ?>
-
-                <?php if ($i % 2 == 0): ?>
-                    <?php $taskNumber = $i / 2; ?>
-                    <?php if (isTaskUnlocked($taskNumber)): ?>
-                        <!-- Task terbuka -->
-                        <div class="level cursor-pointer w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <a href="literasi-budaya-materi.php?task=<?= $taskNumber ?>">
-                                <i class="fa-solid fa-comment"></i>
-                            </a>
-                        </div>
-                    <?php else: ?>
-                        <!-- Task terkunci -->
-                        <div class="level-lock w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 aspect-square text-center flex items-center justify-center">
-                            <i class="fa-solid fa-comment"></i>
-                        </div>
-                    <?php endif; ?>
                 <?php endif; ?>
             <?php endfor; ?>
         </div>

@@ -179,11 +179,13 @@ include("connect.php");
                 </div>
             </div>
     </section>
+
     <footer class="flex items-center justify-between w-full px-4 py-4">
         <button id="kembali-button" class="button-custom2 text-sm mx-6">
             Kembali
         </button>
     </footer>
+
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
     const firebaseUid = localStorage.getItem("firebase_uid");
@@ -227,12 +229,24 @@ include("connect.php");
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
+    // Tangkap tombol dengan ID tertentu
     const mulaiButton = document.getElementById("masuk-materi");
 
     mulaiButton.addEventListener("click", () => {
         window.location.href = "rating_materi/rating_subjek.php";
     });
-});
+    });
+
+    const home = document.getElementById("home");
+    home.addEventListener("click", () => {
+        window.location.href = "./dashboard-batak.php";
+    });
+
+    const profile = document.getElementById("profile-button");
+    profile.addEventListener("click", () => {
+        window.location.href = "./akun-pengguna.php";
+    });
 
     </script>
 </body>

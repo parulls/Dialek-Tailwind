@@ -49,8 +49,8 @@
 </head>
 <body class="bg-custom-radial font-inter flex flex-col min-h-screen">
     <nav class="flex items-center justify-between w-full px-12 py-12">
-        <div class="logo font-irish m-0 text-2xl">dialek.id</div>
-        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2">
+        <div class="logo font-irish m-0 text-2xl cursor-pointer" onclick="toggleSidebar()">dialek.id</div>
+        <div id="profile-button" class="flex items-center m-0 font-semibold text-custom2 cursor-pointer">
             <p id="account-username" class="px-4 text-xl">memuat...</p>
             <i class="fa-solid fa-user text-2xl"></i> 
         </div>
@@ -118,7 +118,7 @@
         });
 
         selanjutnyaButton.addEventListener("click", () => {
-            window.location.href = "nomor2.php";
+            window.location.href = "./nomor2.php";
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
@@ -138,7 +138,7 @@
 
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            window.location.href = "./masuk.php";
         }
     } catch (error) {
         console.error("Fetch Error:", error);
@@ -148,6 +148,14 @@
     document.getElementById("loading-bar").style.width = "0";
 
 });
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "../../akun-pengguna.php";
+        });
+        const home = document.querySelector('.logo');
+        home.addEventListener("click", () => {
+            window.location.href = "../../dashboard-batak.php";
+        });
     </script>
 </body>
 </html>
