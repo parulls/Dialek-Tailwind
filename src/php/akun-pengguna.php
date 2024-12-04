@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (result.success) {
             const userData = result.user;
             document.getElementById("profile-name").textContent = userData.name || "Nama Tidak Ditemukan";
-            document.getElementById("profile-username").textContent = `@${userData.username || "username"}`;
+            document.getElementById("profile-username").textContent = `${userData.username || "username"}`;
             document.getElementById("profile-image").src = userData.profile_image || "../assets/pp.webp";
         } else {
             alert("Gagal memuat data pengguna: " + result.message);

@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 const result = await response.json();
                 if (result.success && result.user.username) {
-                    accountUsername.textContent = `@${result.user.username}`;
+                    accountUsername.textContent = `${result.user.username}`;
                 } else {
                     accountUsername.textContent = "Gagal memuat username.";
                 }

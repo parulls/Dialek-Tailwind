@@ -278,7 +278,7 @@
             const result = await response.json();
             if (result.success) {
                 const userData = result.user;
-                document.getElementById("account-username").textContent = `@${userData.username || "username"}`;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
             } else {
                 alert("Gagal memuat data pengguna: " + result.message);

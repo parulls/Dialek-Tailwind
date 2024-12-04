@@ -1,7 +1,6 @@
 <?php 
     include("../../connect.php");
 
-    // Periksa apakah ini adalah permintaan POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Content-Type: application/json");
         try {
@@ -64,17 +63,14 @@
                 <p>Pilih sambungan kata yang tepat</p>
             </div>
             <div class="bg-custom7 w-full sm:w-4/5 lg:w-[70%] flex justify-start items-center mb-8 sm:mb-12 mt-16 sm:mt-28 px-4 py-3 rounded-lg">
-                <!-- Bagian PHP untuk menampilkan soal -->
                 <?php
-                // Query untuk mengambil soal dengan id = 1
-                $question_id = 2; // ID soal yang ingin diambil
-                $sql = "SELECT id, question_text FROM questions WHERE id = :id";
+                $question_id = 2;
+                $sql = "SELECT question_id, question_text FROM questions WHERE question_id = :question_id";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':id', $question_id, PDO::PARAM_INT);
+                $stmt->bindParam(':question_id', $question_id, PDO::PARAM_INT);
                 $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-                    // Menampilkan soal
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     echo "<p class='text-base sm:text-lg font-semibold p-2'>" . $row['question_text'] . "</p>";
                 } else {
@@ -84,21 +80,18 @@
             </div>
 
             <div class="flex flex-col sm:flex-row sm:justify-between items-center w-full sm:w-4/5 lg:w-[70%] space-y-4 sm:space-y-0 sm:space-x-4 mb-20 sm:mb-40">
-                <!-- Bagian PHP untuk menampilkan pilihan jawaban -->
                 <?php
-                // Query untuk mengambil jawaban berdasarkan question_id
-                $sql_answers = "SELECT id, answer_text FROM answers WHERE question_id = :question_id";
+                $sql_answers = "SELECT id_answer, answer_text FROM answers WHERE question_id = :question_id";
                 $stmt_answers = $conn->prepare($sql_answers);
                 $stmt_answers->bindParam(':question_id', $question_id, PDO::PARAM_INT);
                 $stmt_answers->execute();
 
                 if ($stmt_answers->rowCount() > 0) {
                     while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
-                        // Membuat formulir untuk setiap jawaban
                         echo "<form method='POST' action='' class='inline-block'>";
-                        echo "<input type='hidden' name='user_id' value='1'>"; // Sesuaikan user_id sesuai dengan sesi login
+                        echo "<input type='hidden' name='user_id' value='1'>";
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
-                        echo "<input type='hidden' name='answer_id' value='" . $answer['id'] . "'>";
+                        echo "<input type='hidden' name='answer_id' value='" . $answer['id_answer'] . "'>";
                         echo "<button type='submit' class='option button-option w-28 sm:w-32 h-10 sm:h-11 text-sm sm:text-lg'>" . $answer['answer_text'] . "</button>";
                         echo "</form>";
                     }
@@ -130,32 +123,31 @@
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
-    const firebaseUid = localStorage.getItem("firebase_uid");
+        const firebaseUid = localStorage.getItem("firebase_uid");
 
-    try {
-        const response = await fetch(window.location.href, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firebase_uid: firebaseUid }),
-        });
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
 
-        const result = await response.json();
-        if (result.success) {
-            const userData = result.user;
-            document.getElementById("account-username").textContent = `${userData.username || "username"}`;
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
-        } else {
-            alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "./masuk.php";
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "./masuk.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
         }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Terjadi kesalahan saat memuat data pengguna.");
-    }
 
-    document.getElementById("loading-bar").style.width = "0";
+        document.getElementById("loading-bar").style.width = "0";
 
-});
+    });
         const profile = document.getElementById("profile-button");
         profile.addEventListener("click", () => {
             window.location.href = "../../akun-pengguna.php";

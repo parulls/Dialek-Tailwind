@@ -5,7 +5,7 @@ include 'connect.php';
 $level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
 
 // Query untuk mengambil data dari database berdasarkan level
-$query = "SELECT title, content FROM kosakata_levels WHERE id = :level";
+$query = "SELECT title, content FROM litbud_levels WHERE id = :level";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':level', $level, PDO::PARAM_INT);
 $stmt->execute();
@@ -42,7 +42,7 @@ $nextLevel = $level + 1;
 $prevLevel = $level - 1;
 
 // Periksa apakah level berikutnya ada di database
-$query_check_next_level = "SELECT COUNT(*) FROM kosakata_levels WHERE id = :nextLevel"; 
+$query_check_next_level = "SELECT COUNT(*) FROM litbud_levels WHERE id = :nextLevel"; 
 $stmt_check_next_level = $conn->prepare($query_check_next_level);
 $stmt_check_next_level->bindParam(':nextLevel', $nextLevel, PDO::PARAM_INT);
 $stmt_check_next_level->execute();
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dialek.Id - Belajar Kosakata</title>
+    <title>Dialek.Id</title>
     <link rel="stylesheet" href="../styles/style2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -242,12 +242,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             window.location.href = './literasi-budaya-materi.php?level=' + (<?php echo $prevLevel; ?>);
         } else {
             // Jika level = 1, kembali ke halaman level
-            window.location.href = './literasi-budaya-level.php';
+            window.location.href = './dashboard-batak.php';
         }
     });
 
     selanjutnyaButton.addEventListener('click', function () {
-        window.location.href = './literasi-budaya-level.php';
+        window.location.href = './dashboard-batak.php';
     });
     </script>
 </body>

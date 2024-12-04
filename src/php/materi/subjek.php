@@ -96,48 +96,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Event listener untuk tombol "Kembali"
         kembaliButton.addEventListener("click", function() {
-            window.location.href = "../rating_materi/rating_subjek.php";  // Mengarahkan ke halaman Materi.html
+            window.location.href = "../rating_materi/rating_subjek.php";  
         });
         selanjutnyaButton.addEventListener("click", () => {
             window.location.href = "../latihan/subjek/nomor1.php";
         });
 
         document.addEventListener("DOMContentLoaded", async () => {
-    const firebaseUid = localStorage.getItem("firebase_uid");
+        const firebaseUid = localStorage.getItem("firebase_uid");
 
-    try {
-        const response = await fetch(window.location.href, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firebase_uid: firebaseUid }),
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
+
+            } else {
+                window.location.href = "./masuk.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+        }
+
+        document.getElementById("loading-bar").style.width = "0";
+
+        const home = document.getElementById("home");
+        home.addEventListener("click", () => {
+            window.location.href = "../dashboard-batak.php";
         });
 
-        const result = await response.json();
-        if (result.success) {
-            const userData = result.user;
-            document.getElementById("account-username").textContent = `${userData.username || "username"}`;
-
-        } else {
-            alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "./masuk.php";
-        }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Terjadi kesalahan saat memuat data pengguna.");
-    }
-
-    document.getElementById("loading-bar").style.width = "0";
-
-    const home = document.getElementById("home");
-    home.addEventListener("click", () => {
-        window.location.href = "../dashboard-batak.php";
+        const profile = document.getElementById("profile-button");
+        profile.addEventListener("click", () => {
+            window.location.href = "../akun-pengguna.php";
+        });
     });
-
-    const profile = document.getElementById("profile-button");
-    profile.addEventListener("click", () => {
-        window.location.href = "../akun-pengguna.php";
-    });
-});
     </script>
 </body>
 </html>

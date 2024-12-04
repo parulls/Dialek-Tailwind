@@ -2,10 +2,10 @@
 include("../connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // Sanitasi input materi_id
-    $materi_id = isset($_GET['materi_id']) ? intval($_GET['materi_id']) : 1;
+    // Sanitasi input id_materi
+    $id_materi = isset($_GET['id_materi']) ? intval($_GET['id_materi']) : 1;
 
-    if ($materi_id > 0) {
+    if ($id_materi > 0) {
         // Query untuk menghitung rata-rata rating dan distribusi rating
         $query = "
             SELECT 
@@ -17,11 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 SUM(CASE WHEN rating = 2 THEN 1 ELSE 0 END) AS star_2,
                 SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END) AS star_1
             FROM materi_ratings
-            WHERE materi_id = ?
+            WHERE id_materi = ?
         ";
 
         if ($stmt = $conn->prepare($query)) {
-            $stmt->bindValue(1, $materi_id, PDO::PARAM_INT);
+            $stmt->bindValue(1, $id_materi, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             loadingElement.textContent = 'Loading...';
             document.body.appendChild(loadingElement);
 
-            fetch(`get_rating.php?materi_id=${materiId}`)
+            fetch(`get_rating.php?id_materi=${materiId}`)
                 .then(response => response.json())
                 .then(data => {
                     // Menyembunyikan loading state
@@ -273,39 +273,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 .catch(error => {
                     loadingElement.style.display = 'none';
                     console.error("Error:", error);
-                    alert("Terjadi kesalahan saat memuat data rating.");
                 });
         }
 
         loadRating();
 
         document.addEventListener("DOMContentLoaded", async () => {
-    const firebaseUid = localStorage.getItem("firebase_uid");
+        const firebaseUid = localStorage.getItem("firebase_uid");
 
-    try {
-        const response = await fetch(window.location.href, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firebase_uid: firebaseUid }),
-        });
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
 
-        const result = await response.json();
-        if (result.success) {
-            const userData = result.user;
-            document.getElementById("account-username").textContent = `${userData.username || "username"}`;
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
-        } else {
-            alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "login.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
         }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Terjadi kesalahan saat memuat data pengguna.");
-    }
 
-    document.getElementById("loading-bar").style.width = "0";
+        document.getElementById("loading-bar").style.width = "0";
 
-});
+    });
     </script>
 </body>
 </html>

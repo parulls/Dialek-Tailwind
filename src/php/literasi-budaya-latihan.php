@@ -5,7 +5,7 @@ include 'connect.php';
 $task_id = isset($_GET['task_id']) ? intval($_GET['task_id']) : 1; // Default task 1
 
 // Query untuk mengambil data task berdasarkan level 2 dan task_id
-$query = "SELECT question, option_a, option_b, correct_option FROM literasi_tasks WHERE level_id = 2 AND id = :task_id";
+$query = "SELECT question, option_a, option_b, correct_option FROM litbud_tasks WHERE level_id = 2 AND id = :task_id";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':task_id', $task_id, PDO::PARAM_INT);
 $stmt->execute();
@@ -21,7 +21,7 @@ if (!$task_data) {
 $nextTask = $task_id + 1;
 
 // Periksa apakah task berikutnya ada di database
-$query_next_task = "SELECT COUNT(*) FROM literasi_tasks WHERE level_id = 2 AND id = :nextTask";
+$query_next_task = "SELECT COUNT(*) FROM litbud_tasks WHERE level_id = 2 AND id = :nextTask";
 $stmt_next_task = $conn->prepare($query_next_task);
 $stmt_next_task->bindParam(':nextTask', $nextTask, PDO::PARAM_INT);
 $stmt_next_task->execute();

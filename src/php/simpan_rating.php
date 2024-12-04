@@ -108,7 +108,7 @@
 
         // Kembali ke halaman sebelumnya
         kembali.addEventListener("click", () => {
-            window.location.href = "../php/materi.php";
+            window.location.href = "latihan/subjek/nomor5.php";
         });
 
         // Menandai rating telah diberikan
@@ -168,32 +168,31 @@
         enableNextButton();
 
         document.addEventListener("DOMContentLoaded", async () => {
-    const firebaseUid = localStorage.getItem("firebase_uid");
+        const firebaseUid = localStorage.getItem("firebase_uid");
 
-    try {
-        const response = await fetch(window.location.href, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ firebase_uid: firebaseUid }),
-        });
+        try {
+            const response = await fetch(window.location.href, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firebase_uid: firebaseUid }),
+            });
 
-        const result = await response.json();
-        if (result.success) {
-            const userData = result.user;
-            document.getElementById("account-username").textContent = `${userData.username || "username"}`;
+            const result = await response.json();
+            if (result.success) {
+                const userData = result.user;
+                document.getElementById("account-username").textContent = `${userData.username || "username"}`;
 
-        } else {
-            alert("Gagal memuat data pengguna: " + result.message);
-            window.location.href = "login.php";
+            } else {
+                alert("Gagal memuat data pengguna: " + result.message);
+                window.location.href = "login.php";
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
         }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Terjadi kesalahan saat memuat data pengguna.");
-    }
 
-    document.getElementById("loading-bar").style.width = "0";
+        document.getElementById("loading-bar").style.width = "0";
 
-});
+    });
     </script>
 </body>
 </html>
