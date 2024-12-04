@@ -1,8 +1,7 @@
 <?php
 include 'connect.php';
 
-// Mendapatkan ID level dari parameter URL
-$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 jika tidak ada parameter
+$level = isset($_GET['level']) ? intval($_GET['level']) : 1; // Default level 1 kalo gada parameter
 
 // Query untuk mengambil data dari database berdasarkan level
 $query = "SELECT title, content FROM litbud_levels WHERE id = :level";
@@ -37,7 +36,6 @@ $level_data = $stmt->fetch(PDO::FETCH_ASSOC);
 $title = $level_data['title'];
 $content = $level_data['content'];
 
-// Menentukan level selanjutnya dan sebelumnya
 $nextLevel = $level + 1;
 $prevLevel = $level - 1;
 
@@ -100,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #sidebar {
             position: fixed;
             top: 0;
-            left: -100%; /* Sidebar tersembunyi */
+            left: -100%;
             background-color: white;
             box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
             transition: left 0.4s ease;
@@ -108,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         #sidebar.open {
-            left: 0; /* Sidebar terbuka */
+            left: 0;
         }
     </style>
 </head>
@@ -205,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function toggleSidebar() {
             const sidebar = document.getElementById("sidebar");
             console.log("Toggling sidebar...");
-            sidebar.classList.toggle("open");  // Toggle the 'open' class to show or hide the sidebar
+            sidebar.classList.toggle("open");
         }
 
         document.addEventListener("DOMContentLoaded", async () => {

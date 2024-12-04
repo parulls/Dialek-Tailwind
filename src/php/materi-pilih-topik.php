@@ -165,6 +165,7 @@ include("connect.php");
                 </div>
             
                 <!-- Bilangan -->
+                <!-- Bilangan -->
                 <div class="flex items-center justify-between px-6 py-6 rounded-2xl border border-bar shadow-md w-full">
                     <div class="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gray-300 rounded-full">
                         <i class="fa-solid fa-lock text-gray-400 text-xl"></i>
@@ -218,6 +219,7 @@ include("connect.php");
             document.getElementById("account-username").textContent = `${userData.username || "username"}`;
         } else {
             alert("Gagal memuat data pengguna: " + result.message);
+            window.location.href = "login.php";
             window.location.href = "login.php";
         }
     } catch (error) {

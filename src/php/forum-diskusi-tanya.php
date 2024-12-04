@@ -1,7 +1,6 @@
 <?php 
     include("connect.php");
 
-       // Periksa apakah ini adalah permintaan POST
        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Content-Type: application/json");
         try {

@@ -1,7 +1,6 @@
 <?php
 require 'connect.php';
 
-// Fungsi untuk mendapatkan kata Batak dari database
 function getBatakWords($conn)
 {
     try {
@@ -13,7 +12,6 @@ function getBatakWords($conn)
     }
 }
 
-// Fungsi untuk memperbarui skor
 function updateScore($conn, $firebaseUid, $score)
 {
     try {
@@ -29,9 +27,6 @@ function updateScore($conn, $firebaseUid, $score)
     }
 }
 
-
-
-// Jika permintaan adalah GET dan JSON diminta
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     header("Content-Type: application/json");
     $words = getBatakWords($conn);
@@ -43,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     exit;
 }
 
-// Jika permintaan adalah GET dan JSON diminta
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     header("Content-Type: application/json");
     $words = getBatakWords($conn);
@@ -55,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['json'])) {
     exit;
 }
 
-// Jika permintaan adalah POST untuk memperbarui skor atau mendapatkan data pengguna
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     $data = json_decode(file_get_contents("php://input"), true);
@@ -94,9 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -129,15 +120,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <main class="flex flex-col items-center flex-grow">
-        <!-- Judul -->
         <h1 class="text-4xl font-bold text-gradient">Sambung Kata</h1>
 
-        <!-- Waktu -->
         <div class="text-4xl py-6 text-green-900" id="timer" style="font-weight: bold;">01:15</div>
 
-        <!-- Game -->
         <div class="flex space-x-24 items-start">
-            <!-- Player -->
             <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
                 <p class="font-extrabold text-xl text-green-900">Kamu</p>
                 <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="player-score" style="background-color: #acd3c6;">0</div>
@@ -146,7 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div id="player-words" class="mt-4 text-sm min-h-7"></div>
             </div>
 
-            <!-- AI -->
             <div class="p-4 rounded-lg shadow-lg w-64" style="background-color: rgba(218, 230, 217, 0.4)">
                 <p class="font-extrabold text-xl text-green-900">Dia</p>
                 <div class="text-green-900 px-2 text-2xl font-bold mb-4 w-1/3" id="ai-score" style="background-color: #acd3c6;">0</div>
@@ -155,7 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-        <!-- Pop-up -->
         <div id="popup" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50" style="display: none;">
             <div class="p-6 rounded-lg shadow-lg text-center" style="background-color: #CBEADF;">
                 <p id="popup-message" class="text-lg font-bold mb-4"></p>
@@ -210,7 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             window.location.href = "login.php";
         }
 
-            // Fetch kata Batak dari backend
             try {
                 const response = await fetch("?json=true");
                 const data = await response.json();
@@ -283,7 +267,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-
             function showResultPopup(message) {
                 document.getElementById("popup-message").textContent = message;
                 document.getElementById("popup").style.display = "flex";
@@ -299,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!batakTobaWords.includes(lowercaseWord)) return false; 
             if (usedWords.has(lowercaseWord)) return "reused"; 
             if (lastWord && lowercaseWord[0] !== lastWord.slice(-1)) return false; 
-            return "new"; // Kata valid dan baru
+            return "new";
         }
 
             function handlePlayerTurn() {
@@ -307,7 +290,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             wordInput.value = "";
             errorMessage.classList.add("hidden"); 
 
-            // Validasi kata
             const validity = isValidWord(word);
             if (!validity ) {
                 errorMessage.textContent ="Masukkan kata yang valid!";
@@ -322,21 +304,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             localStorage.setItem("usedVocabulary", JSON.stringify(usedVocabulary));
         }
 
-            // Tambahkan kata ke UI
             const wordElement = document.createElement("div");
             wordElement.textContent = word;
             wordElement.classList.add("used-word");
             playerWords.appendChild(wordElement);
 
-            // Simpan kata ke LocalStorage
             savePlayerWordToLocalStorage(word);
 
-            // Perbarui skor pemain
             playerScore += validity === "new" ? 10 : 5;
             usedWords.add(word); 
             lastWord = word; 
 
-            // Ganti giliran ke AI
             playerTurn = false; 
             setTimeout(handleAITurn, 1000); 
             updateScores(); 
@@ -358,8 +336,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     endGame("Dia tidak bisa menemukan kata yang valid! Kamu menang!");
                     return;
                 }
-
-          
 
                 playerTurn = true;
                 updateScores();

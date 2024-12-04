@@ -1,5 +1,4 @@
 <?php
-// Konfigurasi Koneksi Database
 $host = 'aws-0-ap-southeast-1.pooler.supabase.com';
 $user = 'postgres.ifhedwymtdwjybimejrq';
 $password = 'dialekdevwomen';
@@ -7,14 +6,12 @@ $port = '6543';
 $dbname = 'postgres';
 
 try {
-    // Buat koneksi menggunakan PDO PostgreSQL
     $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Koneksi database gagal: " . $e->getMessage());
 }
 
-// Fungsi Query
 function query($query) {
     global $conn;
 
@@ -27,7 +24,6 @@ function query($query) {
     }
 }
 
-// Fungsi Registrasi
 function registrasi($data) {
     global $conn;
 
@@ -37,7 +33,6 @@ function registrasi($data) {
     $password = $data["password"];
     $confirmPassword = $data["confirmPassword"];
 
-    // Cek apakah ada kolom yang kosong
     if (empty($name) || empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
         echo "<script>
                 alert('Semua kolom harus diisi!');
@@ -45,7 +40,6 @@ function registrasi($data) {
         return false;
     }
 
-    // Cek apakah password dan confirm password sesuai
     if ($password !== $confirmPassword) {
         echo "<script>
                 alert('Konfirmasi password tidak sesuai!');
@@ -53,7 +47,6 @@ function registrasi($data) {
         return false;
     }
 
-    // Cek apakah username sudah ada
     $stmt = $conn->prepare("SELECT username FROM user WHERE username = :username");
     $stmt->bindParam(':username', $username);
     $stmt->execute();

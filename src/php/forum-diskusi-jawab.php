@@ -1,6 +1,5 @@
 <?php 
     include("connect.php");
-    // Periksa apakah ini adalah permintaan POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Content-Type: application/json");
         try {
@@ -49,7 +48,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
     @media (max-width: 768px) {
-        /* Compact layout on tablets */
         .header h1 {
             font-size: 1.5rem;
         }
@@ -70,7 +68,6 @@
     }
 
     @media (max-width: 640px) {
-        /* Mobile screen layout adjustments */
         body {
             font-size: 0.875rem;
         }
@@ -157,7 +154,6 @@
         home.addEventListener("click", () => {
             window.location.href = "./dashboard-batak.php";
         });
-        // Tampilkan pertanyaan
         const urlParams = new URLSearchParams(window.location.search);
         const questionText = urlParams.get('question');
         document.getElementById('questionDisplay').textContent = questionText;
@@ -166,7 +162,6 @@
         const answerInput = document.getElementById('answerInput');
         const submitAnswerButton = document.getElementById('submitAnswerButton');
 
-        // Tambah jawaban
         submitAnswerButton.addEventListener('click', () => {
             const answerText = answerInput.value.trim();
             if (answerText) {
@@ -208,7 +203,6 @@
                 answersList.appendChild(answerElement);
                 answerInput.value = '';
 
-                // Like button
                 const likeButton = answerElement.querySelector('.like-button');
                 const heartIcon = likeButton.querySelector('.fa-heart'); 
                 const likeCount = answerElement.querySelector('.like-count');
@@ -226,7 +220,6 @@
                     likeCount.textContent = answerElement.likes;
                 });
 
-                // Komentar
                 const commentToggleButton = answerElement.querySelector('.comment-toggle-button');
                 const commentCount = answerElement.querySelector('.comment-count');
                 const commentsList = answerElement.querySelector('.comments-list');
@@ -235,7 +228,6 @@
                     commentsList.classList.toggle('hidden');
                 });
 
-                // Tambah komentar
                 const submitCommentButton = answerElement.querySelector('.submit-comment');
                 const commentInput = answerElement.querySelector('.comment-input');
 

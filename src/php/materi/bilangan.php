@@ -1,15 +1,12 @@
 <?php
-// Pastikan untuk menyertakan koneksi ke database
 include("../connect.php");
 
-// Cek apakah koneksi berhasil
 if (!$conn) {
     echo "<p>Koneksi database gagal</p>";
     exit;
 }
 
-// Query untuk mengambil data dengan id_materi = 4
-$id_material = 4; // ID yang ingin diambil
+$id_material = 4;
 $query = "SELECT id_material, material_title, material_content FROM materials WHERE id_material = :id_material";
 $stmt = $conn->prepare($query);
 $stmt->bindParam(':id_material', $id_material, PDO::PARAM_INT);
@@ -46,7 +43,6 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
     </nav>
 
     <section class="main flex flex-col mx-auto w-4/5 items-center flex-grow space-y-16 text-xl p-8 text-custom2 min-h-[500px] h-full drop-shadow-2xl" id="content-section">
-        <!-- Menampilkan materi yang diambil dari database -->
         <?php if (!empty($materials)): ?>
             <div class="materi-item">
                 <h2><?= htmlspecialchars($materials['material_title']); ?></h2>
@@ -64,12 +60,10 @@ $materials = $stmt->fetch(PDO::FETCH_ASSOC);
     </footer>
 
     <script>
-        // Mendapatkan elemen tombol
         const kembaliButton = document.getElementById("kembali-button");
 
-        // Event listener untuk tombol "Kembali"
         kembaliButton.addEventListener("click", function() {
-            window.location.href = "../html/Materi.html";  // Mengarahkan ke halaman Materi.html
+            window.location.href = "../html/Materi.html";
         });
     </script>
 

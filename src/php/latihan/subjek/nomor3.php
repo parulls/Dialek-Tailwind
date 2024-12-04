@@ -89,6 +89,7 @@
                     while ($answer = $stmt_answers->fetch(PDO::FETCH_ASSOC)) {
                         echo "<form method='POST' action='' class='inline-block'>";
                         echo "<input type='hidden' name='user_id' value='1'>";
+                        echo "<input type='hidden' name='user_id' value='1'>";
                         echo "<input type='hidden' name='question_id' value='$question_id'>";
                         echo "<input type='hidden' name='answer_id' value='" . $answer['id_answer'] . "'>";
                         echo "<button type='submit' class='option button-option w-28 sm:w-32 h-10 sm:h-11 text-sm sm:text-lg'>" . $answer['answer_text'] . "</button>";

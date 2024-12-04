@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $firebaseUid = $data['firebase_uid'] ?? null;
         $name = trim($data['name'] ?? '');
-        $username = trim($data['username'] ?? generateRandomUsername()); // Generate username jika kosong
+        $username = trim($data['username'] ?? generateRandomUsername()); 
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? null;
         $profileImage = $data['profile_image'] ?? 'default_profile_image_url';
@@ -221,7 +221,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
                 name: name,
                 username: username,
                 email: email,
-                profile_image: "default_profile_image_url", // Default profile image
+                profile_image: "default_profile_image_url", 
                 password: password,
             }),
         });
@@ -236,7 +236,7 @@ document.getElementById("signup-form").addEventListener("submit", async (event) 
             localStorage.setItem("profileName", result.name);
 
             alert("Signup berhasil!");
-            window.location.href = "./dashboard-batak.php"; // Redirect to dashboard
+            window.location.href = "./dashboard-batak.php"; 
         } else {
             alert(result.message);
         }
@@ -276,7 +276,7 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
             localStorage.setItem("profileName", resultData.name);
 
             alert("Signup berhasil dengan Google!");
-            window.location.href = "./dashboard-batak.php"; // Redirect to dashboard
+            window.location.href = "./dashboard-batak.php"; 
         } else {
             alert(resultData.message);
         }

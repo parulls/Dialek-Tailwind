@@ -7,7 +7,6 @@ if (!isset($_SESSION['start_time'])) {
     $_SESSION['start_time'] = time();
 }
 
-// Waktu batas 1 menit
 $time_limit = 60;
 $elapsed_time = time() - $_SESSION['start_time'];
 
@@ -134,8 +133,8 @@ $hint = $word_data['hint'] ?? 'tidak ada petunjuk';
         const countdown = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(countdown);
-                document.querySelector('input[name="user_word"]').disabled = true; // Disable input
-                alert("Waktu habis!"); // Alert user
+                document.querySelector('input[name="user_word"]').disabled = true;
+                alert("Waktu habis!");
             } else {
                 timerElement.textContent = timeLeft;
                 timeLeft--;
@@ -143,16 +142,12 @@ $hint = $word_data['hint'] ?? 'tidak ada petunjuk';
         }, 1000);
 
         refreshBtn.addEventListener("click", () => {
-            // AJAX request to fetch a new word
             fetch('get_word.php')
                 .then(response => response.json())
                 .then(data => {
-                    // Update the displayed word and hint
                     document.querySelector('.word-custom').textContent = data.word.split('').sort(() => Math.random() - 0.5).join('');
                     document.querySelector('.hint span').textContent = data.hint;
-                    // Update the hidden input with the new correct word
                     document.querySelector('input[name="correct_word"]').value = data.word;
-                    // Reset the timer
                     timeLeft = <?php echo $time_limit; ?>;
                     timerElement.textContent = timeLeft;
                 })

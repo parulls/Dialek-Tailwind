@@ -64,8 +64,9 @@
             </div>
             <div class="bg-custom7 w-full sm:w-4/5 lg:w-[70%] flex justify-start items-center mb-8 sm:mb-12 mt-16 sm:mt-28 px-4 py-3 rounded-lg">
                 <?php
-                $question_id = 2;
-                $sql = "SELECT question_id, question_text FROM questions WHERE question_id = :question_id";
+                // Query untuk mengambil soal dengan id = 1
+                $question_id = 2; // ID soal yang ingin diambil
+                $sql = "SELECT id, question_text FROM questions WHERE id = :id";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':question_id', $question_id, PDO::PARAM_INT);
                 $stmt->execute();
@@ -81,7 +82,8 @@
 
             <div class="flex flex-col sm:flex-row sm:justify-between items-center w-full sm:w-4/5 lg:w-[70%] space-y-4 sm:space-y-0 sm:space-x-4 mb-20 sm:mb-40">
                 <?php
-                $sql_answers = "SELECT id_answer, answer_text FROM answers WHERE question_id = :question_id";
+                // Query untuk mengambil jawaban berdasarkan question_id
+                $sql_answers = "SELECT id, answer_text FROM answers WHERE question_id = :question_id";
                 $stmt_answers = $conn->prepare($sql_answers);
                 $stmt_answers->bindParam(':question_id', $question_id, PDO::PARAM_INT);
                 $stmt_answers->execute();

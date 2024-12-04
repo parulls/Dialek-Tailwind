@@ -1,7 +1,6 @@
 <?php
 include("connect.php");
 
-// Periksa apakah ini adalah permintaan POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     try {
@@ -37,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-
-// Jika bukan permintaan POST, tampilkan frontend
 ?>
 
 
@@ -143,7 +140,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     home.addEventListener("click", () => {
         window.location.href = "./dashboard-batak.php";
     });
-    // Arahkan ke halaman Pengaturan
     document.getElementById("SettingButton").addEventListener("click", () => {
         window.location.href = "./pengaturan.php";
     });

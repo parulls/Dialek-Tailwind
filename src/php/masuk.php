@@ -1,8 +1,6 @@
 <?php
-// Bagian Backend
 include("connect.php");
 
-// Tangani permintaan POST untuk API
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Content-Type: application/json");
     try {
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// Tangani permintaan GET untuk menampilkan halaman login
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +144,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Function to handle storing user data in localStorage
         const storeUserData = (userData) => {
         localStorage.setItem("firebase_uid", userData.firebase_uid); // Simpan firebase_uid
         localStorage.setItem("username", userData.username || "User");
